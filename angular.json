@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "MotorIncrementos"
+    }
+  },
+  "defaultProject": "MotorIncrementos",
+  "cli": {
+    "analytics": false
+  }
 }

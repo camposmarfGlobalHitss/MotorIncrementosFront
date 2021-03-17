@@ -1,0 +1,75 @@
+<div class="row mt-5">
+    <div class="col">
+        <h1>GUARDAR BIZ</h1>
+        <hr>
+        <h3 class="mb-3" *ngIf="panelPeticion">Mensaje: </h3>
+        <form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardar()" *ngIf="panelPeticion">
+
+
+            <div class="mb-1">
+                <label class="form-label">Description</label>
+                <input type="text" class="form-control" formControlName="description">
+                <small *ngIf="descriptionNoValido" class="text-danger">* Campo es Requerido</small>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">Service</label>
+                <input type="text" class="form-control" formControlName="service">
+                <small *ngIf="serviceNoValido" class="text-danger">* Campo es Requerido</small>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">CategoryCode</label>
+                <input type="text" class="form-control" formControlName="categoryCode">
+                <small *ngIf="categoryCodeNoValido" class="text-danger">* Campo es Requerido</small>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">SubCategoryCode</label>
+                <input type="text" class="form-control" formControlName="subCategoryCode">
+                <small *ngIf="subCategoryCodeNoValido" class="text-danger">* Campo es Requerido</small>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">VoiceOfCustomerCode</label>
+                <input type="text" class="form-control" formControlName="voiceOfCustomerCode">
+                <small *ngIf="voiceOfCustomerCodeNoValido" class="text-danger">* Campo es Requerido</small>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">CloseInteractionCode</label>
+                <input type="text" class="form-control" formControlName="closeInteractionCode">
+                <small *ngIf="closeInteractionCodeNoValido" class="text-danger">* Campo es Requerido</small>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">DomainName</label>
+                <input type="text" class="form-control" formControlName="domainName">
+            </div>
+            <div class="mb-1">
+                <label class="form-label">UserSignum</label>
+                <input type="text" class="form-control" formControlName="userSignum">
+            </div>
+            <div class="mb-1">
+                <label class="form-label">Subject</label>
+                <input type="text" class="form-control" placeholder="Subject" formControlName="subject" [class.is-invalid]="subjectNoValido">
+                <small *ngIf="subjectNoValido" class="text-danger">* Campo es Requerido</small>
+            </div>
+            <div class="mb-1">
+                <label class="form-label">InteractionDirectionTypeCode</label>
+                <input type="text" class="form-control" formControlName="interactionDirectionTypeCode">
+            </div>
+            <div class="form-group mb-5 mt-5">
+                <button class="btn btn-success w-100" type="submit">
+                    Guardar Biz
+                </button>
+            </div>
+
+        </form>
+
+
+    </div>
+    <div class="col" *ngIf="panelResult">
+        <h3 class="text-success text-center mt-3">Biz Guardada Con Exito!!!</h3>
+        <pre style="background: #ABEBC6; color: #140094;">
+            {{respSetBizInteraction | json}}
+        </pre>
+        <button class="btn btn-primary w-100" (click)="regresar()">
+            Volver a Biz
+        </button>
+    </div>
+</div>

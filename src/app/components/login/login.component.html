@@ -1,0 +1,32 @@
+<form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="validarLogin()">
+    <div class="row mt-5">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="card" style="width: 100%;">
+                <img src="../../../assets/img/fondologin.jpg" class="card-img-top" alt="fondo">
+
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">US</span>
+                            <input id="usuario" type="text" class="form-control" placeholder="Usuario" formControlName="usuario">
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="input-group ">
+                            <span class="input-group-text" id="basic-addon1">PS</span>
+                            <input id="password" type="password" class="form-control" placeholder="Contraseña" formControlName="password">
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <button class="btn btn-primary" style="width: 100%;" type="submit">Entrar</button>
+                    </li>
+
+                </ul>
+
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</form>

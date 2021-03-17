@@ -1,0 +1,17 @@
+{
+    "/MassiveOrderSummary/V1.0/*": {
+        "target": "http://100.126.21.189:7898",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/mit/*": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/BIZInteractions/Rest/V1.0/BizInteractionsApi/*": {
+        "target": "http://100.126.21.189:7777",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
