@@ -9,14 +9,14 @@ export class AppComponent {
   title = 'MotorIncrementos';
 
   constructor(){
-    localStorage.clear();
+    // localStorage.clear();
   }
 
   mostrarNavBar(){
     if(localStorage.getItem('usuario') ===null ){
       return false;
     }else{
-      return true;
+      return false;
     }
   }
 

@@ -1,7 +1,7 @@
-<div class="row mt-5">
+<div class="row mt-2 g-4">
     <h1>Monitoreo Incremento</h1>
     <hr>
-    <div class="col-5" *ngIf="muestraSelect">
+    <div class="col-md-5" *ngIf="muestraSelect">
         <div class="form-group row">
             <div class="col-4">
                 <label class="col-form-label" style="font-size: 18px;">Monitoreo por</label>
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="col-5" *ngIf="muestraArchivoPlano">
+    <div class="col-md-5" *ngIf="muestraArchivoPlano">
         <button class="btn btn-danger" (click)="irAtrasArchivoPlano()">
             <i class="fa fa-arrow-left"></i>
         </button>
@@ -40,7 +40,7 @@
             <button class="btn btn btn-success btn-block" type="button" (click)="monitorear()" [disabled]="buttonMonitoreo">Realizar Monitoreo</button>
         </div>
     </div>
-    <div class="col-5" *ngIf="muestraBatchId">
+    <div class="col-md-5" *ngIf="muestraBatchId">
         <button class="btn btn-danger" (click)="irAtrasBatchId()">
             <i class="fa fa-arrow-left"></i>
         </button>
@@ -57,12 +57,12 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <div class="col-md-6">
         <h2 class="text-center">Estado Monitoreo</h2>
         <hr style="margin-left: 10px;">
         <app-loading *ngIf="carga"></app-loading>
         <pre *ngIf="areajson" style="height: 400px; background:#DCD7D6; color: #140094;">
-            {{attribs}}
+                {{attribs}}
         </pre>
         <table class="table" *ngIf="muestratablaResultados">
             <thead class="table-dark">

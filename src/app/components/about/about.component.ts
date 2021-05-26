@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
-
-  constructor() { }
+  today:Date;
+  constructor() { 
+    this.today = new Date();
+  }
 
   ngOnInit(): void {
   }

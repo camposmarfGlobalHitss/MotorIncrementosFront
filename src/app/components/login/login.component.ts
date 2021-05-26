@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgControl, ReactiveFormsModule, Validators } fr
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import Swal from 'sweetalert2'
+import { UsuarioResponse } from '../../interfaces/usuario-response';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,7 @@ import Swal from 'sweetalert2'
 export class LoginComponent implements OnInit {
   
   pass:string='';
-  // userValido:string=''; // se va a colocar un usuario quemado con correo cuando se valla a presentar en el review 
-  // passValido:string=''; // se va a colocar un pass quemado con correo cuando se valla a presentar en el review
+  Usuario:UsuarioResponse;
 
   loginForm: FormGroup;
   constructor(private fb:FormBuilder,
@@ -47,8 +47,8 @@ export class LoginComponent implements OnInit {
     Swal.showLoading();
 
     this.loginService.getLogin(this.loginForm.get('usuario').value)
-                      .subscribe( (resp:any) =>{
-                      console.log('entro por el de NO ERROR');
+                      .subscribe( (resp:UsuarioResponse) =>{
+                      
                       const user = this.loginForm.get('usuario').value;
                       const pass =   this.loginForm.get('password').value;
                       if(user === resp.username && pass === resp.contrasena){
@@ -59,7 +59,8 @@ export class LoginComponent implements OnInit {
                           allowOutsideClick: false
                         });
                         localStorage.setItem('usuario',user);
-                        this.router.navigate(['/home']);
+                        this.router.navigate(['/dashboard']);
+                        this.loginService.setUser(resp);
                       }else{
                         Swal.fire({
                           icon: 'error',

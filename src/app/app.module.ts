@@ -24,6 +24,23 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { CommonModule } from '@angular/common';
 import { MonitoreoPlmComponent } from './components/monitoreo-plm/monitoreo-plm.component';
 import { BizComponent } from './components/biz/biz.component';
+import { AboutComponent } from './components/about/about.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { RegistroComponent } from './components/registro/registro.component';
+import { OlvidoPassComponent } from './components/olvido-pass/olvido-pass.component';
+import { VerificarUsuarioComponent } from './components/verificar-usuario/verificar-usuario.component';
+import { PostRegistroComponent } from './components/post-registro/post-registro.component';
+import { ExtraccionInformacionComponent } from './components/extraccion-informacion/extraccion-informacion.component';
+import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+import { SeguridadComponent } from './components/seguridad/seguridad.component';
+import { AuditoriaComponent } from './components/auditoria/auditoria.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FiltroTablasPipe } from './pipes/filtro-tablas.pipe';
+import { BizService } from './services/biz.service';
+import { ExtraccionInformacionService } from './services/extraccion-informacion.service';
+import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -35,7 +52,20 @@ import { BizComponent } from './components/biz/biz.component';
     NavbarComponent,
     LoadingComponent,
     MonitoreoPlmComponent,
-    BizComponent
+    BizComponent,
+    DashboardComponent,
+    AboutComponent,
+    PerfilComponent,
+    RegistroComponent,
+    OlvidoPassComponent,
+    VerificarUsuarioComponent,
+    PostRegistroComponent,
+    ExtraccionInformacionComponent,
+    ConfiguracionComponent,
+    SeguridadComponent,
+    AuditoriaComponent,
+    FiltroTablasPipe,
+    AdminUsuariosComponent
   ],
   imports: [
     BrowserModule,
@@ -43,14 +73,20 @@ import { BizComponent } from './components/biz/biz.component';
     ReactiveFormsModule,
     HttpClientModule,
     APP_ROUTING,
-    CommonModule
+    CommonModule,
+    NgxPaginationModule,
+    NgbModule
+  ],exports:[
+  
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     LoginGuard,
     NoLoginGuard,
     MonitoreoService,
-    LoginService
+    LoginService,
+    BizService,
+    ExtraccionInformacionService
   ],
   bootstrap: [AppComponent]
 })

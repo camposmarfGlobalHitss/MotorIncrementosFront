@@ -10,5 +10,6 @@ export interface Biz {
     executionDate?:string; 
     subject?:string;
     interactionDirectionTypeCode?:string; 
-    // customerCode?:string; 
+    customerCode?:string;
+    messageProceso?:string; 
 }

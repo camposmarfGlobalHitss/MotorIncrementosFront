@@ -1,11 +1,9 @@
 <form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="validarLogin()">
-    <div class="row mt-5">
-        <div class="col-3"></div>
-        <div class="col-6">
-            <div class="card" style="width: 100%;">
-                <img src="../../../assets/img/fondologin.jpg" class="card-img-top" alt="fondo">
+    <div class="row justify-content-center pt-5 mt-3 m-1">
 
-
+        <div class="col-md-6 col-sm-8 col-xl-4 col-lg-5">
+            <div class="card" style="width: 30rem;">
+                <img src="../../../assets/img/fondo_login_v2.jpg" class="card-img-top" alt="fondo">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <div class="input-group">
@@ -26,7 +24,13 @@
                 </ul>
 
             </div>
+
+            <span style="font-size: 22px;">No tienes Cuenta? <a href="/registro">Registrate</a></span>
+            <br>
+            <span style="font-size: 22px;">
+                <a href="/olvidoPass/0">Olvidaste la Contraseña?</a>
+            </span>
         </div>
-        <div class="col-3"></div>
+
     </div>
 </form>

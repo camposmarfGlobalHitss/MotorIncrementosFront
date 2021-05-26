@@ -1,0 +1,59 @@
+<div class="d-flex" id="content-wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-container" class="bg-primary">
+        <div class="logo">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="../../../assets/img/logo-Claro.png" class="img-fluid rounded-circle avatar mr-2" id="logodashboard" alt="Claro">
+                </div>
+                <div class="col-md-10 mt-2">
+                    <h4 class="text-light font-weight-bold mb-0" style="font-size: 22px; margin-left: 20px;">MIT</h4>
+                </div>
+            </div>
+        </div>
+        <div class="menu" routerLinkActive="active">
+            <a [routerLink]="['/dashboard']" class="d-block text-light p-3 border-0"><i class="icon ion-md-apps lead me-2"></i>
+                Tablero</a>
+            <a routerLink="/dashboard/extraccion" class="d-block text-light p-3 border-0"><i class="icon ion-md-cube lead me-2"></i>
+                    Cargue Informacion</a>
+
+            <a routerLink="/dashboard/monitoreo" class="d-block text-light p-3 border-0"><i class="icon ion-md-barcode lead me-2"></i>
+                Monitoreo</a>
+
+            <a routerLink="/dashboard/biz" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead me-2"></i>
+                Biz Interaction</a>
+            <a routerLink="/dashboard/perfil" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead me-2"></i>
+                Perfil</a>
+            <a routerLink="/dashboard/about" class="d-block text-light p-3 border-0"><i class="icon ion-md-help lead me-2"></i>
+                    Acerca</a>
+            <a *ngIf="habConfiguracion" routerLink="/dashboard/configuracion" class="d-block text-light p-3 border-0"> <i class="icon ion-md-settings lead me-2"></i> Configuración
+            </a>
+        </div>
+    </div>
+    <!-- Fin sidebar -->
+
+    <div class="w-100">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+            <div class="container-fluid">
+
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    </ul>
+                    <label class="me-2 text-primary" style="font-weight:bold;">{{usuarioLogueado}}</label>
+                    <button class="btn btn-outline-danger" (click)="desloguear()">Logout</button>
+                </div>
+            </div>
+        </nav>
+        <!-- Fin Navbar -->
+        <!-- Inicio Contenido -->
+        <div class="w-100 ms-3 mt-3">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- Fin Contenido -->
+    </div>
+</div>

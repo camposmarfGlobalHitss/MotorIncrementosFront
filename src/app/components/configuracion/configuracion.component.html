@@ -1,0 +1,47 @@
+<h2>Modulo Configuracion</h2>
+<hr>
+<div class="row">
+    <div class="col-3">
+        <div class="card" style="width: 18rem;">
+            <img src="../../../assets/img/audit2.png" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Auditoria</h5>
+                <p class="card-text">validar los registros ingresados al sistema y generar reportes al sistema.</p>
+                <a href="/dashboard/auditoria" class="btn btn-primary w-100">Gestionar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card" style="width: 18rem;">
+            <img src="../../../assets/img/security.png" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Seguridad</h5>
+                <p class="card-text">Gestiona accesos, valida usuarios, genera acciones sobre los modulos admitidos, genera reportes</p>
+                <a href="#" class="btn btn-primary w-100">Gestionar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card" style="width: 18rem;">
+            <img src="../../../assets/img/usuarios.png" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Usuarios</h5>
+                <p class="card-text">Genera acciones sobre los usuarios activos en el sistema, valida su actividad y genera reportes</p>
+                <a href="/dashboard/adminusuarios" class="btn btn-primary w-100">Gestionar</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="card" style="width: 18rem;">
+            <img src="../../../assets/img/programador.png" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Otros</h5>
+                <p class="card-text">Genera otras acciones sobre el sistema, configuraciones que no esten incluidas en otros modulos</p>
+                <a href="#" class="btn btn-primary w-100">Gestionar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w-100 ms-3 mt-3">
+    <router-outlet></router-outlet>
+</div>

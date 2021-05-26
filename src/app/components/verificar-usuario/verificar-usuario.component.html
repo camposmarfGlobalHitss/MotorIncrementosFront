@@ -1,0 +1,11 @@
+<div class="row justify-content-center pt-5 mt-3 m-1">
+    <div class="col-md-6 col-sm-8 col-xl-4 col-lg-5" style="border: 0.5px solid; background-color: rgb(204, 216, 206); box-shadow: forestgreen;">
+        <h2 class="text-center text-danger">{{estadoVerificacion}}</h2>
+        <div class="alert alert-primary" role="alert">
+            {{mensajeVerificacion}} <a href="#" class="alert-link">{{correo}}</a> {{opcionCorreccion}}
+        </div>
+        <hr>
+        <button type="button" (click)="navegarLogin()" class="btn btn-success mb-3">login</button>
+
+    </div>
+</div>

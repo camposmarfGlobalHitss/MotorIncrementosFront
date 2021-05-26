@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>Perfil</h1>
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="titular">Titular Cuenta</label>
+            <input type="text" id="titular" class="form-control" [value]="nombreCompleto" aria-describedby="helpId" disabled="true">
+        </div>
+        <div class="form-group">
+            <label for="correo">Correo</label>
+            <input type="text" id="correo" class="form-control" [value]="correo" aria-describedby="helpId" disabled="true">
+        </div>
+
+        <div class="form-group">
+            <label for="username">Usuario</label>
+            <input type="text" id="username" class="form-control" [value]="username" aria-describedby="helpId" disabled="true">
+
+        </div>
+        <div class="form-group mt-2">
+            <label for="descusuario">Descripcion Usuario</label>
+            <input type="text" name="" id="descusuario" class="form-control" [value]="descUsuario" aria-describedby="helpId" disabled="true">
+
+        </div>
+        <div class="form-group mt-2">
+            <label for="fechausuario">fecha Creacion Usuario</label>
+            <input type="text" name="" id="fechausuario" class="form-control" [value]="fecha | date" aria-describedby="helpId" disabled="true">
+
+        </div>
+        <div class="form-group mt-2">
+            <label for="estadousuario">Estado</label>
+            <input type="text" name="" id="estadousuario" class="form-control" [value]="estado" aria-describedby="helpId" disabled="true">
+
+        </div>
+        <div class="form-group mt-2">
+            <label for="rol">Rol</label>
+            <input type="text" name="" id="rol" class="form-control" [value]="rol" aria-describedby="helpId" disabled="true">
+
+        </div>
+        <button *ngIf="!areaCambioContrasena" class="btn btn-primary mt-3" (click)="cambioContrasena()">Cambio Contraseña</button>
+        <button *ngIf="areaCambioContrasena" class="btn btn-danger mt-3" (click)="areaCambioContrasena=!areaCambioContrasena">Cancelar</button>
+
+    </div>
+    <div *ngIf="areaCambioContrasena" class="col-md-10 border border-danger mt-3 ms-2" style="margin-bottom: 70px;">
+        <form (ngSubmit)="guardarContrasena( forma )" #forma="ngForm">
+            <div class="form-group mt-2">
+                <label for="passanterior">Contraseña Actual</label>
+                <input type="password" name="passanterior" placeholder="Actual" ngModel id="passanterior" class="form-control" required minlength="6" [class.is-invalid]="passanterior.invalid && passanterior.touched" #passanterior="ngModel">
+                <small *ngIf="passanterior.invalid && passanterior.touched" class="form-text text-danger">Ingrese minimo 6 caracteres</small>
+            </div>
+            <div class="form-group mt-2 mb-3">
+                <label for="passnuevo">Contraseña Nueva</label>
+                <input type="password" name="passnuevo" placeholder="Nueva" ngModel id="passnuevo" class="form-control" required minlength="6" [class.is-invalid]="passnuevo.invalid && passnuevo.touched" #passnuevo="ngModel">
+                <small *ngIf="passnuevo.invalid && passnuevo.touched" class="form-text text-danger">Ingrese minimo 6 caracteres</small>
+            </div>
+            <button class="btn btn-success mb-3" [disabled]="forma.invalid" type="submit">Cambiar</button>
+
+        </form>
+    </div>
+</div>

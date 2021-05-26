@@ -1,0 +1,29 @@
+<h1 class="text-center">Recuperar Contraseña</h1>
+<hr>
+<div class="row justify-content-center pt-5 mt-3 m-1">
+    <div *ngIf="panelenviocorreo" class="col-md-6 col-sm-8 col-xl-4 col-lg-5" style="background-color: rgb(207, 252, 207);">
+        <span *ngIf="respuesta" class="text-danger">{{mensaje}}</span>
+        <div class="form-group mt-3">
+            <label for="email">Ingrese su correo</label>
+            <input class="form-control" type="email" name="email" placeholder="Ingrese su correo" #emailRecuperar>
+            <button class="btn btn-success mt-3 mb-3" (click)="recuperarIngreso(emailRecuperar.value)">Recuperar</button>
+        </div>
+        <a class="btn btn-primary mt-3 mb-3" href="/login">ir al login</a>
+    </div>
+    <div *ngIf="cambiopass" class="col-md-6 col-sm-8 col-xl-4 col-lg-5">
+        <form (ngSubmit)="guardarContrasena( forma )" #forma="ngForm">
+            <div class="form-group mt-2">
+                <label for="nuevopass">Contraseña Nueva</label>
+                <input type="password" name="nuevopass" placeholder="Nueva contraseña" ngModel id="nuevopass" class="form-control" required minlength="6" [class.is-invalid]="nuevopass.invalid && nuevopass.touched" #nuevopass="ngModel">
+                <small *ngIf="nuevopass.invalid && nuevopass.touched" class="form-text text-danger">Ingrese minimo 6 caracteres</small>
+            </div>
+            <div class="form-group mt-2 mb-3">
+                <label for="confirmacionpass">Confirme de nuevo</label>
+                <input type="password" name="confirmacionpass" placeholder="Repita contraseña" ngModel id="confirmacionpass" class="form-control" required minlength="6" [class.is-invalid]="confirmacionpass.invalid && confirmacionpass.touched" #confirmacionpass="ngModel">
+                <small *ngIf="confirmacionpass.invalid && confirmacionpass.touched" class="form-text text-danger">Ingrese minimo 6 caracteres</small>
+            </div>
+            <button class="btn btn-success mb-3" [disabled]="forma.invalid" type="submit">Cambiar</button>
+
+        </form>
+    </div>
+</div>

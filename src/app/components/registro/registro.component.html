@@ -1,0 +1,45 @@
+<h3 class="text-center mt-2">Formulario de Registro</h3>
+<div class="row" id="contenedor">
+    <div class="col-md-5 secImange">
+        <div class="row">
+            <img src="../../../assets/img/logo-Claro.png" class="logoclaro" alt="logo">
+        </div>
+        <div class="row">
+            <h1 id="textobienvenida">Bienvenido!!!</h1>
+        </div>
+    </div>
+    <div class="col-md-7 secForm ">
+        <form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardarUsuario()">
+            <div class="form-group mt-2">
+                <label for="nombrecompleto" class="text-primary">Nombre Completo</label>
+                <input type="text" class="form-control text-capitalize" name="nombrecompleto" id="nombrecompleto" aria-describedby="helpId" placeholder="Ingrese Nombre" formControlName="nombrecompleto" [class.is-invalid]="getNombreCompletoNoValido()">
+                <small *ngIf="getNombreCompletoNoValido()" class="text-danger">* Campo Obligatorio y con minimo 6 caracteres</small>
+            </div>
+
+            <div class="form-group">
+                <label for="username" class="text-primary">Nombre de Usuario</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Ingrese Usuario" formControlName="username" [class.is-invalid]="getUserNameNoValido()">
+                <small *ngIf="getUserNameNoValido()" class="text-danger">* Campo Obligatirio y con minimo 5 caracteres</small>
+            </div>
+
+            <div class="form-group">
+                <label for="correo" class="text-primary">Correo</label>
+                <input type="email" name="correo" id="correo" class="form-control" placeholder="Ingrese Correo" formControlName="correo" [class.is-invalid]="getCorreoNoValido()">
+                <small *ngIf="getCorreoNoValido()" id="helpId" class="text-danger">* Campo requerido o no valido</small>
+            </div>
+            <div class="form-group">
+                <label for="contrasena" class="text-primary">Contraseña</label>
+                <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese Contraseña" formControlName="contrasena" [class.is-invalid]="getContrasenaNoValida()">
+                <small *ngIf="getContrasenaNoValida()" id="helpId" class="text-danger">* Ingrese minimo 6 caracteres</small>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mt-2 w-100 mb-3" [disabled]="forma.invalid">Registrate</button>
+            </div>
+            <p class="text-center">
+                <a routerLink="/login">¿Ya tienes Cuenta?</a>
+            </p>
+
+        </form>
+
+    </div>
+</div>
