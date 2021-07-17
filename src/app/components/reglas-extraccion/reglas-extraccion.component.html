@@ -1,0 +1,66 @@
+<h2>Reglas de Extraccion</h2>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-success table-striped table-hover mt-3" id="tabla-condiciones">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripcion Regla</th>
+                    <th>Fecha Creacion</th>
+                    <th>Condicion</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let regla of listReglas | paginate:{itemsPerPage:20, currentPage:pageActual}; let i = index">
+                    <td scope="row">{{i+1}}</td>
+                    <td>{{regla.regla}}</td>
+                    <td>{{regla.fechaCreacion |date}}</td>
+                    <td>{{regla.condicion}}</td>
+                    <td>
+                        <button class="btn btn-success me-2 mb-1" (click)="openLG(contenido,regla)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger mb-1" (click)="borrarCondicion(regla)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActual = $event"></pagination-controls>
+
+        <button class="btn btn-primary" (click)="irCrearRegla()">Nueva Regla</button>
+        <button class="btn btn-success ms-2">Continuar</button>
+    </div>
+    <div class="col-md-12">
+        <ng-template #contenido let-modal>
+            <div class="modal-header">
+                <h4 class="modal-tittle text-success">Editar Regla</h4>
+                <button class="close" aria-label="close" (click)="modal.dismiss()">
+                    <span aria-label="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" [formGroup]="forma" (ngSubmit)="actualizarCondicion()">
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">DESCRIPCION DE LA REGLA</label>
+                        <textarea class="form-control" id="descripcion" rows="5" name="descripcion" formControlName="descripcion"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="condicion" class="form-label w-100">GENERACION FILTRO</label>
+                        <textarea class="form-control" id="condicion" rows="5" name="condicion" formControlName="condicion"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="submit" (click)="actualizarCondicion()">Editar</button>
+                <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+            </div>
+        </ng-template>
+
+    </div>
+
+</div>

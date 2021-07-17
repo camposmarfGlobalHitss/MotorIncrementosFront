@@ -132,6 +132,8 @@ export class AdminUsuariosComponent implements OnInit {
       text: 'Validando Informacion!',
       allowOutsideClick: false
     });
+    Swal.showLoading();
+    
     this.usuario = this.forma.value;
     this.usuario.id = this.usuarioSeleccionado.id;
     this.usuario.feciniusuario = this.usuarioSeleccionado.feciniusuario;
@@ -170,6 +172,8 @@ export class AdminUsuariosComponent implements OnInit {
       text: 'Validando Informacion!',
       allowOutsideClick: false
     });
+    Swal.showLoading();
+
     console.log(this.forma);
     this.usuario = this.forma.value;
     if(this.forma.invalid){
@@ -208,11 +212,19 @@ export class AdminUsuariosComponent implements OnInit {
     this.usuario.observaciones = `usuario borrado por: ${usuarioBorra}`;
     Swal.fire({
       title: `¿Realmente desea eliminar al usuario "${usuario.username}" ? `,
+      confirmButtonColor:'#DC3545',
       showCancelButton: true,
       confirmButtonText: `Confirmar`,
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Espere...',
+          text: 'Validando Informacion!',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
         this.adminusuarios.updateUsuario(this.usuario).subscribe(resp=>{
           Swal.fire('Usuario Borrado!', '', 'success');
           this.cargarListasIniciales();

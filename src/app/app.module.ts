@@ -41,6 +41,10 @@ import { BizService } from './services/biz.service';
 import { ExtraccionInformacionService } from './services/extraccion-informacion.service';
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReglasExtraccionComponent } from './components/reglas-extraccion/reglas-extraccion.component';
+import { GeneracionReglasComponent } from './components/generacion-reglas/generacion-reglas.component';
+import { AdminusuariosService } from './services/adminusuarios.service';
+import { ReglasService } from './services/reglas.service';
 
 
 
@@ -65,7 +69,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SeguridadComponent,
     AuditoriaComponent,
     FiltroTablasPipe,
-    AdminUsuariosComponent
+    AdminUsuariosComponent,
+    ReglasExtraccionComponent,
+    GeneracionReglasComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +92,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MonitoreoService,
     LoginService,
     BizService,
-    ExtraccionInformacionService
+    ExtraccionInformacionService,
+    AdminusuariosService,
+    ReglasService
   ],
   bootstrap: [AppComponent]
 })

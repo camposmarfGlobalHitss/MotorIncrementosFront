@@ -18,6 +18,8 @@ import { ConfiguracionComponent } from './components/configuracion/configuracion
 import { SeguridadComponent } from './components/seguridad/seguridad.component';
 import { AuditoriaComponent } from './components/auditoria/auditoria.component';
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
+import { ReglasExtraccionComponent } from './components/reglas-extraccion/reglas-extraccion.component';
+import { GeneracionReglasComponent } from './components/generacion-reglas/generacion-reglas.component';
 
 
 const ROUTES: Routes = [
@@ -38,6 +40,8 @@ const ROUTES: Routes = [
         {path:'biz', component: BizComponent },
         {path:'perfil', component: PerfilComponent },
         {path:'extraccion', component: ExtraccionInformacionComponent },
+        {path:'reglas', component: ReglasExtraccionComponent },
+        {path:'creareglas', component: GeneracionReglasComponent },
         {path:'configuracion', component: ConfiguracionComponent},
         {path:'auditoria', component: AuditoriaComponent},
         {path:'seguridad', component: SeguridadComponent},
