@@ -5,7 +5,7 @@
         <table class="table table-success table-striped table-hover mt-3" id="tabla-condiciones">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Item</th>
                     <th>Descripcion Regla</th>
                     <th>Fecha Creacion</th>
                     <th>Condicion</th>
@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let regla of listReglas | paginate:{itemsPerPage:20, currentPage:pageActual}; let i = index">
+                <tr *ngFor="let i = index let regla of listReglas | paginate:{itemsPerPage:10, currentPage:pageActual}; ">
                     <td scope="row">{{i+1}}</td>
                     <td>{{regla.regla}}</td>
                     <td>{{regla.fechaCreacion |date}}</td>
@@ -32,8 +32,13 @@
         </table>
         <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActual = $event"></pagination-controls>
 
-        <button class="btn btn-primary" (click)="irCrearRegla()">Nueva Regla</button>
-        <button class="btn btn-success ms-2">Continuar</button>
+        <button class="btn btn-primary mb-5" (click)="irCrearRegla()">Nueva Regla</button>
+        <button class="btn btn-warning ms-2 mb-5" (click)="validarCondiciones(carga)">Validar Reglas</button>
+        <button class="btn btn-success ms-2 mb-5 me-2 float-end" (click)="extraccionCuentas()">Continuar</button>
+
+
+
+
     </div>
     <div class="col-md-12">
         <ng-template #contenido let-modal>
@@ -61,6 +66,44 @@
             </div>
         </ng-template>
 
+    </div>
+
+    <div class="col-md-12">
+        <ng-template #carga let-modal>
+            <div class="modal-header">
+                <h4 class="modal-tittle text-success">VALIDAR CONDICIONES ACTUALES</h4>
+                <button class="close" aria-label="close" (click)="modal.dismiss()">
+                    <span aria-label="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>NO REFERENCIA</th>
+                            <th>COD_ID</th>
+                            <th>ID CLIENTE</th>
+                            <th>IDENTIFICACION CLIENTE</th>
+                            <th>ID PRODUCTO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let calculo of list_calculo | paginate:{itemsPerPage:30, currentPage:paginaActualModal}; let i = index">
+                            <td scope="row">{{calculo.no_REFERENCIA}}</td>
+                            <td>{{calculo.cod_ID}}</td>
+                            <td>{{calculo.id_CLIENTE}}</td>
+                            <td>{{calculo.iden_CLIE}}</td>
+                            <th>{{calculo.id_PRODUCTO}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="paginaActualModal = $event"></pagination-controls>
+            </div>
+            <div class="modal-footer">
+                <label class="text-success position-absolute bottom-0 start-0 mb-4 ms-2" style="font-weight: bold;">Cantidad Registros: {{cantidad_registros}}</label>
+                <button type="button" class="btn btn-danger bg-success" (click)="modal.close()">Cerrar</button>
+            </div>
+        </ng-template>
     </div>
 
 </div>

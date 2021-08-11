@@ -40,7 +40,6 @@ export class AdminUsuariosComponent implements OnInit {
     this.cantActivos = this.cantInactivos = this.cantBloqueados = this.cantBorrados = 0 ;
     this.adminusuarios.getUsuarios().subscribe(resp =>{
       this.listUsuariosTotales = resp;
-      console.log(this.listUsuariosTotales);
       for (const usuario of resp) {
         if(usuario.estado === 1){
           this.listUsuarios.push(usuario);
@@ -174,7 +173,6 @@ export class AdminUsuariosComponent implements OnInit {
     });
     Swal.showLoading();
 
-    console.log(this.forma);
     this.usuario = this.forma.value;
     if(this.forma.invalid){
       return;

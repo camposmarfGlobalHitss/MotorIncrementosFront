@@ -5,6 +5,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReglasService } from 'src/app/services/reglas.service';
 import { Regla } from '../../classes/regla';
 import Swal from 'sweetalert2';
+import { CalculoIncremento } from '../../classes/calculo-incremento';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { LoginService } from '../../services/login.service';
+import { Exclusiones } from '../../classes/exclusiones';
 
 @Component({
   selector: 'app-reglas-extraccion',
@@ -13,19 +17,30 @@ import Swal from 'sweetalert2';
 })
 export class ReglasExtraccionComponent implements OnInit {
   pageActual:number=1;
+  paginaActualModal:number=1;
   filterTabla:string='';
   listReglas:Regla[];
   seleccionado:any;
   forma:FormGroup;
   reglaSeleccionada:Regla;
+  cantidad_registros:number=0;
+  list_calculo:CalculoIncremento[] = [];
+
+
+  user_actual:string ='';
+
+  list_exclusiones:Exclusiones[]  = [];
+
   constructor(private router:Router,public modal:NgbModal,
-              private reglasSrv:ReglasService, private fb:FormBuilder) {
+              private reglasSrv:ReglasService, private fb:FormBuilder,
+              private loginSrv:LoginService) {
     this.cargarListaCondiciones();
+    this.user_actual = localStorage.getItem('usuario');    
   }
 
   cargarListaCondiciones(){
     this.reglasSrv.listarCondiciones().subscribe(resp=>{
-      this.listReglas = resp;      
+      this.listReglas = resp;          
     });
   }
 
@@ -33,7 +48,7 @@ export class ReglasExtraccionComponent implements OnInit {
   }
 
   irCrearRegla(){
-    this.router.navigateByUrl('/dashboard/creareglas')
+    this.router.navigateByUrl('/dashboard/creareglas');
   }
 
   openLG(contenido, regla:Regla){
@@ -131,6 +146,78 @@ export class ReglasExtraccionComponent implements OnInit {
       condicion : [regla.condicion, Validators.required]
     });
   }
+
+  extraccionCuentas(){
+    Swal.fire({
+      title:'Desea ejecutar la extraccion de cuentas?',
+      confirmButtonColor:'#5062F7',
+      confirmButtonText:'Confirmar',
+      showConfirmButton:true,
+      showCancelButton:true,
+      allowOutsideClick:false
+    }).then((result)=>{
+      if(result.isConfirmed){
+        Swal.fire({
+          icon: 'info',
+          title: 'Por favor espere...',
+          text: 'Ejecutando proceso!',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        this.reglasSrv.extraccionCuentas().subscribe(resp=>{
+          Swal.fire({
+            icon: 'success',
+            title: 'OK',
+            text: resp,
+            allowOutsideClick: false
+          });
+          this.router.navigateByUrl('/dashboard/calculoIncremento');
+        },err=>{
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: err.error,
+            allowOutsideClick: false  
+          });
+        })
+      }
+    })
+  }
+
+
+  validarCondiciones(carga){
+    Swal.fire({
+      icon: 'info',
+      title: 'Por favor espere...',
+      text: 'CARGANDO DATOS CON LAS CONDICIONES ACTUALES..',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+    this.reglasSrv.validarCondicionesActuales().subscribe(resp=>{
+      this.list_calculo = resp;
+      this.cantidad_registros = this.list_calculo.length;
+      Swal.fire({
+        icon: 'success',
+        title: 'OK',
+        text: 'DATOS CARGADOS CORRECTAMENTE',
+        allowOutsideClick: false
+      });
+      this.modal.open(carga, {size:'lg', scrollable:true, centered:true});
+
+    },err=>{
+      console.log(err);
+      
+      Swal.fire({
+        icon: 'error',
+        title: 'Upsss..',
+        text: err.statusText,
+        allowOutsideClick: false  
+      });
+    });
+    
+  }
+
+  
   
 
 }

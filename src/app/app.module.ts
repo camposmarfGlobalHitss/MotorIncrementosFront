@@ -45,6 +45,10 @@ import { ReglasExtraccionComponent } from './components/reglas-extraccion/reglas
 import { GeneracionReglasComponent } from './components/generacion-reglas/generacion-reglas.component';
 import { AdminusuariosService } from './services/adminusuarios.service';
 import { ReglasService } from './services/reglas.service';
+import { CalculoIncrementoComponent } from './components/calculo-incremento/calculo-incremento.component';
+import { FilteridclientePipe } from './pipes/filteridcliente.pipe';
+import { FilteridenclientePipe } from './pipes/filteridencliente.pipe';
+import { FilterrefPipe } from './pipes/filterref.pipe';
 
 
 
@@ -72,6 +76,10 @@ import { ReglasService } from './services/reglas.service';
     AdminUsuariosComponent,
     ReglasExtraccionComponent,
     GeneracionReglasComponent,
+    CalculoIncrementoComponent,
+    FilteridclientePipe,
+    FilteridenclientePipe,
+    FilterrefPipe,
   ],
   imports: [
     BrowserModule,
