@@ -1,0 +1,279 @@
+<h1>Parametrizacion calculo incremento</h1>
+<hr>
+<div class="col-md-12 me-2 mb-5">
+    <ngb-accordion #acc="ngbAccordion">
+        <ngb-panel id="toggle-1" title="RANGOS INCREMENTOS PARA MOVIL {{!parametrizacionMRI ? '- Sin parametrizar' : ''}}">
+            <ng-template ngbPanelContent>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>DESDE</th>
+                            <th>HASTA</th>
+                            <th>PORCENTAJE</th>
+                            <th>VALOR</th>
+                            <th>FEC_DESDE</th>
+                            <th>FEC_HASTA</th>
+                            <th>ACCION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let movilRango of listMovilRangoIncremento | paginate:{itemsPerPage:5, currentPage:pageActual}">
+                            <td scope="row">{{movilRango.desde}}</td>
+                            <td>{{movilRango.hasta}}</td>
+                            <td>{{movilRango.porcentaje}}</td>
+                            <td>{{movilRango.valor}}</td>
+                            <td>{{movilRango.fecha_desde | date:'dd/MM/yyyy'}}</td>
+                            <td>{{movilRango.fecha_hasta | date:'dd/MM/yyyy'}}</td>
+                            <td>
+                                <button class="btn btn-danger mb-1" (click)="borrarMovilRangoIncremento(movilRango)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActual = $event"></pagination-controls>
+
+                <button class="btn btn-danger mb-3" *ngIf="parametrizacionMRI" (click)="cancelarMovilRangoIncremento()">Cancelar</button>
+                <button class="btn btn-success ms-3 mb-3" *ngIf="!parametrizacionMRI" (click)="aceptarMovilRangoIncremento(acc)">Aceptar</button>
+                <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrizacionMRI" (click)="AbrirModal(contenido)">Nuevo</button>
+
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="toggle-2" title="PARAMETROS INCREMENTO PARA FIJA {{!parametrosIncrementoFija ? '- Sin parametrizar' : ''}}">
+            <ng-template ngbPanelContent>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>NEGOCIO</th>
+                            <th>PAQUETE</th>
+                            <th>SERV PAQUETE</th>
+                            <th>SERV INC ANTES IVA</th>
+                            <th>UMBRAL RENTA</th>
+                            <th>SERVICIO</th>
+                            <th>TIPO INCREM</th>
+                            <th>VIGENCIA</th>
+                            <th>ACCION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let PIF of listParametrosIncrementoFija | paginate:{itemsPerPage:5, currentPage:pageActualParametrizacionIncrementoFija}">
+                            <td>{{PIF.negocio}}</td>
+                            <td>{{PIF.paquete}}</td>
+                            <td>{{PIF.servicios_paquete}}</td>
+                            <td>{{PIF.serv_inc_antes_iva}}</td>
+                            <td>{{PIF.umbral_renta}}</td>
+                            <td>{{PIF.servicio}}</td>
+                            <td>{{PIF.tipo_incremento}}</td>
+                            <td>{{PIF.vigencia |date:'dd-MM-yyyy'}}</td>
+                            <td>
+                                <button class="btn btn-danger mb-1" (click)="borrarParametrosIncrementoFija(PIF)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActualParametrizacionIncrementoFija = $event"></pagination-controls>
+                <button class="btn btn-danger mb-3" *ngIf="parametrosIncrementoFija" (click)="cancelarParametrosIncrementoFija()">Cancelar</button>
+                <button class="btn btn-success ms-3 mb-3" *ngIf="!parametrosIncrementoFija" (click)="aceptarParametrosIncrementoFija(acc)">Aceptar</button>
+                <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrosIncrementoFija" (click)="AbrirModalParametrosIncrementoFija(contenido2)">Nuevo</button>
+
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="toggle-3" title="PARAMETRIZAR VALORES UVT {{!parametrizacionValoresUvt ? '- Sin parametrizar' : ''}}">
+            <ng-template ngbPanelContent>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>VLR UVT</th>
+                            <th>AÑO VIGENCIA</th>
+                            <th>INICIO VIGENCIA</th>
+                            <th>FIN VIGENCIA</th>
+                            <th>ESTADO</th>
+                            <th>ACCCION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let uvt of listUvts | paginate:{itemsPerPage:5, currentPage:pageActualValoresUvt}">
+                            <td scope="row">{{uvt.vlr_UVT_ACT}}</td>
+                            <td>{{uvt.anio_VIGENCIA}}</td>
+                            <td>{{uvt.fec_INI_VIGENCIA | date:'dd/MM/yyyy'}}</td>
+                            <td>{{uvt.fec_FIN_VIGENCIA | date:'dd/MM/yyyy'}}</td>
+                            <td>{{uvt.estado}}</td>
+                            <td>
+                                <button class="btn btn-danger mb-1" (click)="borrarValorUvt(uvt)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActualValoresUvt= $event"></pagination-controls>
+                <button class="btn btn-danger mb-3" *ngIf="parametrizacionValoresUvt" (click)="cancelarValoresUvt()">Cancelar</button>
+                <button class="btn btn-success ms-3 mb-3" *ngIf="!parametrizacionValoresUvt" (click)="aceptarValoresUvt(acc)">Aceptar</button>
+                <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrizacionValoresUvt" (click)="abrirModalValoresUvt(contenido3)">Nuevo</button>
+
+            </ng-template>
+        </ngb-panel>
+        <ngb-panel id="toggle-4" title="MOVIL SUBTIPO OFERTA {{!parametrizacionActualizacionPSO ? '- Sin parametrizar' : ''}}">
+            <ng-template ngbPanelContent>
+                <div class="col-md-12 mb-3">
+                    <label for="actualizarPSO">Ultima Actualizacion:  <strong>{{UltimaActualizacionProductoSubtipoOferta | date:'dd/MM/yyyy hh:mm a' }}</strong> </label>
+                </div>
+                <div class="col-md-12">
+                    <h5 *ngIf="!parametrizacionActualizacionPSO">
+                        <label for="actualizarPSO" class="me-3 text-success">¿desea actualizar MOVIL SUBTIPO OFERTA?</label>
+                    </h5>
+                    <select *ngIf="!parametrizacionActualizacionPSO" class="form-select" name="actualizarPSO" id="actualizarPSO" [(ngModel)]="opcionPSO">
+                        <option value="0">Seleccione</option>
+                        <option value="1">SI</option>
+                        <option value="2">NO</option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <button class="btn btn-success mt-3 mb-3" *ngIf="!parametrizacionActualizacionPSO" (click)="guardarPSO(acc)">Guardar y Aceptar</button>
+                    <button class="btn btn-danger ms-3 mt-3 mb-3" *ngIf="parametrizacionActualizacionPSO" (click)="cancelarActualizacionPSO()">Cancelar</button>
+                </div>
+
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+    <hr/>
+    <button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-1')">Toggle first</button>
+    <button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.toggle('toggle-2')">Toggle second</button>
+    <button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.collapse('toggle-2')">Toggle third</button>
+</div>
+<div class="col-md-12">
+    <ng-template #contenido let-modal>
+        <div class="modal-header">
+            <h4 class="modal-tittle text-success">Mov Rango Incremento</h4>
+            <button class="close" aria-label="close" (click)="modal.dismiss()">
+                    <span aria-label="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" [formGroup]="formaMovilRango" (ngSubmit)="guardarMovilRangoIncremento()">
+                <div class="mb-3">
+                    <label for="desde" class="form-label">Desde</label>
+                    <input type="number" class="form-control" id="desde" placeholder="Ingrese Desde" name="desde" formControlName="desde">
+                </div>
+                <div class="mb-3">
+                    <label for="hasta" class="form-label">Hasta</label>
+                    <input type="number" class="form-control" id="hasta" placeholder="Ingrese Hasta" name="hasta" formControlName="hasta">
+                </div>
+                <div class="mb-3">
+                    <label for="porcentaje" class="form-label">Porcentaje</label>
+                    <input type="number" class="form-control" id="porcentaje" placeholder="Ingrese Porcentaje" name="porcentaje" formControlName="porcentaje">
+                </div>
+                <div class="mb-3">
+                    <label for="valor" class="form-label">Valor</label>
+                    <input type="number" class="form-control" id="valor" placeholder="Ingrese Valor" name="valor" formControlName="valor">
+                </div>
+                <div class="mb-3">
+                    <label for="fechaDesde" class="form-label">Fecha Desde</label>
+                    <input type="datetime-local" class="form-control" id="fechaDesde" placeholder="Ingrese la Fecha Desde" name="fechaDesde" formControlName="fechaDesde">
+                </div>
+                <div class="mb-3">
+                    <label for="fechaHasta" class="form-label">Fecha Hasta</label>
+                    <input type="datetime-local" class="form-control" id="fechaHasta" placeholder="Ingrese la Fecha Hasta" name="fechaHasta" formControlName="fechaHasta">
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="guardarMovilRangoIncremento()">Guardar</button>
+            <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+        </div>
+
+    </ng-template>
+</div>
+
+<div class="col-md-12">
+    <ng-template #contenido2 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-tittle text-success">Parametros Incremento Fija</h4>
+            <button class="close" aria-label="close" (click)="modal.dismiss()">
+                    <span aria-label="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" [formGroup]="formaParametrosIncrementoFija" (ngSubmit)="guardarParametrosIncrementoFija()">
+                <div class="mb-3">
+                    <label for="negocio" class="form-label">Negocio</label>
+                    <input type="text" disabled class="form-control" id="negocio" name="negocio" formControlName="negocio">
+                </div>
+                <div class="mb-3">
+                    <label for="paquete" class="form-label">Paquete</label>
+                    <input type="text" class="form-control" id="paquete" placeholder="Sencillo,Doble,Triple" name="paquete" formControlName="paquete">
+                </div>
+                <div class="mb-3">
+                    <label for="servpaquete" class="form-label">Serv Paquete</label>
+                    <input type="text" class="form-control" id="servpaquete" placeholder="TV, Internet, Telefonia" name="servpaquete" formControlName="servpaquete">
+                </div>
+                <div class="mb-3">
+                    <label for="vlrinciva" class="form-label">Vlr Incremento Antes de Iva</label>
+                    <input type="number" class="form-control" id="vlrinciva" placeholder="Valor Incremento Antes de Iva" name="vlrinciva" formControlName="vlrinciva">
+                </div>
+                <div class="mb-3">
+                    <label for="umbral" class="form-label">Umbral para Incremento</label>
+                    <input type="number" class="form-control" id="umbral" placeholder="Ingrese Umbral" name="umbral" formControlName="umbral">
+                </div>
+                <div class="mb-3">
+                    <label for="servicio" class="form-label">Servicio Donde Aplica Incremento</label>
+                    <input type="text" class="form-control" id="servicio" placeholder="Ingrese Servicio" name="servicio" formControlName="servicio">
+                </div>
+                <div class="mb-3">
+                    <label for="tipoincremento" class="form-label">Tipo Incremento</label>
+                    <input type="text" disabled class="form-control" id="tipoincremento" name="tipoincremento" formControlName="tipoincremento">
+                </div>
+                <div class="mb-3">
+                    <label for="vigencia" class="form-label">Vigencia</label>
+                    <input type="datetime-local" class="form-control" id="vigencia" name="vigencia" formControlName="vigencia">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" (click)="guardarParametrosIncrementoFija()">Guardar</button>
+            <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+        </div>
+
+    </ng-template>
+</div>
+
+<div class="col-md-12">
+    <ng-template #contenido3 let-modal>
+        <div class="modal-header">
+            <h4 class="modal-tittle text-success">Parametros UVT</h4>
+            <button class="close" aria-label="close" (click)="modal.dismiss()">
+                    <span aria-label="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" [formGroup]="formaValoresUVT" (ngSubmit)="guardarValorUVT()">
+                <div class="mb-3">
+                    <label for="valorUvt" class="form-label">Valor UVT</label>
+                    <input type="number" class="form-control" id="valorUvt" placeholder="Ingrese Valor UVT" name="valorUvt" formControlName="valorUvt">
+                </div>
+                <div class="mb-3">
+                    <label for="annioVigencia" class="form-label">Año Vigencia</label>
+                    <input type="number" class="form-control" id="annioVigencia" placeholder="Ingrese Año" name="annioVigencia" formControlName="annioVigencia">
+                </div>
+                <div class="mb-3">
+                    <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+                    <input type="datetime-local" class="form-control" id="fechaInicio" placeholder="Ingrese Fecha Inicio" name="fechaInicio" formControlName="fechaInicio">
+                </div>
+                <div class="mb-3">
+                    <label for="fechaFin" class="form-label">Fecha Fin</label>
+                    <input type="datetime-local" class="form-control" id="fechaFin" placeholder="Ingrese Fecha Fin" name="fechaFin" formControlName="fechaFin">
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="guardarValorUVT()">Guardar</button>
+            <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+        </div>
+
+    </ng-template>
+</div>

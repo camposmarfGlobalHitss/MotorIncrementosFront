@@ -21,6 +21,8 @@ import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuari
 import { ReglasExtraccionComponent } from './components/reglas-extraccion/reglas-extraccion.component';
 import { GeneracionReglasComponent } from './components/generacion-reglas/generacion-reglas.component';
 import { CalculoIncrementoComponent } from './components/calculo-incremento/calculo-incremento.component';
+import { ParametrizacionCalculoComponent } from './components/parametrizacion-calculo/parametrizacion-calculo.component';
+import { FrontCalculoComponent } from './components/front-calculo/front-calculo.component';
 
 
 const ROUTES: Routes = [
@@ -43,7 +45,11 @@ const ROUTES: Routes = [
         {path:'extraccion', component: ExtraccionInformacionComponent },
         {path:'reglas', component: ReglasExtraccionComponent },
         {path:'creareglas', component: GeneracionReglasComponent },
-        {path:'calculoIncremento', component: CalculoIncrementoComponent },
+        {path:'calculoIncremento', component: FrontCalculoComponent, children:[
+            {path:'calculo', component:CalculoIncrementoComponent},
+            {path:'parametrizacion', component:ParametrizacionCalculoComponent},
+            {path:'**', redirectTo:'calculo' }
+            ] },
         {path:'configuracion', component: ConfiguracionComponent},
         {path:'auditoria', component: AuditoriaComponent},
         {path:'seguridad', component: SeguridadComponent},

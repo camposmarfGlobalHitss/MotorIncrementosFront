@@ -171,7 +171,7 @@ export class ReglasExtraccionComponent implements OnInit {
             text: resp,
             allowOutsideClick: false
           });
-          this.router.navigateByUrl('/dashboard/calculoIncremento');
+          this.router.navigateByUrl('/dashboard/calculoIncremento/calculo');
         },err=>{
           Swal.fire({
             icon: 'error',

@@ -49,6 +49,9 @@ import { CalculoIncrementoComponent } from './components/calculo-incremento/calc
 import { FilteridclientePipe } from './pipes/filteridcliente.pipe';
 import { FilteridenclientePipe } from './pipes/filteridencliente.pipe';
 import { FilterrefPipe } from './pipes/filterref.pipe';
+import { ParametrizacionCalculoComponent } from './components/parametrizacion-calculo/parametrizacion-calculo.component';
+import { FrontCalculoComponent } from './components/front-calculo/front-calculo.component';
+import { CalculoincrementoService } from './services/calculoincremento.service';
 
 
 
@@ -77,6 +80,8 @@ import { FilterrefPipe } from './pipes/filterref.pipe';
     ReglasExtraccionComponent,
     GeneracionReglasComponent,
     CalculoIncrementoComponent,
+    ParametrizacionCalculoComponent,
+    FrontCalculoComponent,
     FilteridclientePipe,
     FilteridenclientePipe,
     FilterrefPipe,
@@ -102,7 +107,8 @@ import { FilterrefPipe } from './pipes/filterref.pipe';
     BizService,
     ExtraccionInformacionService,
     AdminusuariosService,
-    ReglasService
+    ReglasService,
+    CalculoincrementoService
   ],
   bootstrap: [AppComponent]
 })

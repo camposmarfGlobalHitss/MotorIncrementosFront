@@ -141,6 +141,10 @@ export class CalculoIncrementoComponent implements OnInit {
     this.mostrarExclusiones = true;
   }
 
+  irParametrizacion(){
+    this.route.navigateByUrl('/dashboard/calculoIncremento/parametrizacion');
+  }
+
 
 
 

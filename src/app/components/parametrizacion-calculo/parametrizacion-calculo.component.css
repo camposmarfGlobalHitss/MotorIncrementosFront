@@ -1,0 +1,6 @@
+p,
+img {
+  text-transform: capitalize;
+  padding: -5px;
+  list-style-type: square;
+}
