@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CalculoIncremento } from 'src/app/classes/calculo-incremento';
 import { ReglasService } from '../../services/reglas.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Exclusiones } from 'src/app/classes/exclusiones';
 
@@ -15,6 +15,8 @@ export class CalculoIncrementoComponent implements OnInit {
   
   list_cal_inc:CalculoIncremento[] = [];
   pageActual:number=1;
+  parametroUrl:number;
+  parametrizacionRelizada:boolean=false;
   data_cargada:boolean=false;
   exclusiones_cargadas:boolean=false;
   idclientefilter:string ='';
@@ -31,11 +33,24 @@ export class CalculoIncrementoComponent implements OnInit {
   list_exclusiones:Exclusiones[]  = [];
   mostrarExclusiones:boolean = false;
   pageActualExc:number=1;
-  constructor(private reglasSrv:ReglasService, private route:Router) {
+  cargaMensaje:string;
+  constructor(private reglasSrv:ReglasService, private route:Router, private activateRoute:ActivatedRoute) {
+    this.activateRoute.params.subscribe(param=>{
+      this.parametroUrl = +param.parametrizacion;
+    });
+    console.log(this.parametroUrl);
+    
+    if(this.parametroUrl===1){      
+      this.parametrizacionRelizada = true;
+      this.cargaMensaje = 'Cargando Datos';  
+    }else{      
+      this.parametrizacionRelizada = false;
+      this.cargaMensaje = 'Cargando resultado de aplicacion de reglas!!!';
+    }
     this.data_cargada = false;
     this.mostrarExclusiones = false;
     this.user_actual = localStorage.getItem('usuario');
-    this.mostrarMensajeCargando();
+    this.mostrarMensajeCargando(this.cargaMensaje);
     this.reglasSrv.traerCuentasPostExtraccion().subscribe(resp=>{
         this.list_cal_inc = resp;
         
@@ -62,11 +77,11 @@ export class CalculoIncrementoComponent implements OnInit {
   }
 
 
-  mostrarMensajeCargando(){
+  mostrarMensajeCargando(mensaje:string){
     Swal.fire({
       icon: 'info',
       title: 'Por Favor Espere...',
-      text: 'Cargando resultado de aplicacion de reglas!!!',
+      text: mensaje,
       allowOutsideClick: false
     });
     Swal.showLoading();
@@ -143,6 +158,10 @@ export class CalculoIncrementoComponent implements OnInit {
 
   irParametrizacion(){
     this.route.navigateByUrl('/dashboard/calculoIncremento/parametrizacion');
+  }
+
+  continuarCalculoIncremento(){
+    this.route.navigateByUrl('/dashboard/calculoIncremento/interfaces');
   }
 
 

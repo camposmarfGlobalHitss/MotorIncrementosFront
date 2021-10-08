@@ -23,6 +23,7 @@ import { GeneracionReglasComponent } from './components/generacion-reglas/genera
 import { CalculoIncrementoComponent } from './components/calculo-incremento/calculo-incremento.component';
 import { ParametrizacionCalculoComponent } from './components/parametrizacion-calculo/parametrizacion-calculo.component';
 import { FrontCalculoComponent } from './components/front-calculo/front-calculo.component';
+import { InterfacesComponent } from './components/interfaces/interfaces.component';
 
 
 const ROUTES: Routes = [
@@ -46,8 +47,9 @@ const ROUTES: Routes = [
         {path:'reglas', component: ReglasExtraccionComponent },
         {path:'creareglas', component: GeneracionReglasComponent },
         {path:'calculoIncremento', component: FrontCalculoComponent, children:[
-            {path:'calculo', component:CalculoIncrementoComponent},
+            {path:'calculo/:parametrizacion', component:CalculoIncrementoComponent},
             {path:'parametrizacion', component:ParametrizacionCalculoComponent},
+            {path:'interfaces', component:InterfacesComponent},
             {path:'**', redirectTo:'calculo' }
             ] },
         {path:'configuracion', component: ConfiguracionComponent},

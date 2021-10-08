@@ -13,7 +13,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let i = index let regla of listReglas | paginate:{itemsPerPage:10, currentPage:pageActual}; ">
+                <tr *ngFor="let i = index let regla of listReglas | paginate:{id:'prueba', itemsPerPage:10, currentPage:pageActual}; ">
                     <td scope="row">{{i+1}}</td>
                     <td>{{regla.regla}}</td>
                     <td>{{regla.fechaCreacion |date}}</td>
@@ -30,7 +30,7 @@
 
             </tbody>
         </table>
-        <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActual = $event"></pagination-controls>
+        <pagination-controls id="prueba" class="text-center" previousLabel="Prev" responsive="true" (pageChange)="cambiarPaginaReglasAct($event)"></pagination-controls>
 
         <button class="btn btn-primary mb-5" (click)="irCrearRegla()">Nueva Regla</button>
         <button class="btn btn-warning ms-2 mb-5" (click)="validarCondiciones(carga)">Validar Reglas</button>
@@ -97,7 +97,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="paginaActualModal = $event"></pagination-controls>
+                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="cambiarPaginaValidaRegla($event)"></pagination-controls>
             </div>
             <div class="modal-footer">
                 <label class="text-success position-absolute bottom-0 start-0 mb-4 ms-2" style="font-weight: bold;">Cantidad Registros: {{cantidad_registros}}</label>

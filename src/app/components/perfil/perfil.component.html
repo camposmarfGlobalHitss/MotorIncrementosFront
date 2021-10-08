@@ -38,8 +38,8 @@
             <input type="text" name="" id="rol" class="form-control" [value]="rol" aria-describedby="helpId" disabled="true">
 
         </div>
-        <button *ngIf="!areaCambioContrasena" class="btn btn-primary mt-3" (click)="cambioContrasena()">Cambio Contraseña</button>
-        <button *ngIf="areaCambioContrasena" class="btn btn-danger mt-3" (click)="areaCambioContrasena=!areaCambioContrasena">Cancelar</button>
+        <button *ngIf="!areaCambioContrasena" class="btn btn-primary mt-3 mb-3" (click)="cambioContrasena()">Cambio Contraseña</button>
+        <button *ngIf="areaCambioContrasena" class="btn btn-danger mt-3 mb-3" (click)="areaCambioContrasena=!areaCambioContrasena">Cancelar</button>
 
     </div>
     <div *ngIf="areaCambioContrasena" class="col-md-10 border border-danger mt-3 ms-2" style="margin-bottom: 70px;">

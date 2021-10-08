@@ -1,0 +1,14 @@
+<h1>Modulo Interfaces</h1>
+<div class="col-md-12">
+    <button class="btn btn-primary mt-5 mb-3" (click)="generarArchivoPLM()">Generar Archivo Plano</button>
+</div>
+<div class="col-md-12">
+    <hr>
+    <input type="file" accept=".csv" #fileImportInput name="CSV File Upload" (change)="fileChangeListener($event)" accept=".csv">
+    <br>
+    <hr>
+    <button class="btn btn-danger" *ngIf="MostrarContenido" (click)="MostrarContenido=!MostrarContenido">Ocultar</button>
+    <h3 *ngIf="MostrarContenido">Contenido del archivo: {{selectedCSVFileName}}</h3>
+    <pre *ngIf="MostrarContenido" id="contenido-archivo" style="width: 1100px; height: 700px;">{{resultadoLectura}}</pre>
+    <button class="btn btn-primary mb-3" (click)="finalizarProceso()">Terminar</button>
+</div>

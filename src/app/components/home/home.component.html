@@ -1,122 +1,87 @@
 <h1 class="mt-3">
-    Tablero Principal</h1>
+    Tablero Principal...</h1>
 <hr>
-<div class="row row-cols-1 row-cols-md-3 g-4 me-3 mt-3 mb-3">
-    <div class="col">
-        <div class="card bg-success">
+<div class="row">
+    <div class="col-4 mb-2">
+        <div class="card" style="width: 23rem;">
+            <img src="../../../assets/img/icon_home/cargue_info.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
+                <h5 class="card-title">Cargue de Informacion</h5>
+                <p class="card-text">Extraccion de informacion de las diferentes fuentes de datos.</p>
+                <a href="/dashboard/extraccion" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card bg-success">
+    <div class="col-4">
+        <div class="card" style="width: 23rem;">
+            <img src="../../../assets/img/icon_home/incremento.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
+                <h5 class="card-title">Proceso Incremento</h5>
+                <p class="card-text">Realizar todo el proceso de incremento partiendo desde parametrizacion de reglas hasta la generacion del archivo para PLM</p>
+                <a href="/dashboard/reglas" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card bg-success">
+    <div class="col-4">
+        <div class="card" style="width: 23rem;">
+            <img src="../../../assets/img/icon_home/monitoreo.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
+                <h5 class="card-title">Monitoreo</h5>
+                <p class="card-text">Gestiona el monitoreo de los archivos enviados al PLM que se encuentran en proceso de incremento, mediante el Nombre de Archivo o ID de cargue.</p>
+                <a href="/dashboard/monitoreo" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card bg-success">
+    <!-- <div class="col-3">
+        <div class="card" style="width: 18rem;">
+            <img src="../../../assets/img/programador.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
+                <h5 class="card-title">Otros</h5>
+                <p class="card-text">Genera otras acciones sobre el sistema, configuraciones que no esten incluidas en otros modulos</p>
+                <a href="#" class="btn btn-primary w-100">Gestionar</a>
+            </div>
+        </div>
+    </div> -->
+</div>
+<div class="row">
+    <div class="col-4">
+        <div class="card" style="width: 23rem;">
+            <img src="../../../assets/img/icon_home/biz.png" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">BIZ Interaction</h5>
+                <p class="card-text">Realizar la actualizacion de las tarifas sobre el CRM.</p>
+                <a href="/dashboard/biz" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card bg-success">
+    <div class="col-4">
+        <div class="card" style="width: 23rem;">
+            <img src="../../../assets/img/icon_home/perfil.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
+                <h5 class="card-title">Perfil</h5>
+                <p class="card-text">Reliza toda la gestion sobre el perfil actual como cambios de contraseña, validacion de roles, gestion de correos configurados entre otros</p>
+                <a href="/dashboard/perfil" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card bg-success">
+    <div class="col-4">
+        <div class="card" style="width: 23rem;">
+            <img src="../../../assets/img/icon_home/config.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
+                <h5 class="card-title">Configuracion</h5>
+                <p class="card-text">Realizar la gestion sobre los modulos de Auditoria, Seguridad, Usuarios del sistema, entre otros</p>
+                <a href="/dashboard/configuracion" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
     </div>
-    <div class="col">
-        <div class="card bg-success">
+    <!-- <div class="col-3">
+        <div class="card" style="width: 18rem;">
+            <img src="../../../assets/img/programador.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
+                <h5 class="card-title">Otros</h5>
+                <p class="card-text">Genera otras acciones sobre el sistema, configuraciones que no esten incluidas en otros modulos</p>
+                <a href="#" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card bg-success">
-            <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card bg-success">
-            <div class="card-body">
-                <h5 class="card-title">Monitoreo PLM</h5>
-                <p class="card-text">Modulo que permite realizar el monitoreo un archivo batch en tiempo real, solo debe diligenciar el Batch id y este mostrara el resultado del procesamiento en el PLM</p>
-                <br>
-                <button class="btn btn-primary w-100">Ir al modulo</button>
-            </div>
-        </div>
-    </div>
+    </div> -->
 </div>

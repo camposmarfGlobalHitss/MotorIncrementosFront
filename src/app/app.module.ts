@@ -52,7 +52,8 @@ import { FilterrefPipe } from './pipes/filterref.pipe';
 import { ParametrizacionCalculoComponent } from './components/parametrizacion-calculo/parametrizacion-calculo.component';
 import { FrontCalculoComponent } from './components/front-calculo/front-calculo.component';
 import { CalculoincrementoService } from './services/calculoincremento.service';
-
+import { InterfacesComponent } from './components/interfaces/interfaces.component';
+import { PapaParseModule } from 'ngx-papaparse';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { CalculoincrementoService } from './services/calculoincremento.service';
     CalculoIncrementoComponent,
     ParametrizacionCalculoComponent,
     FrontCalculoComponent,
+    InterfacesComponent,
     FilteridclientePipe,
     FilteridenclientePipe,
     FilterrefPipe,
@@ -94,7 +96,8 @@ import { CalculoincrementoService } from './services/calculoincremento.service';
     APP_ROUTING,
     CommonModule,
     NgxPaginationModule,
-    NgbModule
+    NgbModule,
+    PapaParseModule
   ],exports:[
   
   ],

@@ -204,10 +204,9 @@ export class AdminUsuariosComponent implements OnInit {
   }
 
   borrarUsuario(usuario: UsuarioResponse){
-    this.usuario = usuario;
-    this.usuario.estado = 4;
+    this.usuario = usuario; 
     const usuarioBorra = localStorage.getItem('usuario').toString();
-    this.usuario.observaciones = `usuario borrado por: ${usuarioBorra}`;
+    
     Swal.fire({
       title: `¿Realmente desea eliminar al usuario "${usuario.username}" ? `,
       confirmButtonColor:'#DC3545',
@@ -216,6 +215,8 @@ export class AdminUsuariosComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
+        this.usuario.estado = 4;
+        this.usuario.observaciones = `usuario borrado por: ${usuarioBorra}`;
         Swal.fire({
           icon: 'info',
           title: 'Espere...',

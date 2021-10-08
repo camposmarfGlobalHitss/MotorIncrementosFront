@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ReglasService } from 'src/app/services/reglas.service';
 import { Regla } from '../../classes/regla';
 import Swal from 'sweetalert2';
@@ -31,9 +31,11 @@ export class ReglasExtraccionComponent implements OnInit {
 
   list_exclusiones:Exclusiones[]  = [];
 
-  constructor(private router:Router,public modal:NgbModal,
+  constructor(private router:Router,private modal:NgbModal, private config: NgbModalConfig,
               private reglasSrv:ReglasService, private fb:FormBuilder,
               private loginSrv:LoginService) {
+                config.backdrop = 'static'
+                config.keyboard = false;
     this.cargarListaCondiciones();
     this.user_actual = localStorage.getItem('usuario');    
   }
@@ -171,7 +173,7 @@ export class ReglasExtraccionComponent implements OnInit {
             text: resp,
             allowOutsideClick: false
           });
-          this.router.navigateByUrl('/dashboard/calculoIncremento/calculo');
+          this.router.navigateByUrl('/dashboard/calculoIncremento/calculo/0');
         },err=>{
           Swal.fire({
             icon: 'error',
@@ -216,6 +218,20 @@ export class ReglasExtraccionComponent implements OnInit {
     });
     
   }
+
+  cambiarPaginaReglasAct($event){
+    this.pageActual = $event;  
+  }
+
+  cambiarPaginaValidaRegla($event){
+    this.paginaActualModal = $event;
+  }
+
+
+  
+
+
+  
 
   
   

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { MovilRangoIncremento } from '../classes/movil-rango-incremento';
 import { ParametrosIncrementoFija } from '../classes/parametros-incremento-fija';
 import { Uvts } from '../classes/uvts';
+import { ParametrosCalculoMovil } from '../classes/parametros-calculo-movil';
+import { ParametrosCalculoFija } from '../classes/parametros-calculo-fija';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +62,19 @@ export class CalculoincrementoService {
 
   ActualizacionPSO(user:string):Observable<string>{
     return this.http.get(`mit/calculo/ActualizacionPSO?user=${user}`,{responseType:'text'})
+  }
+
+  ejecutarCalculoIncrementoMovil(calculoMovil:ParametrosCalculoMovil):Observable<string>{
+    return this.http.post('mit/calculo/ejecutarCalculoIncrementoMovil',calculoMovil,{responseType:'text'});
+  }
+
+  ejecutarCalculoIncrementoFija(calculoFija:ParametrosCalculoFija):Observable<string>{
+    return this.http.post('mit/calculo/ejecutarCalculoIncrementoFija',calculoFija,{responseType:'text'})
+  }
+
+
+  generarArchivoPlanoPLM():Observable<string>{
+    return this.http.get('mit/calculo/generarArchivoPLM',{responseType:'text'})
   }
 
 

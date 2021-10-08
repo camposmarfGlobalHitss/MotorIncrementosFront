@@ -23,6 +23,7 @@
     "@ng-bootstrap/ng-bootstrap": "^8.0.4",
     "bootstrap": "^4.5.0",
     "ngx-pagination": "^5.0.0",
+    "ngx-papaparse": "^3.0.4",
     "rxjs": "~6.5.5",
     "sweetalert2": "^10.15.5",
     "tslib": "^2.0.0",

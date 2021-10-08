@@ -65,10 +65,10 @@
 
     </div>
 </div>
-<div class="row mt-2" *ngIf="data_cargada">
+<div class="row mt-2" *ngIf="data_cargada && !parametrizacionRelizada">
     <div class="col-md-12">
-        <button class="btn btn-success " *ngIf="!mostrarExclusiones" (click)="cargarExclusiones()">Cargar Exclusiones</button>
-        <button class="btn btn-danger " *ngIf="mostrarExclusiones" (click)="mostrarExclusiones=!mostrarExclusiones">Ocultar</button>
+        <button class="btn btn-success " *ngIf="!mostrarExclusiones && !parametrizacionRelizada" (click)="cargarExclusiones()">Cargar Exclusiones</button>
+        <button class="btn btn-danger " *ngIf="mostrarExclusiones && !parametrizacionRelizada" (click)="mostrarExclusiones=!mostrarExclusiones">Ocultar</button>
 
     </div>
     <div class="col-md-12 border border-info rounded mt-3 mb-3 ms-1" *ngIf="mostrarExclusiones">
@@ -103,7 +103,8 @@
 </div>
 <div class="row" *ngIf="data_cargada">
     <div class="col-md-12 mt-5">
-        <button class="btn btn-primary mt-2 mb-3 " (click)="irParametrizacion()">Parametrizacion Calculo</button>
+        <button class="btn btn-primary mt-2 mb-3" *ngIf="!parametrizacionRelizada" (click)="irParametrizacion()">Parametrizacion Calculo</button>
         <button class="btn btn-danger mt-2 mb-3 ms-2" (click)="cancelarCalculo()">CANCELAR</button>
+        <button class="btn btn-success ms-2 mb-3 me-2 float-end" *ngIf="parametrizacionRelizada" (click)="continuarCalculoIncremento()">continuar</button>
     </div>
 </div>
