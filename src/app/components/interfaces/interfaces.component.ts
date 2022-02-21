@@ -11,28 +11,44 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './interfaces.component.html',
   styleUrls: ['./interfaces.component.css']
 })
-export class InterfacesComponent {
-  
-  selectedCSVFileName:string='';
-  resultadoLectura:string='';
-  isCSV_Valid:boolean;
-  MostrarContenido:boolean=false;
-  constructor(private papa:Papa, private calculoSrv:CalculoincrementoService, private router:Router,
-              private interfacSrv:InterfacesService){
+export class InterfacesComponent implements OnInit {
+
+  selectedCSVFileName: string = '';
+  resultadoLectura: string = '';
+  isCSV_Valid: boolean;
+  MostrarContenido: boolean = false;
+  constructor(private papa: Papa, 
+    private calculoSrv: CalculoincrementoService, 
+    private route: Router,
+    private interfacSrv: InterfacesService) {
     const csvData = '';
     this.MostrarContenido = false;
-
-
-    this.papa.parse(csvData,{
+    this.papa.parse(csvData, {
       complete: (result) => {
-          console.log('Parsed: ', result);
+        console.log('Parsed: ', result);
       }
-  });
-
-     
-    
+    });
   }
 
+  ngOnInit(): void {
+    /*
+      @Luz.Obredor 16.02.2022
+      Funcionalidad que permite validar si el usuario ha ejecutado correctamente el cálculo de incremento
+      si la respuesta es positiva da paso a la visualización del módulo de generación de interfaces, reportes y archivos
+      por el contrario si es negativa la funcionalidad redirige al usuario para que realice la ejecución tanto para fija como móvil.
+    */
+    Swal.fire({
+      text: "¿La parametrización de la ejecución del cálculo de incrementos está completa?",
+      icon: "info",      
+      showCancelButton:true,
+      cancelButtonText: "Sí",      
+      showConfirmButton: true,
+      confirmButtonText: "No",
+      preConfirm: () => {
+        this.route.navigateByUrl('/dashboard/calculoIncremento/ejecucion');
+      }     
+    })
+  }
 
   fileChangeListener($event: any): void {
     this.MostrarContenido = true;
@@ -58,21 +74,19 @@ export class InterfacesComponent {
 
           let csvTableData = [...results.data.slice(1, results.data.length)];
           console.log(results);
-          
+
         } else {
           for (let i = 0; i < results.errors.length; i++) {
-            console.log( 'Error Parsing CSV File: ',results.errors[i].message);
+            console.log('Error Parsing CSV File: ', results.errors[i].message);
           }
         }
       };
     } else {
       console.log('No File Selected');
     }
-
   }
 
-
-  generarArchivoPLM(){
+  generarArchivoPLM() {
     Swal.fire({
       icon: 'info',
       title: 'Por Favor Espere...',
@@ -80,183 +94,173 @@ export class InterfacesComponent {
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.calculoSrv.generarArchivoPlanoPLM().subscribe(resp=>{
-       Swal.fire({
-         icon:'success',
-         title:'OK',
-         text:resp,
-         allowOutsideClick:false
-       }); 
-    },err=>{
+    this.calculoSrv.generarArchivoPlanoPLM().subscribe(resp => {
       Swal.fire({
-        icon:'error',
-        title:'upss..!!',
-        text:'error al generar el archivo, por favor intente mas tarde',
-        allowOutsideClick:false
+        icon: 'success',
+        title: 'OK',
+        text: resp,
+        allowOutsideClick: false
+      });
+    }, err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'upss..!!',
+        text: 'error al generar el archivo, por favor intente mas tarde',
+        allowOutsideClick: false
       });
     });
-    
-
   }
 
-
-  finalizarProceso(){
+  finalizarProceso() {
 
     Swal.fire({
-      text:'Realmente desea finalizar el proceso de incremento?',
-      confirmButtonColor:'#5062F7',
-      confirmButtonText:'Confirmar',
-      showConfirmButton:true,
-      showCancelButton:true,
-      allowOutsideClick:false      
-    }).then(result=>{
-      if(result.isConfirmed){
-        this.router.navigateByUrl('/dashboard');
+      text: 'Realmente desea finalizar el proceso de incremento?',
+      confirmButtonColor: '#5062F7',
+      confirmButtonText: 'Confirmar',
+      showConfirmButton: true,
+      showCancelButton: true,
+      allowOutsideClick: false
+    }).then(result => {
+      if (result.isConfirmed) {
+        this.route.navigateByUrl('/dashboard');
       }
     })
   }
 
-
-  selectOpcion(selectOpt:any){
-    if(selectOpt==='1'){
+  selectOpcion(selectOpt: any) {
+    if (selectOpt === '1') {
       this.generarRepCtasIncremento();
-    }else if(selectOpt==='2'){
+    } else if (selectOpt === '2') {
       this.generarRepCtasNoCumplenPoliticas();
-    }else if(selectOpt==='3'){
+    } else if (selectOpt === '3') {
       this.generarRepCtasSujIncremento();
-    }else if(selectOpt==='4'){
+    } else if (selectOpt === '4') {
       this.generarRepCtasNoSujIncremento();
-    }else if(selectOpt==='5'){
+    } else if (selectOpt === '5') {
       this.generarRepCtrlFyM();
-    }else{
+    } else {
       alert('seleccione una opcion valida')
     }
   }
 
-  generarArchivos(seleccion:any){
-      if(seleccion==='0'){
-        alert('por favor seleccione una opcion valida');
-      }else if(seleccion ==='2'){
-        this.generarInformePreIncremento();
-      }
+  generarArchivos(seleccion: any) {
+    if (seleccion === '0') {
+      alert('por favor seleccione una opcion valida');
+    } else if (seleccion === '2') {
+      this.generarInformePreIncremento();
+    }
   }
 
+  generarRepCtasIncremento() {
 
-  generarRepCtasIncremento(){
-    
     Swal.fire({
-      icon:'info',
-      title:'Por favor espere!!',
-      text:'Generando Reporte Cuentas Incremento',
+      icon: 'info',
+      title: 'Por favor espere!!',
+      text: 'Generando Reporte Cuentas Incremento',
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.interfacSrv.generarRepCtasIncremento().subscribe(resp=>{
+    this.interfacSrv.generarRepCtasIncremento().subscribe(resp => {
       Swal.fire({
-        icon:'success',
-        title:'EXITO!!',
-        text:resp
+        icon: 'success',
+        title: 'EXITO!!',
+        text: resp
       });
     })
   }
 
-
-  generarRepCtasNoCumplenPoliticas(){
+  generarRepCtasNoCumplenPoliticas() {
     Swal.fire({
-      icon:'info',
-      title:'Por favor espere!!',
-      text:'Generando Reporte de cuentas no incrementadas...',
+      icon: 'info',
+      title: 'Por favor espere!!',
+      text: 'Generando Reporte de cuentas no incrementadas...',
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.interfacSrv.generarRepCtasNoCumplenPoliticas().subscribe(resp=>{
+    this.interfacSrv.generarRepCtasNoCumplenPoliticas().subscribe(resp => {
       Swal.fire({
-        icon:'success',
-        title:'EXITO!!',
-        text:resp
+        icon: 'success',
+        title: 'EXITO!!',
+        text: resp
       });
     })
-    
+
   }
 
-  generarRepCtasSujIncremento(){
+  generarRepCtasSujIncremento() {
     Swal.fire({
-      icon:'info',
-      title:'Por favor espere!!',
-      text:'Generando Reporte de Cuentas sujetas a incremento',
+      icon: 'info',
+      title: 'Por favor espere!!',
+      text: 'Generando Reporte de Cuentas sujetas a incremento',
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.interfacSrv.generarRepCtasSujIncremento().subscribe(resp=>{
+    this.interfacSrv.generarRepCtasSujIncremento().subscribe(resp => {
       Swal.fire({
-        icon:'success',
-        title:'EXITO!!',
-        text:resp
-      });
-    })
-  }
-
-  generarRepCtasNoSujIncremento(){
-    Swal.fire({
-      icon:'info',
-      title:'Por favor espere!!',
-      text:'Generando Reporte de cuentas no sujetas a incremento',
-      allowOutsideClick: false
-    });
-    Swal.showLoading();
-    this.interfacSrv.generarRepCtasNoSujIncremento().subscribe(resp=>{
-      Swal.fire({
-        icon:'success',
-        title:'EXITO!!',
-        text:resp
+        icon: 'success',
+        title: 'EXITO!!',
+        text: resp
       });
     })
   }
 
-  generarRepCtrlFyM(){
+  generarRepCtasNoSujIncremento() {
     Swal.fire({
-      icon:'info',
-      title:'Por favor espere!!',
-      text:'Generando Reportes de control de fija y movil',
+      icon: 'info',
+      title: 'Por favor espere!!',
+      text: 'Generando Reporte de cuentas no sujetas a incremento',
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.interfacSrv.generarRepCtrlFyM().subscribe(resp=>{
+    this.interfacSrv.generarRepCtasNoSujIncremento().subscribe(resp => {
       Swal.fire({
-        icon:'success',
-        title:'EXITO!!',
-        text:resp
+        icon: 'success',
+        title: 'EXITO!!',
+        text: resp
       });
     })
   }
 
-  generarInformePreIncremento(){
+  generarRepCtrlFyM() {
     Swal.fire({
-      icon:'info',
-      title:'Por favor espere!!',
-      text:'Generando Informe Pre Incremento',
+      icon: 'info',
+      title: 'Por favor espere!!',
+      text: 'Generando Reportes de control de fija y movil',
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.interfacSrv.generarInformePreIncremento().subscribe(resp=>{
+    this.interfacSrv.generarRepCtrlFyM().subscribe(resp => {
       Swal.fire({
-        icon:'success',
-        title:'EXITO!!',
-        text:resp
+        icon: 'success',
+        title: 'EXITO!!',
+        text: resp
       });
-    },error=>{
+    })
+  }
+
+  generarInformePreIncremento() {
+    Swal.fire({
+      icon: 'info',
+      title: 'Por favor espere!!',
+      text: 'Generando Informe Pre Incremento',
+      allowOutsideClick: false
+    });
+    Swal.showLoading();
+    this.interfacSrv.generarInformePreIncremento().subscribe(resp => {
+      Swal.fire({
+        icon: 'success',
+        title: 'EXITO!!',
+        text: resp
+      });
+    }, error => {
       console.log(error);
-      
+
       Swal.fire({
-        icon:'error',
-        title:'Error',
-        text:error.error
+        icon: 'error',
+        title: 'Error',
+        text: error.error
       })
     });
   }
 
-
 }
-
-
-

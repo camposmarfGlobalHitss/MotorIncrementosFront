@@ -19,7 +19,25 @@ export class ExtraccionInformacionService {
     return this.http.get('mit/extractInfo/extractInfoClientes',{responseType: 'text'})
   }
 
+  /*
+    @Luz.Obredor 10.02.2022
+    Se crea servicio para poblar tabla IMT_TBL_CONTRATOS con la extracción de contratos de BD BSCS
+    No requiere parámetros
+  */
+  extraccionContratos():Observable<string>{
+    return this.http.get('mit/extractInfo/extractInfoContratos',{responseType: 'text'})
+  }
+
   extraccionProductoOferta():Observable<string>{
     return this.http.get('mit/extractInfo/extractInfoProductoOFerta',{responseType: 'text'});
+  }
+
+  /*
+    @Luz.Obredor 10.02.2022
+    Se crea servicio de poblado de tabla IMT_TBL_TARIFAS_USO con la extracción de charging system
+    No requiere parámetros
+  */
+  extraccionCsOffers():Observable<string>{
+    return this.http.get('mit/extractInfo/extractCsOffers',{responseType: 'text'});
   }
 }

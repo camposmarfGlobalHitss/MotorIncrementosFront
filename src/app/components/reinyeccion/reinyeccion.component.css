@@ -1,0 +1,30 @@
+#contenido-archivo {
+    background-color: #DCD7D6;
+    padding: 10px;
+  }
+  
+  .orderby {
+    text-align-last: center;
+    padding: 9px;
+    width: 600px;
+    border-radius: 1px;
+    border: 2px solid #007bff;
+    font-weight: 600;
+    color: #272427;
+    font-size: 20px;
+  }
+  
+  .orderby2 {
+    text-align-last: center;
+    padding: 9px;
+    width: 600px;
+    border-radius: 1px;
+    border: 2px solid #28a745;
+    font-weight: 600;
+    color: #272427;
+    font-size: 20px;
+  }
+
+  .btn-danger{
+    margin-right: 1%;
+  }

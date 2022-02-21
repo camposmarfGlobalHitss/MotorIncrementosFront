@@ -75,6 +75,21 @@ a:hover {
   border-right: 1px solid #efefef;
 }
 
+.dropdown{
+  display: flex;
+  justify-content: space-between;
+}
+
+.fa-chevron-down, .fa-chevron-up{
+  padding-left: 0.5rem;
+  font-size: 12px !important;
+}
+
+.submenu{
+  font-size: 0.8rem !important;
+  margin-left: 1rem;
+}
+
 @media (max-width: 768px) {
   #sidebar-container {
     display: none;

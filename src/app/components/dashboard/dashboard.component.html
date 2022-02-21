@@ -5,7 +5,8 @@
         <div class="logo">
             <div class="row">
                 <div class="col-md-2">
-                    <img src="../../../assets/img/logo-Claro.png" class="img-fluid rounded-circle avatar mr-2" id="logodashboard" alt="Claro">
+                    <img src="../../../assets/img/logo-Claro.png" class="img-fluid rounded-circle avatar mr-2"
+                        id="logodashboard" alt="Claro">
                 </div>
                 <div class="col-md-10 mt-2">
                     <h4 class="text-light font-weight-bold mb-0" style="font-size: 22px; margin-left: 20px;">MIT</h4>
@@ -13,22 +14,45 @@
             </div>
         </div>
         <div class="menu" routerLinkActive="active">
-            <a [routerLink]="['/dashboard']" class="d-block text-light p-3 border-0"><i class="icon ion-md-apps lead me-2"></i>
+            <a [routerLink]="['/dashboard']" class="d-block text-light p-3 border-0"><i
+                    class="icon ion-md-apps lead me-2"></i>
                 Tablero</a>
-            <a routerLink="/dashboard/extraccion" class="d-block text-light p-3 border-0"><i class="icon ion-md-cube lead me-2"></i>
-                    Cargue Informacion</a>
-            <a routerLink="/dashboard/reglas" class="d-block text-light p-3 border-0">
-                <i class="fas fa-chart-line me-2"></i> Proc Incremento</a>
-            <a routerLink="/dashboard/monitoreo" class="d-block text-light p-3 border-0"><i class="icon ion-md-barcode lead me-2"></i>
+            <a routerLink="/dashboard/extraccion" class="d-block text-light p-3 border-0"><i
+                    class="icon ion-md-cube lead me-2"></i>
+                Cargue Información</a>
+            <a class="d-block text-light p-3 border-0" (click)="collapse.toggle()"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                <i class="fas fa-chart-line me-2"></i>
+                Proc Incremento
+                <i *ngIf="isCollapsed" class="fas fa-chevron-down"></i>
+                <i *ngIf="!isCollapsed" class="fas fa-chevron-up"></i>
+            </a>
+            <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                <a [routerLink]="['/dashboard/reglas']" class="d-block text-light p-3 border-0 submenu">
+                    Reglas de Extracción</a>
+                <a [routerLink]="['/dashboard/calculoIncremento/parametrizacion']" class="d-block text-light p-3 border-0 submenu">
+                    Parametrización</a>
+                <a (click)="ejecucionIncremento()" class="d-block text-light p-3 border-0 submenu">
+                    Ejecución del cálculo</a>
+                <a [routerLink]="['/dashboard/calculoIncremento/interfaces']" class="d-block text-light p-3 border-0 submenu">
+                    Generación de Interfaces</a>
+                <a [routerLink]="['/dashboard/calculoIncremento/reinyeccion']" class="d-block text-light p-3 border-0 submenu">
+                    Proc Reinyección</a>
+            </div>
+            <a routerLink="/dashboard/monitoreo" class="d-block text-light p-3 border-0"><i
+                    class="icon ion-md-barcode lead me-2"></i>
                 Monitoreo</a>
-
-            <a routerLink="/dashboard/biz" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead me-2"></i>
+            <a routerLink="/dashboard/biz" class="d-block text-light p-3 border-0"><i
+                    class="icon ion-md-stats lead me-2"></i>
                 Biz Interaction</a>
-            <a routerLink="/dashboard/perfil" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead me-2"></i>
+            <a routerLink="/dashboard/perfil" class="d-block text-light p-3 border-0"><i
+                    class="icon ion-md-person lead me-2"></i>
                 Perfil</a>
-            <a routerLink="/dashboard/about" class="d-block text-light p-3 border-0"><i class="icon ion-md-help lead me-2"></i>
-                    Acerca</a>
-            <a *ngIf="habConfiguracion" routerLink="/dashboard/configuracion" class="d-block text-light p-3 border-0"> <i class="icon ion-md-settings lead me-2"></i> Configuración
+            <a routerLink="/dashboard/about" class="d-block text-light p-3 border-0"><i
+                    class="icon ion-md-help lead me-2"></i>
+                Acerca</a>
+            <a *ngIf="habConfiguracion" routerLink="/dashboard/configuracion" class="d-block text-light p-3 border-0">
+                <i class="icon ion-md-settings lead me-2"></i> Configuración
             </a>
         </div>
     </div>

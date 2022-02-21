@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { UsuarioResponse } from '../../interfaces/usuario-response';
 import { Router } from '@angular/router';
-
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit {
   usuario:UsuarioResponse
   usuarioLogueado:string = '';
   habConfiguracion:Boolean = false;
+  public isCollapsed = true;
+  
   constructor(public loginService:LoginService, 
               public router:Router) {
       if(localStorage.getItem('usuario')===null){
@@ -30,13 +32,14 @@ export class DashboardComponent implements OnInit {
             this.usuario.codperfil===1 ? this.habConfiguracion = true : this.habConfiguracion = false;
           })
         }
-      }
-      
-      
-      
+      }     
    }
 
   ngOnInit(): void {
+  }
+
+  ejecucionIncremento(){
+    this.router.navigateByUrl(`/dashboard/calculoIncremento/ejecucion/${0}`);
   }
 
   desloguear(){

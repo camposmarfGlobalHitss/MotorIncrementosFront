@@ -1,4 +1,4 @@
-<h1 class="mt-3">Modulo Cargue Informacion</h1>
+<h1 class="mt-3">Módulo Cargue Información</h1>
 <hr>
 <div class="row">
     <div class="col-md-12">
@@ -8,7 +8,7 @@
                     <th>ID</th>
                     <th>Entidad</th>
                     <th>Usuario</th>
-                    <th>Fecha Extraccion</th>
+                    <th>Fecha Extracción</th>
                     <th>Cantidad Registros</th>
                 </tr>
             </thead>
@@ -25,16 +25,17 @@
         <hr>
     </div>
     <div class="col-md-12">
-        <h4>CONFIGURACION DE LA EXTRACCION</h4>
+        <h4>CONFIGURACIÓN DE LA EXTRACCIÓN</h4>
         <div class="form-group">
             <label for="selectTablas">Selecciona Tabla</label>
             <select id="selectTablas" name="selectTablas" class="form-select mt-2" [(ngModel)]="seleccionado">
-                <option selected>Seleccione una</option>
+                <option value="0" selected>Seleccione una</option>
                 <option value="1">IMT_TBL_CLIENTES</option>
                 <option value="2">IMT_TBL_CONTRATOS</option>
                 <option value="3">IMT_TBL_PRODUCTO_OFERTA</option>
+                <option value="4">IMT_TBL_TARIFAS_USO</option>
               </select>
         </div>
-        <button class="btn btn-primary mt-5" (click)="extraerInfo()">Extraer informacion</button>
+        <button class="btn btn-primary mt-5" (click)="extraerInfo()">Extraer información</button>
     </div>
 </div>

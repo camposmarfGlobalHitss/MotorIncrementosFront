@@ -11,7 +11,7 @@ export class AdminusuariosService {
   constructor(private http: HttpClient) { }
 
   getUsuarios():Observable<UsuarioResponse[]>{
-    return this.http.get<UsuarioResponse[]>('mit/admin/usuarios/getusuarios');
+    return this.http.get<UsuarioResponse[]>(`mit/admin/usuarios/getusuarios`);
   }
 
   updateUsuario(usuario:UsuarioResponse){
@@ -19,7 +19,7 @@ export class AdminusuariosService {
   }
 
   creeateUsuario(usuario:UsuarioResponse){
-    return this.http.post('mit/admin/usuarios/createUsuario',usuario,{responseType: 'text'});
+    return this.http.post(`mit/admin/usuarios/createUsuario`,usuario,{responseType: 'text'});
   }
 
 }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule } from '@angular/core';
 
 ///Routes
 import { APP_ROUTING } from './app.router.module';
@@ -10,7 +10,7 @@ import { LoginService } from './services/login.service';
 
 
 //modules add
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 
 
 import { AppComponent } from './app.component';
@@ -53,8 +53,9 @@ import { ParametrizacionCalculoComponent } from './components/parametrizacion-ca
 import { FrontCalculoComponent } from './components/front-calculo/front-calculo.component';
 import { CalculoincrementoService } from './services/calculoincremento.service';
 import { InterfacesComponent } from './components/interfaces/interfaces.component';
+import { ReinyeccionComponent } from './components/reinyeccion/reinyeccion.component';
 import { PapaParseModule } from 'ngx-papaparse';
-
+import {EjecucionIncrementoComponent} from './components/ejecucion-incremento/ejecucion-incremento.component';
 
 @NgModule({
   declarations: [
@@ -84,9 +85,11 @@ import { PapaParseModule } from 'ngx-papaparse';
     ParametrizacionCalculoComponent,
     FrontCalculoComponent,
     InterfacesComponent,
+    ReinyeccionComponent,
     FilteridclientePipe,
     FilteridenclientePipe,
     FilterrefPipe,
+    EjecucionIncrementoComponent
   ],
   imports: [
     BrowserModule,
@@ -97,7 +100,7 @@ import { PapaParseModule } from 'ngx-papaparse';
     CommonModule,
     NgxPaginationModule,
     NgbModule,
-    PapaParseModule
+    PapaParseModule,
   ],exports:[
   
   ],
@@ -111,7 +114,7 @@ import { PapaParseModule } from 'ngx-papaparse';
     ExtraccionInformacionService,
     AdminusuariosService,
     ReglasService,
-    CalculoincrementoService
+    CalculoincrementoService,
   ],
   bootstrap: [AppComponent]
 })

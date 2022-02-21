@@ -1,0 +1,15 @@
+<h1>Proceso de Cargue de Archivo de Incremento (Reinyección)</h1>
+<hr>
+<div class="row mt-3">
+    <h3 class="text-warning">Cargue de archivo PLM</h3>
+    <div class="col-md-12">
+        <input class="btn btn-warning" type="file" accept=".csv" #fileImportInput name="CSV File Upload" (change)="fileChangeListener($event)" accept=".csv">
+        <hr>
+        <button class="btn btn-danger mt-3" *ngIf="MostrarContenido && validateName" (click)="MostrarContenido=!MostrarContenido">Ocultar</button>
+        <button class="btn btn-success mt-3" *ngIf="actualizoestados" (click)="ejecucionIncremento()">Ejecución Cálculo</button>
+        <br><br>
+        <h4 *ngIf="MostrarContenido && validateName">Contenido del archivo: {{selectedCSVFileName}}</h4>
+        <br>
+        <pre *ngIf="MostrarContenido && validateName" id="contenido-archivo" style="width: 1100px; height: 700px;">{{resultadoLectura}}</pre>        
+    </div>
+</div>

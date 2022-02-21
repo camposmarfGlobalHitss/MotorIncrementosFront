@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UsuarioResponse } from '../interfaces/usuario-response';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -27,7 +28,7 @@ export class LoginService {
 
 
   getLogin(user:string):Observable<UsuarioResponse>{
-    return this.http.get<UsuarioResponse>(`mit/usuarios?usuario=${user}`);
+    return this.http.get<UsuarioResponse>(`/mit/usuarios?usuario=${user}`);
   }
 
   setUser(usuario:UsuarioResponse){
@@ -36,20 +37,18 @@ export class LoginService {
   }
 
   actualizarContrasena(usuario: UsuarioResponse){
-      return this.http.put<UsuarioResponse>('mit/actualizarUsuario',usuario);
+      return this.http.put<UsuarioResponse>(`/mit/actualizarUsuario`,usuario);
   }
 
-  crearUsuario(usuario:UsuarioResponse){
-    
-    
-    return this.http.post('mit/crearUsuario',usuario);
+  crearUsuario(usuario:UsuarioResponse){   
+    return this.http.post(`/mit/crearUsuario`,usuario);
   }
 
   verificarUsuario(codigo:string):Observable<UsuarioResponse>{
-    return this.http.get<UsuarioResponse>(`mit/verificarCodigo?codigo=${codigo}`);
+    return this.http.get<UsuarioResponse>(`/mit/verificarCodigo?codigo=${codigo}`);
   }
 
   olvidoPass(correo:string){
-    return this.http.get(`mit/olvidoPass?correo=${correo}`);
+    return this.http.get(`/mit/olvidoPass?correo=${correo}`);
   }
 }

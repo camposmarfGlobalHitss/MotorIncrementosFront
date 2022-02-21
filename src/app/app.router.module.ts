@@ -24,6 +24,8 @@ import { CalculoIncrementoComponent } from './components/calculo-incremento/calc
 import { ParametrizacionCalculoComponent } from './components/parametrizacion-calculo/parametrizacion-calculo.component';
 import { FrontCalculoComponent } from './components/front-calculo/front-calculo.component';
 import { InterfacesComponent } from './components/interfaces/interfaces.component';
+import { ReinyeccionComponent } from './components/reinyeccion/reinyeccion.component';
+import { EjecucionIncrementoComponent } from './components/ejecucion-incremento/ejecucion-incremento.component';
 
 
 const ROUTES: Routes = [
@@ -49,13 +51,15 @@ const ROUTES: Routes = [
         {path:'calculoIncremento', component: FrontCalculoComponent, children:[
             {path:'calculo/:parametrizacion', component:CalculoIncrementoComponent},
             {path:'parametrizacion', component:ParametrizacionCalculoComponent},
+            {path:'ejecucion/:parametro', component: EjecucionIncrementoComponent},
             {path:'interfaces', component:InterfacesComponent},
-            {path:'**', redirectTo:'calculo' }
+            {path:'**', redirectTo:'calculo' },
+            {path:'reinyeccion', component: ReinyeccionComponent}
             ] },
         {path:'configuracion', component: ConfiguracionComponent},
         {path:'auditoria', component: AuditoriaComponent},
         {path:'seguridad', component: SeguridadComponent},
-        {path:'adminusuarios', component: AdminUsuariosComponent},       
+        {path:'adminusuarios', component: AdminUsuariosComponent},
         ]
     },
     {path:'**', pathMatch:'full', redirectTo:'login'},

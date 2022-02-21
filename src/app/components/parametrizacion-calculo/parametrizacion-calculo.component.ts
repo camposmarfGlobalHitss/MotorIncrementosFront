@@ -23,9 +23,6 @@ export class ParametrizacionCalculoComponent implements OnInit {
   formaMovilRango:FormGroup;
   formaParametrosIncrementoFija:FormGroup;
   formaValoresUVT:FormGroup; 
-  formaParametrosCalculoMovil:FormGroup;
-  formaParametrosCalculoFija:FormGroup;
-
 
   listMovilRangoIncremento:MovilRangoIncremento[] = [];
   listUvts:Uvts[]=[];
@@ -33,16 +30,11 @@ export class ParametrizacionCalculoComponent implements OnInit {
   movilRangoIncremento:MovilRangoIncremento={};
   parametrosIncFija:ParametrosIncrementoFija={};
   valoruvt:Uvts={};
-  parametrosCalculoMovil:ParametrosCalculoMovil={};
-  parametrosCalculoFija:ParametrosCalculoFija={};
   parametrizacionMRI:boolean=false;
   parametrosIncrementoFija:boolean=false;
   parametrizacionValoresUvt:boolean=false;
   parametrizacionActualizacionPSO:boolean=false;
-  icontrashPCM:boolean=false;
-  icontrashPCF:boolean=false;
-  ejecucionCIM:boolean=false;
-  ejecucionCIF:boolean=false;
+  
   UltimaActualizacionProductoSubtipoOferta:string;
   opcionPSO:string = '0';
   opcionPCM_TipoRedondeo:string = '0';
@@ -86,6 +78,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
   }
 
   cargarFormularios(){
+
     this.formaMovilRango = this.fb.group({
       desde:['',Validators.required],
       hasta:['',Validators.required],
@@ -94,7 +87,6 @@ export class ParametrizacionCalculoComponent implements OnInit {
       fechaDesde:['',Validators.required],
       fechaHasta:['',Validators.required]
     });
-
 
     this.formaParametrosIncrementoFija = this.fb.group({
       negocio:['Fija',Validators.required],
@@ -113,29 +105,6 @@ export class ParametrizacionCalculoComponent implements OnInit {
       fechaInicio:['',Validators.required],
       fechaFin:['',Validators.required]
     });
-
-
-    this.formaParametrosCalculoMovil = this.fb.group({
-      iva:['',Validators.required],
-      impoconsumo:['',Validators.required],
-      porciondatos:['',Validators.required],
-      porcionvoz:['',Validators.required],
-      unidadredondeo:['',Validators.required],
-      vigenciauvt:['',Validators.required],
-      incrementousosdefecto:['',Validators.required],
-      tiporedondeo:[this.opcionPCM_TipoRedondeo,Validators.required],
-      frecuenciacommit:['',Validators.required],
-      estadocalcular:[this.opcionPCM_EstadoCalcular,Validators.required]
-    });
-
-
-    this.formaParametrosCalculoFija = this.fb.group({
-        iva:['',Validators.required],
-        incrementomaximo:['',Validators.required],
-        frecuenciacommit:['',Validators.required],
-        estadocalcular:[this.opcionPCF_EstadoCalcular,Validators.required]
-    });
-
 
   }
 
@@ -517,145 +486,6 @@ export class ParametrizacionCalculoComponent implements OnInit {
       }
     })
 
-    
-
   }
-
-
-  guardarParametrosCalculoMovil(){
-
-    if(this.formaParametrosCalculoMovil.valid){
-      this.parametrosCalculoMovil.iva = this.formaParametrosCalculoMovil.value.iva;
-      this.parametrosCalculoMovil.impoconsumo = this.formaParametrosCalculoMovil.value.impoconsumo;
-      this.parametrosCalculoMovil.porcion_datos = this.formaParametrosCalculoMovil.value.porciondatos;
-      this.parametrosCalculoMovil.porcion_voz = this.formaParametrosCalculoMovil.value.porcionvoz;
-      this.parametrosCalculoMovil.unidad_redondeo = this.formaParametrosCalculoMovil.value.unidadredondeo;
-      this.parametrosCalculoMovil.vigencia_uvt = this.formaParametrosCalculoMovil.value.vigenciauvt;
-      this.parametrosCalculoMovil.incremento_usos_por_defecto = this.formaParametrosCalculoMovil.value.incrementousosdefecto;
-      this.parametrosCalculoMovil.tipo_redondeo_usos = this.formaParametrosCalculoMovil.value.tiporedondeo === '1' ? 'NORMAL' : this.formaParametrosCalculoMovil.value.tiporedondeo === '2' ? 'PISO' : 'TECHO';
-      this.parametrosCalculoMovil.frecuencia_commit = this.formaParametrosCalculoMovil.value.frecuenciacommit;
-      this.parametrosCalculoMovil.estado_a_calcular = this.formaParametrosCalculoMovil.value.estadocalcular === '1' ? 'CALCULADO' : 'CORREGIDO';
-      this.icontrashPCM = true;
-      this.modal.dismissAll();
-      this.cargarFormularios();
-      
-    }else{
-      Swal.fire({
-        icon:'error',
-        title:'campos imcompletos',
-        text:'faltan campos por rellenar valide e intente de nuevo'
-      })
-    }
-    
-    
-  }
-
-  ejecutarPCM(){
-    Swal.fire({
-      icon: 'info',
-      title: 'Espere...',
-      text: 'Ejecutando el Proceso!',
-      allowOutsideClick: false
-    });
-    Swal.showLoading();
-    this.calculoSrv.ejecutarCalculoIncrementoMovil(this.parametrosCalculoMovil).subscribe(resp=>{
-      Swal.fire({
-        icon:'info',
-        title:'OK',
-        text:resp
-      });
-    },err=>{
-      Swal.fire({
-        icon:'error',
-        title:'Upss!!',
-        text:'algo ha salido mal por favor intente mas tarde'
-      });
-    });
-    this.ejecucionCIM = true;
-  }
-
-  abrirModalPCM(contenido4){
-      this.cargarFormularios();
-      this.modal.open(contenido4,{size:'sm',centered:true, scrollable:true});
-  }
-
-  borrarPCM(){
-    this.parametrosCalculoMovil = {};
-    this.icontrashPCM = false;
-  }
-
-  abrirModalPCF(contenido5){
-    this.cargarFormularios();
-    this.modal.open(contenido5,{size:'sm', centered:true, scrollable:true});
-  }
-
-  guardarParametrosCalculoFija(){
-    if(this.formaParametrosCalculoFija.valid){
-        this.parametrosCalculoFija.iva_oficial = this.formaParametrosCalculoFija.value.iva;
-        this.parametrosCalculoFija.incremento_maximo = this.formaParametrosCalculoFija.value.incrementomaximo;
-        this.parametrosCalculoFija.frecuencia_commit = this.formaParametrosCalculoFija.value.frecuenciacommit;
-        this.parametrosCalculoFija.estado_a_calcular = this.formaParametrosCalculoFija.value.estadocalcular === '1' ? 'CALCULADO' : 'CORREGIDO'
-        this.icontrashPCF = true;
-        this.modal.dismissAll();
-        this.cargarFormularios();
-      }else{
-      Swal.fire({
-        icon:'error',
-        title:'faltan datos',
-        text:'faltan campos por llenar por favor valide e intente de nuevo'
-      });
-    }
-  }
-
-  borrarPCF(){
-    this.parametrosCalculoFija = {};
-    this.icontrashPCF = false;
-  }
-
-  ejcutarPCF(){
-    Swal.fire({
-      icon: 'info',
-      title: 'Espere...',
-      text: 'Ejecutando el Proceso!',
-      allowOutsideClick: false
-    });
-    Swal.showLoading();
-    this.calculoSrv.ejecutarCalculoIncrementoFija(this.parametrosCalculoFija).subscribe(resp=>{
-      Swal.fire({
-        icon:'info',
-        title:'OK',
-        text:resp
-      });
-    },err=>{
-      Swal.fire({
-        icon:'error',
-        title:'Upss!!',
-        text:'algo ha salido mal por favor intente mas tarde'
-      });
-    });
-
-    this.ejecucionCIF = true;
-  }
-
-
-  continuarProcesoParametrizacion(){
-    this.router.navigateByUrl(`/dashboard/calculoIncremento/calculo/${1}`);
-  }
-  
-  cancelarParametrizacion(){
-    Swal.fire({
-      title:'Desea cancelar la parametrizacion actual?',
-      confirmButtonColor:'#DC3545',
-      showCancelButton:true,
-      confirmButtonText:'Confirmar'
-    }).then(resp=>{
-      if(resp.isConfirmed){
-        this.router.navigateByUrl(`/dashboard/calculoIncremento/calculo/${0}`);
-      }
-    });
-  }
-
-
-  
 
 }

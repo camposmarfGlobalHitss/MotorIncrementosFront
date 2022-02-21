@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ExtraccionInformacionService } from '../../services/extraccion-informacion.service';
 import { Auditoria } from '../../classes/auditoria';
 import Swal from 'sweetalert2'
+import { AuditoriaService } from 'src/app/services/auditoria.service';
 
 @Component({
   selector: 'app-extraccion-informacion',
@@ -10,100 +11,161 @@ import Swal from 'sweetalert2'
 })
 export class ExtraccionInformacionComponent implements OnInit {
 
-  ListExtraccionInfo:Auditoria[]=[];
-  seleccionado:any;
-  resultExtract:string ='';
-  constructor(private extractInfoService:ExtraccionInformacionService) { 
-      
+  ListExtraccionInfo: Auditoria[] = [];
+  seleccionado: any;
+  resultExtract: string = '';
+
+  constructor(private extractInfoService: ExtraccionInformacionService
+    , private auditoriaService: AuditoriaService) {
     this.cargarListExtraccionInfo();
   }
 
   ngOnInit(): void {
   }
 
-  cargarListExtraccionInfo(){
-    this.extractInfoService.traerInformacion().subscribe((resp:Auditoria[]) =>{
+  cargarListExtraccionInfo() {
+    this.extractInfoService.traerInformacion().subscribe((resp: Auditoria[]) => {
       this.ListExtraccionInfo = resp;
     });
   }
 
-  extraerInfo(){
-    Swal.fire({
-      icon: 'info',
-      title: 'Espere...',
-      text: 'Validando Informacion! - Esto puede tardar un par de minutos...',
-      allowOutsideClick: false
-    });
+  /*
+    @Luz.Obredor 10.02.2022
+    Se crea método que guarda en tabla IMT_TBL_AUDITORIA registro relacionado 
+    a la cantidad de registros extraidos de la tabla IMT_TBL_TARIFAS_USO
+    Se obtiene el usuario de la sesión quien ejecuta la extracción CS,
+    Luego se consulta la tabla IMT_TBL_AUDITORIA para su visualización
+  */
+  guardarAuditoria() {
+    const user = localStorage.getItem('usuario').toString();
+    this.auditoriaService.createAuditoriaCS(user).subscribe();
+    this.cargarListExtraccionInfo();
+  }
 
-    Swal.showLoading();
-
-
-    console.log(this.seleccionado);
-    if(this.seleccionado === '1'){     
-      this.extractInfoService.extraccionClientes().subscribe(resp=>{
-        this.resultExtract = resp;
-        console.log(resp);
-        
-        if(this.resultExtract === 'OK'){
+  /*
+    @Luz.Obredor 10.02.2022
+    se modifica método para una mejor validación, inicia el proceso de validación de información
+    siempre que la opción seleccionada no sea la primera, se hace uso de la sentencia switch,
+    en lugar del if anidado. aquí se ejecutan todos los procesos de extracción tanto BSCS como CS
+  */
+  extraerInfo() {
+    switch (this.seleccionado) {
+      case "1":
+        Swal.fire({
+          icon: 'info',
+          title: 'Espere...',
+          text: 'Validando información! - Esto puede tardar un par de minutos...',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        this.extractInfoService.extraccionClientes().subscribe(resp => {
+          this.resultExtract = resp;
+            Swal.fire({
+              icon: 'success',
+              title: 'OK',
+              text: 'La extracción de clientes se realizó correctamente!',
+              allowOutsideClick: false
+            });
+            this.cargarListExtraccionInfo();
+        }, err => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: 'Ha ocurrido un error, Intenta mas tarde!',
+            allowOutsideClick: false
+          });
+        });
+        break;
+      case "2":
+        Swal.fire({
+          icon: 'info',
+          title: 'Espere...',
+          text: 'Validando información! - Esto puede tardar un par de minutos...',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        this.extractInfoService.extraccionContratos().subscribe(resp => {
+          this.resultExtract = resp;
           Swal.fire({
             icon: 'success',
             title: 'OK',
-            text: 'La extraccion de clientes se realizo correctamente!!',
+            text: 'La extracción de contratos se realizó correctamente!',
             allowOutsideClick: false
           });
           this.cargarListExtraccionInfo();
-        }else{
+        }, err => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: 'Ha ocurrido un error, Intenta mas tarde!',
+            allowOutsideClick: false
+          });
+        });
+        break;
+      case "3":
+        Swal.fire({
+          icon: 'info',
+          title: 'Espere...',
+          text: 'Validando información! - Esto puede tardar un par de minutos...',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        this.extractInfoService.extraccionProductoOferta().subscribe(resp => {
+          this.resultExtract = resp;
           Swal.fire({
             icon: 'success',
             title: 'OK',
-            text: 'La extraccion de clientes se realizo correctamente entro por el else!!',
+            text: 'La extracción de Producto oferta se realizó correctamente!',
             allowOutsideClick: false
           });
-        }
-      },err=>{
-        console.log(err);
+          this.cargarListExtraccionInfo();
+        }, err => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: 'Ha ocurrido un error, Intenta mas tarde!',
+            allowOutsideClick: false
+          });
+        });
+        break;
+      case "4":
+        Swal.fire({
+          icon: 'info',
+          title: 'Espere...',
+          text: 'Validando información! - Esto puede tardar un par de minutos...',
+          allowOutsideClick: false
+        });
+        Swal.showLoading();
+        this.extractInfoService.extraccionCsOffers().subscribe(resp => {
+          this.resultExtract = resp;
+          Swal.fire({
+            icon: 'success',
+            title: 'OK',
+            text: 'La extracción de tarifas uso se realizó correctamente!',
+            allowOutsideClick: false
+          });
+          this.guardarAuditoria();
+        }, err => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: 'Ha ocurrido un error, Intenta mas tarde!',
+            allowOutsideClick: false
+          });
+        });
+        break;
+      default:
         Swal.fire({
           icon: 'error',
-          title: 'Upsss..',
-          text: 'Ah Ocurrido un error, Intenta mas tarde!',
+          title: 'Espere...',
+          text: 'Seleccione una opción correcta!',
           allowOutsideClick: false
         });
-      }
-      );
-      
-    }else if(this.seleccionado === '2'){
-        console.log("SELECCIONO IMT_TBL_CONTRATOS");
-       
-
-
-    }else if(this.seleccionado ==='3'){
-      console.log("SELECCIONO IMT_TB_PRODUCTO_OFERTA");
-      this.extractInfoService.extraccionProductoOferta().subscribe(resp=>{
-        this.resultExtract = resp;
-        console.log(resp);          
-        Swal.fire({
-          icon: 'success',
-          title: 'OK',
-          text: 'La extraccion de Producto oferta se realizo correctamente!!',
-          allowOutsideClick: false
-        });
-        this.cargarListExtraccionInfo();
-      },err=>{
-        console.log(err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Upsss..',
-          text: 'Ah Ocurrido un error, Intenta mas tarde!',
-          allowOutsideClick: false
-        });
-      });
-
-
-    }else{
-      console.log("no selecciono nada");
-      
+        break;
     }
-    
   }
-
 }
