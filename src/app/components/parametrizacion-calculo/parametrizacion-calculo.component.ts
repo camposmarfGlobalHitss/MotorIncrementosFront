@@ -6,9 +6,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ParametrosIncrementoFija } from '../../classes/parametros-incremento-fija';
 import { Uvts } from 'src/app/classes/uvts';
-import { ParametrosCalculoMovil } from '../../classes/parametros-calculo-movil';
-import { ParametrosCalculoFija } from '../../classes/parametros-calculo-fija';
 import { Router } from '@angular/router';
+import { NgWizardConfig, NgWizardService, StepChangedArgs, StepValidationArgs, THEME } from 'ng-wizard';
 
 @Component({
   selector: 'app-parametrizacion-calculo',
@@ -41,8 +40,28 @@ export class ParametrizacionCalculoComponent implements OnInit {
   opcionPCM_EstadoCalcular:string ='0';
   opcionPCF_EstadoCalcular:string = '0';
 
-  constructor(private calculoSrv:CalculoincrementoService, private modal:NgbModal,
-    private fb:FormBuilder, private router:Router) { 
+  configs: NgWizardConfig = {
+    selected: 0,
+    theme: THEME.default,
+    toolbarSettings: {
+      toolbarExtraButtons: [
+        { text: 'Continuar', class: 'btn btn-success', event: () => { } }
+      ],
+      showNextButton: false,
+      showPreviousButton: false
+    },
+    anchorSettings:{ 
+      anchorClickable: true, 
+    }
+  };
+
+  isValidTypeBoolean: boolean = true;
+
+  constructor(private calculoSrv:CalculoincrementoService,
+    private modal:NgbModal,
+    private fb:FormBuilder,
+    private router:Router,
+    private ngWizardService: NgWizardService) { 
     this.parametrizacionMRI=false;  
     this.parametrosIncrementoFija=false;
     this.parametrizacionValoresUvt=false;
@@ -117,7 +136,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
       Swal.fire({
         icon: 'info',
         title: 'Espere...',
-        text: 'Validando Informacion!',
+        text: 'Validando información!',
         allowOutsideClick: false
       });
       Swal.showLoading();  
@@ -148,7 +167,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Upsss..',
-        text: 'Falta Diligenciar algunos campos valida e intenta de nuevo',
+        text: 'Falta diligenciar algunos campos valida e intenta de nuevo',
         allowOutsideClick: false
       });     
     }
@@ -162,7 +181,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
 
   borrarMovilRangoIncremento(mri:MovilRangoIncremento){
     Swal.fire({
-      title: 'Desea Eliminar este registro?',
+      title: '¿Desea eliminar este registro?',
       confirmButtonColor:'#DC3545',
       showCancelButton: true,
       confirmButtonText: `Confirmar`,
@@ -173,7 +192,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
           Swal.fire({
             icon: 'info',
             title: 'Espere...',
-            text: 'Validando Informacion!',
+            text: 'Validando información!',
             allowOutsideClick: false
           });
           Swal.showLoading();
@@ -193,7 +212,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
 
   borrarParametrosIncrementoFija(pif:ParametrosIncrementoFija){
     Swal.fire({
-      title:'Desea eliminar este Registro?',
+      title:'¿Desea eliminar este Registro?',
       confirmButtonColor:'#DC3545',
       showCancelButton:true,
       confirmButtonText:'Eliminar'
@@ -202,7 +221,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
           Swal.fire({
             icon: 'info',
             title: 'Espere...',
-            text: 'Validando Informacion!',
+            text: 'Validando información!',
             allowOutsideClick: false
           });
           Swal.showLoading();
@@ -219,17 +238,16 @@ export class ParametrizacionCalculoComponent implements OnInit {
     });
   }
 
-  aceptarMovilRangoIncremento(acc){
+  aceptarMovilRangoIncremento(){
     Swal.fire({
-      title:'Desea aceptar la parametrizacion actual de Movil Rango Incremento?',
+      title:'¿Desea aceptar la parametrización actual de rango de incremento móvil?',
       confirmButtonColor:'#53A1D1',
       showCancelButton:true,
       confirmButtonText:'Confirmar'
     }).then(resp=>{
       if(resp.isConfirmed){
         this.parametrizacionMRI = true;
-        acc.collapseAll();
-        acc.toggle('toggle-2');
+        this.showNextStep()
       }
     });
 
@@ -237,7 +255,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
 
   cancelarMovilRangoIncremento(){
     Swal.fire({
-      title:'Desea cancelar la parametrizacion actual?',
+      title:'¿Desea cancelar la parametrización actual?',
       confirmButtonColor:'#53A1D1',
       showCancelButton:true,
       confirmButtonText:'Confirmar'
@@ -255,12 +273,11 @@ export class ParametrizacionCalculoComponent implements OnInit {
         this.parametrosIncFija.servicios_paquete = this.formaParametrosIncrementoFija.value.servpaquete;
         this.parametrosIncFija.tipo_incremento = this.formaParametrosIncrementoFija.value.tipoincremento;
         this.parametrosIncFija.umbral_renta = this.formaParametrosIncrementoFija.value.umbral;  
-        this.parametrosIncFija.vigencia = new Date(this.formaParametrosIncrementoFija.value.vigencia);    
-        
+        this.parametrosIncFija.vigencia = new Date(this.formaParametrosIncrementoFija.value.vigencia);
         Swal.fire({
           icon:'info',
           title:'Espere...',
-          text:'Validando Informacion'
+          text:'Validando información!'
         });
         Swal.showLoading();
         const user = localStorage.getItem('usuario').toString();
@@ -277,7 +294,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
           Swal.fire({
             icon:'error',
             title:'Upss..',
-            text:'Se ha producido un error por favor intente mas tarde'
+            text:'Se ha producido un error, por favor intente mas tarde'
           });
         });
         
@@ -290,17 +307,16 @@ export class ParametrizacionCalculoComponent implements OnInit {
     this.modal.open(contenido2,{size:'sm', scrollable:true, centered:true});    
   }
 
-  aceptarParametrosIncrementoFija(acc){
+  aceptarParametrosIncrementoFija(){
     Swal.fire({
-      title:'Desea aceptar la parametrizacion actual de Incremento para Fija?',
+      title:'¿Desea aceptar la parametrización actual de incremento para fija?',
       confirmButtonColor:'#53A1D1',
       showCancelButton:true,
       confirmButtonText:'Confirmar'
     }).then(resp=>{
       if(resp.isConfirmed){
         this.parametrosIncrementoFija = true;
-        acc.collapseAll();
-        acc.toggle('toggle-3');
+        this.showNextStep();
       }
     });
   }
@@ -308,7 +324,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
 
   cancelarParametrosIncrementoFija(){
     Swal.fire({
-      title:'Desea cancelar la parametrizacion actual?',
+      title:'¿Desea cancelar la parametrización actual?',
       confirmButtonColor:'#53A1D1',
       showCancelButton:true,
       confirmButtonText:'Confirmar'
@@ -324,7 +340,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
       Swal.fire({
         icon: 'info',
         title: 'Espere...',
-        text: 'Validando Informacion!',
+        text: 'Validando información!',
         allowOutsideClick: false
       });
       Swal.showLoading();
@@ -359,7 +375,7 @@ export class ParametrizacionCalculoComponent implements OnInit {
 
   borrarValorUvt(uvt:Uvts){   
     Swal.fire({
-      title:'Desea eliminar este Registro?',
+      title:'¿Desea eliminar este registro?',
       confirmButtonColor:'#DC3545',
       showCancelButton:true,
       confirmButtonText:'Eliminar'
@@ -397,24 +413,23 @@ export class ParametrizacionCalculoComponent implements OnInit {
   }
 
 
-  aceptarValoresUvt(acc){
+  aceptarValoresUvt(){
     Swal.fire({
-      title:'Desea aceptar la parametrizacion actual los Valores UVT?',
+      title:'¿Desea aceptar la parametrización actual los valores UVT?',
       confirmButtonColor:'#53A1D1',
       showCancelButton:true,
       confirmButtonText:'Confirmar'
     }).then(resp=>{
       if(resp.isConfirmed){
         this.parametrizacionValoresUvt = true;
-        acc.collapseAll();
-        acc.toggle('toggle-4');
+        this.showNextStep();
       }
     });
   }
 
   cancelarValoresUvt(){
     Swal.fire({
-      title:'Desea cancelar la parametrizacion actual?',
+      title:'¿Desea cancelar la parametrización actual?',
       confirmButtonColor:'#53A1D1',
       showCancelButton:true,
       confirmButtonText:'Confirmar'
@@ -425,15 +440,14 @@ export class ParametrizacionCalculoComponent implements OnInit {
     });
   }
 
-  guardarPSO(acc){
-    const user = localStorage.getItem('usuario').toString();    
+  guardarPSO(){
+    const user = localStorage.getItem('usuario').toString(); 
     if(this.opcionPSO!=='0'){
-
       if(this.opcionPSO==='1'){
         Swal.fire({
           icon: 'info',
           title: 'Espere...',
-          text: 'Validando Informacion!',
+          text: 'Validando información!',
           allowOutsideClick: false
         });
         Swal.showLoading();
@@ -445,15 +459,12 @@ export class ParametrizacionCalculoComponent implements OnInit {
            });
            this.cargarListas(); 
            this.opcionPSO = '0';
-           this.parametrizacionActualizacionPSO = true;
-           acc.collapseAll();
-           
-
+           this.parametrizacionActualizacionPSO = true;       
         },err=>{
           Swal.fire({
             icon:'error',
             title:'Upss!!!',
-            text:'Se ha producido un error intente nuevamente!!'
+            text:'Se ha producido un error intente nuevamente!'
           });
           this.cargarListas();
         });
@@ -461,20 +472,19 @@ export class ParametrizacionCalculoComponent implements OnInit {
         this.cargarListas(); 
         this.opcionPSO = '0';
         this.parametrizacionActualizacionPSO = true;
-        acc.collapseAll();
       }      
     }else{
       Swal.fire({
         icon:'error',
         title:'Seleccione una Opcion',
-        text:'no selecciono ninguna opcion, por favor verifique e intente de nuevo'
+        text:'no seleccionó ninguna opción, por favor verifique e intente de nuevo'
       })
     }
   }
 
-  cancelarActualizacionPSO(acc){
+  cancelarActualizacionPSO(){
     Swal.fire({
-      title:'Desea cancelar la parametrizacion actual',
+      title:'¿Desea cancelar la parametrización actual?',
       confirmButtonColor:'#53A1D1',
       showCancelButton:true,
       confirmButtonText:'Confirmar'
@@ -485,7 +495,56 @@ export class ParametrizacionCalculoComponent implements OnInit {
         this.parametrizacionActualizacionPSO = false;
       }
     })
+  }
 
+  stepChanged(args: StepChangedArgs) {
+    this.configs.toolbarSettings.toolbarExtraButtons = []
+    switch(args.step.index){
+      case 0:
+        if(this.parametrizacionMRI){
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarMovilRangoIncremento() }})
+        }
+        this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.aceptarMovilRangoIncremento() }})
+      break;
+      case 1:
+        if(this.parametrosIncrementoFija){
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarParametrosIncrementoFija() }})
+        }
+        this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.aceptarParametrosIncrementoFija() }})
+      break;
+      case 2:
+        if(this.parametrizacionValoresUvt){
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarValoresUvt()}})
+        }
+        this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.aceptarValoresUvt() }})
+      break;
+      default:
+        if(this.parametrizacionActualizacionPSO){
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarActualizacionPSO()}})
+        }
+        this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Finalizar', class: 'btn btn-success', event: () => { this.guardarPSO() }})    
+      break;
+    }
+  }
+
+  isValidFunctionReturnsBoolean(args: StepValidationArgs) {
+    return true;
+  }
+  
+  showPreviousStep(event?: Event) {
+    this.ngWizardService.previous();
+  }
+ 
+  showNextStep(event?: Event) {
+    this.ngWizardService.next();
+  }
+ 
+  resetWizard(event?: Event) {
+    this.ngWizardService.reset();
+  }
+ 
+  setTheme(theme: THEME) {
+    this.ngWizardService.theme(theme);
   }
 
 }

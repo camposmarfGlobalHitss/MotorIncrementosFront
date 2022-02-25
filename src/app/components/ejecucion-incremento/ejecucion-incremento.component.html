@@ -1,91 +1,105 @@
-<h1 class="mb-3">Parámetros de Ejecución de Cálculo de Incremento</h1>
+<!--<h1 class="mb-3">Parámetros de Ejecución de Cálculo de Incremento</h1>
+<hr class="margin">
 <div class="col-md-12 me-3 mb-5">
     <ngb-accordion #acc2="ngbAccordion">
         <ngb-panel id="panel-1" title="EJECUCION CALCULO INCREMENTO PARA MOVIL">
             <ng-template ngbPanelContent>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Iva</th>
-                            <th>Impoconsumo</th>
-                            <th>Porcion Datos</th>
-                            <th>Porcion Voz</th>
-                            <th>Unidad Redondeo</th>
-                            <th>Vigencia UVT</th>
-                            <th>Incremento usos Defecto</th>
-                            <th>Tipo Redondeo</th>
-                            <th>frecuencia Commit</th>
-                            <th>Estado a calcular</th>
-                            <th>Accion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{parametrosCalculoMovil.iva}}</td>
-                            <td>{{parametrosCalculoMovil.impoconsumo}}</td>
-                            <td>{{parametrosCalculoMovil.porcion_datos}}</td>
-                            <td>{{parametrosCalculoMovil.porcion_voz}}</td>
-                            <td>{{parametrosCalculoMovil.unidad_redondeo}}</td>
-                            <td>{{parametrosCalculoMovil.vigencia_uvt}}</td>
-                            <td>{{parametrosCalculoMovil.incremento_usos_por_defecto}}</td>
-                            <td>{{parametrosCalculoMovil.tipo_redondeo_usos}}</td>
-                            <td>{{parametrosCalculoMovil.frecuencia_commit}}</td>
-                            <td>{{parametrosCalculoMovil.estado_a_calcular}}</td>
-                            <td>
-                                <button *ngIf="icontrashPCM" class="btn btn-danger mb-1" (click)="borrarPCM()">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="btn btn-primary mt-3" *ngIf="!icontrashPCM" (click)="abrirModalPCM(contenido4)">Agregar parametros</button>
-                <button class="btn btn-success ms-3 mt-3" *ngIf="icontrashPCM" (click)="ejecutarPCM()" [disabled]="ejecucionCIM">Ejecutar</button>
+                
             </ng-template>
         </ngb-panel>
         <ngb-panel id="panel-2" title="EJECUCION CALCULO INCREMENTO PARA FIJA">
             <ng-template ngbPanelContent>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Iva</th>
-                            <th>Incremento Max</th>
-                            <th>Frecuencia Commit</th>
-                            <th>Estado a Calcular</th>
-                            <th>Accion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{parametrosCalculoFija.iva_oficial}}</td>
-                            <td>{{parametrosCalculoFija.incremento_maximo}}</td>
-                            <td>{{parametrosCalculoFija.frecuencia_commit}}</td>
-                            <td>{{parametrosCalculoFija.estado_a_calcular}}</td>
-                            <td>
-                                <button *ngIf="icontrashPCF" class="btn btn-danger mb-1" (click)="borrarPCF()">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="btn btn-primary mt-3" *ngIf="!icontrashPCF" (click)="abrirModalPCF(contenido5)">Agregar parametros</button>
-
-                <button class="btn btn-success ms-3 mt-3" *ngIf="icontrashPCF" (click)="ejcutarPCF()" [disabled]="ejecucionCIF">Ejecutar</button>
+                
             </ng-template>
         </ngb-panel>
     </ngb-accordion>
     <button class="btn btn-sm btn-outline-primary mr-2 mt-3" (click)="acc2.collapseAll()">Replegar todo</button>
-</div>
-<div class="col-md-12">
-    <button class="btn btn-danger mb-3 me-3" (click)="cancelarParametrizacion()">Cancelar</button>
-    <button class="btn btn-success mb-3 float-end" *ngIf="ejecucionCIM || ejecucionCIF" (click)="continuarProcesoParametrizacion()">Continuar</button>
-</div>
+</div>-->
+
+<h1>Parámetros de ejecución de cálculo de incremento</h1>
+<hr class="margin">
+<ng-wizard [config]="configs" (stepChanged)="stepChanged($event)">
+
+    <ng-wizard-step [title]="'Ejecución de Cálculo Incremento para Móvil'">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary ms-3 mb-3" *ngIf="!icontrashPCM" (click)="abrirModalPCM(contenido4)">Agregar parámetros</button>
+            <button class="btn btn-success ms-3 mt-3" *ngIf="icontrashPCM" (click)="ejecutarPCM()" [disabled]="ejecucionCIM">Ejecutar</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Iva</th>
+                    <th>Impoconsumo</th>
+                    <th>Porcion Datos</th>
+                    <th>Porcion Voz</th>
+                    <th>Unidad Redondeo</th>
+                    <th>Vigencia UVT</th>
+                    <th>Incremento usos Defecto</th>
+                    <th>Tipo Redondeo</th>
+                    <th>frecuencia Commit</th>
+                    <th>Estado a calcular</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{parametrosCalculoMovil.iva}}</td>
+                    <td>{{parametrosCalculoMovil.impoconsumo}}</td>
+                    <td>{{parametrosCalculoMovil.porcion_datos}}</td>
+                    <td>{{parametrosCalculoMovil.porcion_voz}}</td>
+                    <td>{{parametrosCalculoMovil.unidad_redondeo}}</td>
+                    <td>{{parametrosCalculoMovil.vigencia_uvt}}</td>
+                    <td>{{parametrosCalculoMovil.incremento_usos_por_defecto}}</td>
+                    <td>{{parametrosCalculoMovil.tipo_redondeo_usos}}</td>
+                    <td>{{parametrosCalculoMovil.frecuencia_commit}}</td>
+                    <td>{{parametrosCalculoMovil.estado_a_calcular}}</td>
+                    <td>
+                        <button *ngIf="icontrashPCM" class="btn btn-danger mb-1" (click)="borrarPCM()">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-wizard-step>
+
+    <ng-wizard-step [title]="'Ejecución de Cálculo Incremento para Fija'">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary ms-3 mb-3" *ngIf="!icontrashPCF" (click)="abrirModalPCF(contenido5)">Agregar parámetros</button>
+            <button class="btn btn-success ms-3 mt-3" *ngIf="icontrashPCF" (click)="ejcutarPCF()" [disabled]="ejecucionCIF">Ejecutar</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Iva</th>
+                    <th>Incremento Max</th>
+                    <th>Frecuencia Commit</th>
+                    <th>Estado a Calcular</th>
+                    <th>Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{parametrosCalculoFija.iva_oficial}}</td>
+                    <td>{{parametrosCalculoFija.incremento_maximo}}</td>
+                    <td>{{parametrosCalculoFija.frecuencia_commit}}</td>
+                    <td>{{parametrosCalculoFija.estado_a_calcular}}</td>
+                    <td>
+                        <button *ngIf="icontrashPCF" class="btn btn-danger mb-1" (click)="borrarPCF()">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-wizard-step>
+
+</ng-wizard>
 
 <div class="col-md-12">
     <ng-template #contenido4 let-modal>
         <div class="modal-header">
-            <h4 class="modal-tittle text-success">Parametros Calculo Movil</h4>
+            <h4 class="modal-tittle text-success">Parámetros Cálculo Móvil</h4>
             <button class="close" aria-label="close" (click)="modal.dismiss()">
                     <span aria-label="true">&times;</span>
                 </button>
@@ -136,11 +150,6 @@
                 <div class="mb-3">
                     <label for="estadocalcular" class="form-label">Estado a Calcular</label>
                     <input disabled type="text" class="form-control" id="estadocalcular" name="estadocalcular" formControlName="estadocalcular">
-                    <!-- <div class="form-group"select class="form-select" name="estadocalcular" id="estadocalcular" formControlName="estadocalcular">
-                        <option value="0">Seleccione</option>
-                        <option value="1">CALCULADO</option>
-                        <option value="2">CORREGIDO</option>
-                    </select>-->
                 </div>
             </form>
         </div>
@@ -154,7 +163,7 @@
 <div class="col-md-12">
     <ng-template #contenido5 let-modal>
         <div class="modal-header">
-            <h4 class="modal-tittle text-success">Parametros Calculo Fija</h4>
+            <h4 class="modal-tittle text-success">Parámetros Cálculo Fija</h4>
             <button class="close" aria-label="close" (click)="modal.dismiss()">
                     <span aria-label="true">&times;</span>
             </button>
@@ -176,11 +185,6 @@
                 <div class="mb-3">
                     <label for="estadocalcular" class="form-label">Estado a Calcular</label>
                     <input disabled type="text" class="form-control" id="estadocalcular" name="estadocalcular" formControlName="estadocalcular">
-                    <!--<select class="form-select" name="estadocalcular" id="estadocalcular" formControlName="estadocalcular">
-                        <option value="0">Seleccione</option>
-                        <option value="1">CALCULADO</option>
-                        <option value="2">CORREGIDO</option>
-                    </select>-->
                 </div>
             </form>
         </div>

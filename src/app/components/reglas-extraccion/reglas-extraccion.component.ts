@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ReglasService } from 'src/app/services/reglas.service';
@@ -9,6 +9,9 @@ import { CalculoIncremento } from '../../classes/calculo-incremento';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { LoginService } from '../../services/login.service';
 import { Exclusiones } from '../../classes/exclusiones';
+import { NgWizardConfig, NgWizardService, StepChangedArgs, StepValidationArgs, STEP_STATE, THEME } from 'ng-wizard';
+import { of } from 'rxjs';
+import { BizService } from 'src/app/services/biz.service';
 
 @Component({
   selector: 'app-reglas-extraccion',
@@ -16,6 +19,7 @@ import { Exclusiones } from '../../classes/exclusiones';
   styleUrls: ['./reglas-extraccion.component.css']
 })
 export class ReglasExtraccionComponent implements OnInit {
+
   pageActual:number=1;
   paginaActualModal:number=1;
   filterTabla:string='';
@@ -25,19 +29,58 @@ export class ReglasExtraccionComponent implements OnInit {
   reglaSeleccionada:Regla;
   cantidad_registros:number=0;
   list_calculo:CalculoIncremento[] = [];
-
+  
+  isValidTypeBoolean: boolean = true;
 
   user_actual:string ='';
 
   list_exclusiones:Exclusiones[]  = [];
 
+  stepStates = {
+    normal: STEP_STATE.normal,
+    disabled: STEP_STATE.disabled,
+    error: STEP_STATE.error,
+    hidden: STEP_STATE.hidden
+  };
+ 
+  configs: NgWizardConfig = {
+    selected: 0,
+    theme: THEME.circles,
+    toolbarSettings: {
+      toolbarExtraButtons: [
+        { text: 'Continuar', class: 'btn btn-success', event: () => { } }
+      ],
+      showNextButton: false,
+      showPreviousButton: false
+    },
+    anchorSettings:{ 
+      anchorClickable: true, 
+    }
+  };
+
+  mostrarReglasSql:Boolean = false;
+  condicionesActuales:string;
+  BanderaCreaRegla:boolean;
+  resultadoChequeo:string;
+  regla:Regla={};
+  respSrvCrear:Regla ={};
+  forma2:NgForm;
+
   constructor(private router:Router,private modal:NgbModal, private config: NgbModalConfig,
               private reglasSrv:ReglasService, private fb:FormBuilder,
-              private loginSrv:LoginService) {
+              private loginSrv:LoginService,
+              private ngWizardService: NgWizardService) {
                 config.backdrop = 'static'
                 config.keyboard = false;
     this.cargarListaCondiciones();
-    this.user_actual = localStorage.getItem('usuario');    
+    this.user_actual = localStorage.getItem('usuario');  
+    this.mostrarReglasSql = false;
+    this.BanderaCreaRegla = true;
+    this.reglasSrv.getCondicionesActuales().subscribe(resp =>{
+      this.condicionesActuales = resp;
+    });
+    
+
   }
 
   cargarListaCondiciones(){
@@ -49,8 +92,8 @@ export class ReglasExtraccionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  irCrearRegla(){
-    this.router.navigateByUrl('/dashboard/creareglas');
+  irCrearRegla(creacion){
+    this.modal.open(creacion, {size:'lg', scrollable:true, centered:true});
   }
 
   openLG(contenido, regla:Regla){
@@ -151,7 +194,7 @@ export class ReglasExtraccionComponent implements OnInit {
 
   extraccionCuentas(){
     Swal.fire({
-      title:'Desea ejecutar la extraccion de cuentas?',
+      title:'¿Desea ejecutar la extracción de cuentas?',
       confirmButtonColor:'#5062F7',
       confirmButtonText:'Confirmar',
       showConfirmButton:true,
@@ -166,7 +209,8 @@ export class ReglasExtraccionComponent implements OnInit {
           allowOutsideClick: false
         });
         Swal.showLoading();
-        this.reglasSrv.extraccionCuentas().subscribe(resp=>{
+        this.router.navigateByUrl('/dashboard/calculoIncremento/calculo/0');
+        /*this.reglasSrv.extraccionCuentas().subscribe(resp=>{
           Swal.fire({
             icon: 'success',
             title: 'OK',
@@ -181,17 +225,17 @@ export class ReglasExtraccionComponent implements OnInit {
             text: err.error,
             allowOutsideClick: false  
           });
-        })
+        })*/
       }
     })
   }
 
-
-  validarCondiciones(carga){
+  validarCondiciones(){ 
+    this.showNextStep();
     Swal.fire({
       icon: 'info',
       title: 'Por favor espere...',
-      text: 'CARGANDO DATOS CON LAS CONDICIONES ACTUALES..',
+      text: 'Cargando datos con las condiciones actuales...',
       allowOutsideClick: false
     });
     Swal.showLoading();
@@ -201,14 +245,12 @@ export class ReglasExtraccionComponent implements OnInit {
       Swal.fire({
         icon: 'success',
         title: 'OK',
-        text: 'DATOS CARGADOS CORRECTAMENTE',
+        text: 'Datos cargados correctamente!',
         allowOutsideClick: false
       });
-      this.modal.open(carga, {size:'lg', scrollable:true, centered:true});
-
+      //this.modal.open(carga, {size:'lg', scrollable:true, centered:true});
     },err=>{
-      console.log(err);
-      
+      console.log(err);      
       Swal.fire({
         icon: 'error',
         title: 'Upsss..',
@@ -226,14 +268,122 @@ export class ReglasExtraccionComponent implements OnInit {
   cambiarPaginaValidaRegla($event){
     this.paginaActualModal = $event;
   }
+ 
+  showPreviousStep(event?: Event) {
+    this.ngWizardService.previous();
+  }
+ 
+  showNextStep(event?: Event) {
+    this.ngWizardService.next();
+  }
+ 
+  resetWizard(event?: Event) {
+    this.ngWizardService.reset();
+  }
+ 
+  setTheme(theme: THEME) {
+    this.ngWizardService.theme(theme);
+  }
+ 
+  stepChanged(args: StepChangedArgs) {
+    this.configs.toolbarSettings.toolbarExtraButtons = []
+    if(args.step.index == 0){
+      this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Validar Reglas', class: 'btn btn-warning', event: () => { this.validarCondiciones() } })
+    }else{
+      this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Finalizar', class: 'btn btn-success', event: () => { this.extraccionCuentas() } })
+    }    
+  }
+ 
+  isValidFunctionReturnsBoolean(args: StepValidationArgs) {
+    return true;
+  }
+ 
+  isValidFunctionReturnsObservable(args: StepValidationArgs) {
+    return of(true);
+  }
 
+  volverReglas(){
+    this.router.navigateByUrl('/dashboard/reglas');
+  }
 
+  MostrarOcultarSql(){
+    this.mostrarReglasSql = !this.mostrarReglasSql;
+  }
+
+  validar(forma :NgForm){
+    console.log(forma.value);
+    this.forma2 = forma;
+    if(forma.invalid){
+      Object.values(forma.controls).forEach(control=>{
+        control.markAsTouched();
+      });
+    }else{
+      Swal.fire({
+        icon: 'info',
+        title: 'Espere...',
+        text: 'Validando Informacion!',
+        allowOutsideClick: false
+      });
   
+      Swal.showLoading();
 
+      this.reglasSrv.chequearCondicion(forma.value.condicion).subscribe(resp =>{
+        
+        this.resultadoChequeo = resp;
+        console.log(this.resultadoChequeo);
+        Swal.fire({
+          icon: 'success',
+          title: 'OK',
+          text: this.resultadoChequeo,
+          allowOutsideClick: false
+        });
+        this.BanderaCreaRegla = false;
+        this.regla.condicion = forma.value.condicion;
+        this.regla.regla = forma.value.descripcionRegla;
+        this.regla.fechaCreacion = new Date();
+        this.regla.usuarioCreacion = localStorage.getItem('usuario');
+        this.regla.servicioAfectado = forma.value.servicio;
+        this.reglasSrv.getCondicionesActuales().subscribe(resp =>{
+          this.condicionesActuales = resp;
+        });
+      },error=>{
+      
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Upsss..',
+          text: error.error,
+          allowOutsideClick: false  
+        });
+      });
+      
+       
+    }
+    
+  }
 
+  crearRegla(){
+    Swal.fire({
+      icon: 'info',
+      title: 'Espere...',
+      text: 'Validando Informacion!',
+      allowOutsideClick: false
+    });
+
+    Swal.showLoading();
+    this.reglasSrv.crearCondicion(this.regla).subscribe(resp=>{
+      this.respSrvCrear = resp;
+      console.log(resp);
+      Swal.fire({
+        icon: 'success',
+        title: 'OK',
+        text: 'CONDICION CREADA CORRECTAMENTE!!',
+        allowOutsideClick: false,
+        
+      });
+      this.router.navigateByUrl('/dashboard/reglas');
+      this.forma2.reset();
+    })
+  }
   
-
-  
-  
-
 }

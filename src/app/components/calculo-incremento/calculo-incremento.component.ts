@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Exclusiones } from 'src/app/classes/exclusiones';
+import { NgWizardConfig, NgWizardService, StepChangedArgs, StepValidationArgs, THEME } from 'ng-wizard';
 
 @Component({
   selector: 'app-calculo-incremento',
@@ -34,9 +35,28 @@ export class CalculoIncrementoComponent implements OnInit {
   mostrarExclusiones: boolean = false;
   pageActualExc: number = 1;
   cargaMensaje: string;
+
+  configs: NgWizardConfig = {
+    selected: 0,
+    theme: THEME.circles,
+    toolbarSettings: {
+      toolbarExtraButtons: [
+        { text: 'Continuar', class: 'btn btn-success', event: () => { } }
+      ],
+      showNextButton: false,
+      showPreviousButton: false
+    },
+    anchorSettings:{ 
+      anchorClickable: true, 
+    }
+  };
+
+  isValidTypeBoolean: boolean = true;
+
   constructor(private reglasSrv: ReglasService, 
     private route: Router, 
-    private activateRoute: ActivatedRoute) {
+    private activateRoute: ActivatedRoute,
+    private ngWizardService: NgWizardService) {
     this.activateRoute.params.subscribe(param => {
       this.parametroUrl = +param.parametrizacion;
     });
@@ -44,10 +64,10 @@ export class CalculoIncrementoComponent implements OnInit {
 
     if (this.parametroUrl === 1) {
       this.parametrizacionRelizada = true;
-      this.cargaMensaje = 'Cargando Datos';
+      this.cargaMensaje = 'Cargando datos';
     } else {
       this.parametrizacionRelizada = false;
-      this.cargaMensaje = 'Cargando resultado de aplicacion de reglas!!!';
+      this.cargaMensaje = 'Cargando resultado de aplicación de reglas!';
     }
     this.data_cargada = false;
     this.mostrarExclusiones = false;
@@ -91,8 +111,8 @@ export class CalculoIncrementoComponent implements OnInit {
 
   cancelarCalculo() {
     Swal.fire({
-      title: 'Realmente desea cancelar el proceso?',
-      text: 'si cancela tendra que volver a empezar todo el proceso de extraccion nuevamente',
+      title: '¿Realmente desea cancelar el proceso?',
+      text: 'si cancela tendrá que volver a empezar todo el proceso de extracción nuevamente',
       confirmButtonColor: '#DC3545',
       confirmButtonText: 'Confirmar',
       showConfirmButton: true,
@@ -166,4 +186,39 @@ export class CalculoIncrementoComponent implements OnInit {
     this.route.navigateByUrl('/dashboard/calculoIncremento/interfaces');
   }
 
+  stepChanged(args: StepChangedArgs) {
+    this.configs.toolbarSettings.toolbarExtraButtons = []
+    if(args.step.index == 0){
+      this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.showNextStep() } })
+    }else{
+      if(this.data_cargada){        
+        if(!this.parametrizacionRelizada){
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarCalculo() } })
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Parametrización del cálculo', class: 'btn btn-primary', event: () => { this.irParametrizacion()} })
+        }else{
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.continuarCalculoIncremento() } })
+        }      
+      }
+    }    
+  }
+
+  isValidFunctionReturnsBoolean(args: StepValidationArgs) {
+    return true;
+  }
+  
+  showPreviousStep(event?: Event) {
+    this.ngWizardService.previous();
+  }
+ 
+  showNextStep(event?: Event) {
+    this.ngWizardService.next();
+  }
+ 
+  resetWizard(event?: Event) {
+    this.ngWizardService.reset();
+  }
+ 
+  setTheme(theme: THEME) {
+    this.ngWizardService.theme(theme);
+  }
 }

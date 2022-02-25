@@ -1,5 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~ng-wizard/themes/ng_wizard_theme_circles.min.css';
+@import '~ng-wizard/themes/ng_wizard.min.css';
 
 body {
   width: 99%;
+}
+
+.ng-wizard-theme-circles>ul{
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.ng-wizard-theme-circles>ul.step-anchor>li>a{
+  height: 50px !important;
+  width: 50px !important;
+  padding: 15px 0 !important;
+}
+
+.ng-wizard-theme-circles>ul.step-anchor>li{
+  margin-left: 0 !important;
+}
+
+#ngwizard{
+  padding-right: 15px !important;
+}
+
+.ng-wizard-theme-circles>ul.step-anchor>li.active>a {
+  border-color: #007bff !important;
+  background: #007bff !important;
+}
+
+.ng-wizard-theme-circles>ul.step-anchor{
+  margin-bottom: 0 !important;
+}
+
+.margin{
+  margin-right: 15px;
+}
+
+.ng-wizard-main{
+  margin-right: 15px !important;
 }

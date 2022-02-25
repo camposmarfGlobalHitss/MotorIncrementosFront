@@ -1,6 +1,121 @@
-<h2>Calculo Incremento</h2>
-<hr>
-<div class="row mb-3" *ngIf="data_cargada">
+<h1>Cálculo de Incremento</h1>
+<hr class="margin">
+<ng-wizard *ngIf="parametroUrl != 1" [config]="configs" (stepChanged)="stepChanged($event)">
+    <ng-wizard-step [title]="'1'" [canEnter]="isValidTypeBoolean" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+        <div class="row mb-3" *ngIf="data_cargada">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="filtroreferencia" class="form-label" style="font-weight: bold; color:#7A87F5;">Filtro NO
+                        REFERENCIA</label>
+                    <input type="text" class="form-control" placeholder="NO REFERENCIA" id="filtroreferencia"
+                        name="filtroref" [(ngModel)]="filtroref" (keyup)="onKeyUp()">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="filtroidcliente" class="form-label" style="font-weight: bold; color:#7A87F5;">Filtro ID
+                        CLIENTE</label>
+                    <input type="text" class="form-control" placeholder="ID CLIENTE" id="filtroidcliente"
+                        name="idclientefilter" [(ngModel)]="idclientefilter" (keyup)="onKeyUp()">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="filtroidentificacioncliente" class="form-label"
+                        style="font-weight: bold; color:#7A87F5;">Filtro IDENTIFICACION CLIENTE</label>
+                    <input type="text" class="form-control" placeholder="IDENTIFICACION CLIENTE"
+                        id="filtroidentificacioncliente" name="idenClientefilter" [(ngModel)]="idenClientefilter"
+                        (keyup)="onKeyUp()">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" *ngIf="data_cargada">
+                <table class="table table-dark table-hover" style="overflow-x: scroll; display: block; width: 1110px;">
+                    <thead>
+                        <tr>
+                            <th>NUMERO REFERENCIA</th>
+                            <th>ID CLIENTE</th>
+                            <th>IDENTIFICACION CLIENTE</th>
+                            <th>FECHA CREACION INCREMENTO</th>
+                            <th>VLR INCREMENTO</th>
+                            <th>CFM SIN IVA NVO</th>
+                            <th>CFM CON IVA NVO</th>
+                            <th>IVA NVO</th>
+                            <th>COD CICLO</th>
+                            <th>ID PRODUCTO</th>
+                            <th>IMPOCONSUMO VOZ</th>
+                            <th>IMPOCONSUMO DATOS</th>
+                            <th>CFM SIN IVA</th>
+                            <th>PORCENTAJE INCREMTO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let calculo of list_cal_inc | filteridcliente:idclientefilter:filtroref:idenClientefilter | paginate:{itemsPerPage:20, currentPage:pageActual}">
+                            <td>{{calculo.no_REFERENCIA}}</td>
+                            <td>{{calculo.id_CLIENTE}}</td>
+                            <td>{{calculo.iden_CLIE}}</td>
+                            <td>{{calculo.fec_CREA_INCRTO | date}}</td>
+                            <td>{{calculo.vlr_INCREMENTO}}</td>
+                            <td>{{calculo.cfm_SIN_IVA_NVO}}</td>
+                            <td>{{calculo.cfm_CON_IVA_NVO}}</td>
+                            <td>{{calculo.iva_NVO}}</td>
+                            <td>{{calculo.cod_CICLO}}</td>
+                            <td>{{calculo.id_PRODUCTO}}</td>
+                            <td>{{calculo.impoconsumo_VOZ}}</td>
+                            <td>{{calculo.impoconsumo_DATOS}}</td>
+                            <td>{{calculo.cfm_SIN_IVA}}</td>
+                            <td>{{calculo.porcentaje_INCREMENTO}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <pagination-controls class="text-center mb-3" previousLabel="Prev" responsive="true"
+                    (pageChange)="cambiarPagina($event)"></pagination-controls>
+
+            </div>
+        </div>
+    </ng-wizard-step>
+    <ng-wizard-step [title]="'2'">
+        <div class="row mt-2" *ngIf="data_cargada && !parametrizacionRelizada">
+            <!--<div class="col-md-12">
+                <button class="btn btn-success " *ngIf="!mostrarExclusiones && !parametrizacionRelizada" (click)="cargarExclusiones()">Cargar Exclusiones</button>
+                <button class="btn btn-danger " *ngIf="mostrarExclusiones && !parametrizacionRelizada" (click)="mostrarExclusiones=!mostrarExclusiones">Ocultar</button>
+            </div>-->
+            <div class="col-md-12">
+                <h4 class="mb-3 mt-3">Carga de Exclusiones</h4>
+                <input class="form-control w-50" type="file" accept=".csv" id="customFile" (change)="selectFile($event)"><br>
+                <button class="btn btn-primary mb-5 mt-3" [disabled]="!selectedFiles" (click)="upload()">Cargar Archivo</button>
+                <h4 class="mb-3 mt-3 text-success text-center" *ngIf="exclusiones_cargadas">Lista de Exclusiones</h4>
+                <table class="table mt-2" *ngIf="exclusiones_cargadas">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOMBRE</th>
+                            <th>TIPO DOC</th>
+                            <th>IDENTIFICACION CLIENTE</th>
+                            <th>FECHA CREA</th>
+                            <th>USUARIO CREA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let exclusion of list_exclusiones | paginate:{itemsPerPage:10, currentPage:pageActualExc};">
+                            <td scope="row">{{exclusion.id}}</td>
+                            <td>{{exclusion.nombre}}</td>
+                            <td>{{exclusion.tipDoc}}</td>
+                            <td>{{exclusion.idenClie}}</td>
+                            <td>{{exclusion.fecCrea | date}}</td>
+                            <td>{{exclusion.userCrea}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls class="text-center mb-3" *ngIf="exclusiones_cargadas" previousLabel="Prev" responsive="true" (pageChange)="cambiarPaginaExc($event)"></pagination-controls>
+            </div>
+        </div>
+    </ng-wizard-step>
+</ng-wizard>
+<div *ngIf="parametroUrl == 1 && data_cargada" class="row mb-3">
     <div class="col-md-4">
         <div class="mb-3">
             <label for="filtroreferencia" class="form-label" style="font-weight: bold; color:#7A87F5;">Filtro NO REFERENCIA</label>
@@ -20,7 +135,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div *ngIf="parametroUrl == 1" class="row">
     <div class="col-md-12" *ngIf="data_cargada">
         <table class="table table-dark table-hover" style="overflow-x: scroll; display: block; width: 1110px;">
             <thead>
@@ -62,49 +177,11 @@
             </tbody>
         </table>
         <pagination-controls class="text-center mb-3" previousLabel="Prev" responsive="true" (pageChange)="cambiarPagina($event)"></pagination-controls>
-
     </div>
 </div>
-<div class="row mt-2" *ngIf="data_cargada && !parametrizacionRelizada">
-    <div class="col-md-12">
-        <button class="btn btn-success " *ngIf="!mostrarExclusiones && !parametrizacionRelizada" (click)="cargarExclusiones()">Cargar Exclusiones</button>
-        <button class="btn btn-danger " *ngIf="mostrarExclusiones && !parametrizacionRelizada" (click)="mostrarExclusiones=!mostrarExclusiones">Ocultar</button>
-
-    </div>
-    <div class="col-md-12 border border-info rounded mt-3 mb-3 ms-1" *ngIf="mostrarExclusiones">
-        <h5 class="mb-3 mt-3">Carga Exclusiones</h5>
-        <input class="form-control w-50" type="file" accept=".csv" id="customFile" (change)="selectFile($event)"><br>
-        <button class="btn btn-primary mb-5 mt-3" [disabled]="!selectedFiles" (click)="upload()">Cargar Archivo</button>
-        <h4 class="mb-3 mt-3 text-success text-center" *ngIf="exclusiones_cargadas">Lista Exclusiones</h4>
-        <table class="table mt-2" *ngIf="exclusiones_cargadas">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>NOMBRE</th>
-                    <th>TIPO DOC</th>
-                    <th>IDENTIFICACION CLIENTE</th>
-                    <th>FECHA CREA</th>
-                    <th>USUARIO CREA</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let exclusion of list_exclusiones | paginate:{itemsPerPage:10, currentPage:pageActualExc};">
-                    <td scope="row">{{exclusion.id}}</td>
-                    <td>{{exclusion.nombre}}</td>
-                    <td>{{exclusion.tipDoc}}</td>
-                    <td>{{exclusion.idenClie}}</td>
-                    <td>{{exclusion.fecCrea | date}}</td>
-                    <td>{{exclusion.userCrea}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <pagination-controls class="text-center mb-3" *ngIf="exclusiones_cargadas" previousLabel="Prev" responsive="true" (pageChange)="cambiarPaginaExc($event)"></pagination-controls>
-    </div>
-</div>
-<div class="row" *ngIf="data_cargada">
+<div *ngIf="parametroUrl == 1 && data_cargada" class="row">
     <div class="col-md-12 mt-5">
-        <button class="btn btn-primary mt-2 mb-3" *ngIf="!parametrizacionRelizada" (click)="irParametrizacion()">Parametrizacion Calculo</button>
-        <button class="btn btn-danger mt-2 mb-3 ms-2" (click)="cancelarCalculo()">CANCELAR</button>
-        <button class="btn btn-success ms-2 mb-3 me-2 float-end" *ngIf="parametrizacionRelizada" (click)="continuarCalculoIncremento()">continuar</button>
+        <button class="btn btn-danger mt-2 mb-3 ms-2" (click)="cancelarCalculo()">Cancelar</button>
+        <button class="btn btn-success mt-2 mb-3 ms-2 float-end" *ngIf="parametrizacionRelizada" (click)="continuarCalculoIncremento()">Continuar</button>
     </div>
 </div>

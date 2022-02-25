@@ -8,6 +8,7 @@ import { ParametrosCalculoMovil } from '../../classes/parametros-calculo-movil';
 import { ParametrosCalculoFija } from '../../classes/parametros-calculo-fija';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovilRangoIncremento } from '../../classes/movil-rango-incremento';
+import { NgWizardConfig, NgWizardService, StepChangedArgs, StepValidationArgs, THEME } from 'ng-wizard';
 
 @Component({
   selector: 'app-ejecucion-incremento',
@@ -35,13 +36,29 @@ export class EjecucionIncrementoComponent implements OnInit {
   opcionPCM_EstadoCalcular:string;
   opcionPCF_EstadoCalcular:string;
 
-  parametroUrl: number
+  parametroUrl: number;
+
+  configs: NgWizardConfig = {
+    selected: 0,
+    theme: THEME.default,
+    toolbarSettings: {
+      toolbarExtraButtons: [
+        { text: 'Continuar', class: 'btn btn-success', event: () => { } }
+      ],
+      showNextButton: false,
+      showPreviousButton: false
+    },
+    anchorSettings:{ 
+      anchorClickable: true, 
+    }
+  };
 
   constructor(private calculoSrv:CalculoincrementoService, 
     private modal:NgbModal,
     private fb:FormBuilder, 
     private router:Router, 
-    private activateRoute: ActivatedRoute) {
+    private activateRoute: ActivatedRoute,
+    private ngWizardService: NgWizardService) {
       this.activateRoute.params.subscribe(param => {
         this.parametroUrl = +param.parametro;
       });
@@ -142,7 +159,7 @@ export class EjecucionIncrementoComponent implements OnInit {
       Swal.fire({
         icon:'error',
         title:'Upss!!',
-        text:'algo ha salido mal por favor intente mas tarde'
+        text:'Algo ha salido mal, por favor intente mas tarde'
       });
     });
     this.ejecucionCIM = true;
@@ -204,13 +221,12 @@ export class EjecucionIncrementoComponent implements OnInit {
       Swal.fire({
         icon:'error',
         title:'Upss!!',
-        text:'algo ha salido mal por favor intente mas tarde'
+        text:'Algo ha salido mal, por favor intente mas tarde'
       });
     });
 
     this.ejecucionCIF = true;
   }
-
 
   continuarProcesoParametrizacion(){
     this.router.navigateByUrl(`/dashboard/calculoIncremento/calculo/${1}`);
@@ -228,5 +244,45 @@ export class EjecucionIncrementoComponent implements OnInit {
       }
     });
   }
+
+  stepChanged(args: StepChangedArgs) {
+    this.configs.toolbarSettings.toolbarExtraButtons = []
+    this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarParametrizacion() }})
+    if(args.step.index == 0){
+      this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.showNextStep() }})
+    }else{
+      this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Finalizar', class: 'btn btn-success', event: () => { 
+        (this.ejecucionCIM && this.ejecucionCIF)
+          ? this.continuarProcesoParametrizacion() 
+          : Swal.fire({
+            icon: 'info',
+            title: 'Espere...',
+            text: 'No ha parametrizado la ejecución del Proceso!',
+            allowOutsideClick: false
+          });
+      }});
+    }
+  }
+
+  isValidFunctionReturnsBoolean(args: StepValidationArgs) {
+    return true;
+  }
+  
+  showPreviousStep(event?: Event) {
+    this.ngWizardService.previous();
+  }
+ 
+  showNextStep(event?: Event) {
+    this.ngWizardService.next();
+  }
+ 
+  resetWizard(event?: Event) {
+    this.ngWizardService.reset();
+  }
+ 
+  setTheme(theme: THEME) {
+    this.ngWizardService.theme(theme);
+  }
+
 
 }

@@ -1,147 +1,161 @@
-<h1>Parametrización del cálculo de incremento</h1>
-<hr>
+<!--<h1>Parametrización del cálculo de incremento</h1>
+<hr class="margin">
 <div class="col-md-12 me-2 mb-5">
     <ngb-accordion #acc="ngbAccordion">
         <ngb-panel id="toggle-1" title="RANGOS INCREMENTOS PARA MOVIL {{!parametrizacionMRI ? '- Sin parametrizar' : ''}}">
             <ng-template ngbPanelContent>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>DESDE</th>
-                            <th>HASTA</th>
-                            <th>PORCENTAJE</th>
-                            <th>VALOR</th>
-                            <th>FEC_DESDE</th>
-                            <th>FEC_HASTA</th>
-                            <th>ACCION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let movilRango of listMovilRangoIncremento | paginate:{itemsPerPage:5, currentPage:pageActual}">
-                            <td scope="row">{{movilRango.desde}}</td>
-                            <td>{{movilRango.hasta}}</td>
-                            <td>{{movilRango.porcentaje}}</td>
-                            <td>{{movilRango.valor}}</td>
-                            <td>{{movilRango.fecha_desde | date:'dd/MM/yyyy'}}</td>
-                            <td>{{movilRango.fecha_hasta | date:'dd/MM/yyyy'}}</td>
-                            <td>
-                                <button class="btn btn-danger mb-1" (click)="borrarMovilRangoIncremento(movilRango)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActual = $event"></pagination-controls>
-
-                <button class="btn btn-danger mb-3" *ngIf="parametrizacionMRI" (click)="cancelarMovilRangoIncremento()">Cancelar</button>
-                <button class="btn btn-success ms-3 mb-3" *ngIf="!parametrizacionMRI" (click)="aceptarMovilRangoIncremento(acc)">Aceptar</button>
-                <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrizacionMRI" (click)="AbrirModal(contenido)">Nuevo</button>
 
             </ng-template>
         </ngb-panel>
         <ngb-panel id="toggle-2" title="PARAMETROS INCREMENTO PARA FIJA {{!parametrosIncrementoFija ? '- Sin parametrizar' : ''}}">
             <ng-template ngbPanelContent>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>NEGOCIO</th>
-                            <th>PAQUETE</th>
-                            <th>SERV PAQUETE</th>
-                            <th>SERV INC ANTES IVA</th>
-                            <th>UMBRAL RENTA</th>
-                            <th>SERVICIO</th>
-                            <th>TIPO INCREM</th>
-                            <th>VIGENCIA</th>
-                            <th>ACCION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let PIF of listParametrosIncrementoFija | paginate:{itemsPerPage:5, currentPage:pageActualParametrizacionIncrementoFija}">
-                            <td>{{PIF.negocio}}</td>
-                            <td>{{PIF.paquete}}</td>
-                            <td>{{PIF.servicios_paquete}}</td>
-                            <td>{{PIF.serv_inc_antes_iva}}</td>
-                            <td>{{PIF.umbral_renta}}</td>
-                            <td>{{PIF.servicio}}</td>
-                            <td>{{PIF.tipo_incremento}}</td>
-                            <td>{{PIF.vigencia |date:'dd-MM-yyyy'}}</td>
-                            <td>
-                                <button class="btn btn-danger mb-1" (click)="borrarParametrosIncrementoFija(PIF)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActualParametrizacionIncrementoFija = $event"></pagination-controls>
-                <button class="btn btn-danger mb-3" *ngIf="parametrosIncrementoFija" (click)="cancelarParametrosIncrementoFija()">Cancelar</button>
-                <button class="btn btn-success ms-3 mb-3" *ngIf="!parametrosIncrementoFija" (click)="aceptarParametrosIncrementoFija(acc)">Aceptar</button>
-                <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrosIncrementoFija" (click)="AbrirModalParametrosIncrementoFija(contenido2)">Nuevo</button>
-
+                
             </ng-template>
         </ngb-panel>
         <ngb-panel id="toggle-3" title="PARAMETRIZAR VALORES UVT {{!parametrizacionValoresUvt ? '- Sin parametrizar' : ''}}">
             <ng-template ngbPanelContent>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>VLR UVT</th>
-                            <th>AÑO VIGENCIA</th>
-                            <th>INICIO VIGENCIA</th>
-                            <th>FIN VIGENCIA</th>
-                            <th>ESTADO</th>
-                            <th>ACCCION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let uvt of listUvts | paginate:{itemsPerPage:5, currentPage:pageActualValoresUvt}">
-                            <td scope="row">{{uvt.vlr_UVT_ACT}}</td>
-                            <td>{{uvt.anio_VIGENCIA}}</td>
-                            <td>{{uvt.fec_INI_VIGENCIA | date:'dd/MM/yyyy'}}</td>
-                            <td>{{uvt.fec_FIN_VIGENCIA | date:'dd/MM/yyyy'}}</td>
-                            <td>{{uvt.estado}}</td>
-                            <td>
-                                <button class="btn btn-danger mb-1" (click)="borrarValorUvt(uvt)">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActualValoresUvt= $event"></pagination-controls>
-                <button class="btn btn-danger mb-3" *ngIf="parametrizacionValoresUvt" (click)="cancelarValoresUvt()">Cancelar</button>
-                <button class="btn btn-success ms-3 mb-3" *ngIf="!parametrizacionValoresUvt" (click)="aceptarValoresUvt(acc)">Aceptar</button>
-                <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrizacionValoresUvt" (click)="abrirModalValoresUvt(contenido3)">Nuevo</button>
-
+                
             </ng-template>
         </ngb-panel>
         <ngb-panel id="toggle-4" title="MOVIL SUBTIPO OFERTA {{!parametrizacionActualizacionPSO ? '- Sin parametrizar' : ''}}">
             <ng-template ngbPanelContent>
-                <div class="col-md-12 mb-3">
-                    <label for="actualizarPSO">Ultima Actualizacion:  <strong>{{UltimaActualizacionProductoSubtipoOferta | date:'dd/MM/yyyy hh:mm a' }}</strong> </label>
-                </div>
-                <div class="col-md-12">
-                    <h5 *ngIf="!parametrizacionActualizacionPSO">
-                        <label for="actualizarPSO" class="me-3 text-success">¿desea actualizar MOVIL SUBTIPO OFERTA?</label>
-                    </h5>
-                    <select *ngIf="!parametrizacionActualizacionPSO" class="form-select" name="actualizarPSO" id="actualizarPSO" [(ngModel)]="opcionPSO">
-                        <option value="0">Seleccione</option>
-                        <option value="1">SI</option>
-                        <option value="2">NO</option>
-                    </select>
-                </div>
-                <div class="col-md-12">
-                    <button class="btn btn-success mt-3 mb-3" *ngIf="!parametrizacionActualizacionPSO" (click)="guardarPSO(acc)">Guardar y Aceptar</button>
-                    <button class="btn btn-danger ms-3 mt-3 mb-3" *ngIf="parametrizacionActualizacionPSO" (click)="cancelarActualizacionPSO()">Cancelar</button>
-                </div>
-
+                
             </ng-template>
         </ngb-panel>
     </ngb-accordion>
-    <hr/>
-    <button class="btn btn-sm btn-outline-primary mr-2" (click)="acc.collapseAll()">Replegar Todo</button>
-</div>
+    <button class="btn btn-sm btn-outline-primary mr-2 mt-3" (click)="acc.collapseAll()">Replegar Todo</button>
+</div>-->
+<h1>Parametrización del cálculo de incremento</h1>
+<hr class="margin">
+<ng-wizard [config]="configs" (stepChanged)="stepChanged($event)">
+
+    <ng-wizard-step [title]="'Rangos Incremento Móvil'" [description]="!parametrizacionMRI ? 'Sin parametrizar' : 'Parametrizado'" [canEnter]="isValidTypeBoolean" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrizacionMRI" (click)="AbrirModal(contenido)">Nuevo</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>DESDE</th>
+                    <th>HASTA</th>
+                    <th>PORCENTAJE</th>
+                    <th>VALOR</th>
+                    <th>FEC_DESDE</th>
+                    <th>FEC_HASTA</th>
+                    <th>ACCION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let movilRango of listMovilRangoIncremento | paginate:{itemsPerPage:5, currentPage:pageActual}">
+                    <td scope="row">{{movilRango.desde}}</td>
+                    <td>{{movilRango.hasta}}</td>
+                    <td>{{movilRango.porcentaje}}</td>
+                    <td>{{movilRango.valor}}</td>
+                    <td>{{movilRango.fecha_desde | date:'dd/MM/yyyy'}}</td>
+                    <td>{{movilRango.fecha_hasta | date:'dd/MM/yyyy'}}</td>
+                    <td>
+                        <button class="btn btn-danger mb-1" (click)="borrarMovilRangoIncremento(movilRango)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActual = $event"></pagination-controls>
+    </ng-wizard-step>
+
+    <ng-wizard-step [title]="'Parámetros Incremento Fija'" [description]="!parametrosIncrementoFija ? 'Sin parametrizar' : 'Parametrizado'">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrosIncrementoFija" (click)="AbrirModalParametrosIncrementoFija(contenido2)">Nuevo</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>NEGOCIO</th>
+                    <th>PAQUETE</th>
+                    <th>SERV PAQUETE</th>
+                    <th>SERV INC ANTES IVA</th>
+                    <th>UMBRAL RENTA</th>
+                    <th>SERVICIO</th>
+                    <th>TIPO INCREM</th>
+                    <th>VIGENCIA</th>
+                    <th>ACCION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let PIF of listParametrosIncrementoFija | paginate:{itemsPerPage:5, currentPage:pageActualParametrizacionIncrementoFija}">
+                    <td>{{PIF.negocio}}</td>
+                    <td>{{PIF.paquete}}</td>
+                    <td>{{PIF.servicios_paquete}}</td>
+                    <td>{{PIF.serv_inc_antes_iva}}</td>
+                    <td>{{PIF.umbral_renta}}</td>
+                    <td>{{PIF.servicio}}</td>
+                    <td>{{PIF.tipo_incremento}}</td>
+                    <td>{{PIF.vigencia |date:'dd-MM-yyyy'}}</td>
+                    <td>
+                        <button class="btn btn-danger mb-1" (click)="borrarParametrosIncrementoFija(PIF)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActualParametrizacionIncrementoFija = $event"></pagination-controls>
+
+    </ng-wizard-step>
+
+    <ng-wizard-step [title]="'Parametrizar Valores UVT'" [description]="!parametrizacionValoresUvt ? 'Sin parametrizar' : 'Parametrizado'">
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary ms-3 mb-3" *ngIf="!parametrizacionValoresUvt" (click)="abrirModalValoresUvt(contenido3)">Nuevo</button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>VLR UVT</th>
+                    <th>AÑO VIGENCIA</th>
+                    <th>INICIO VIGENCIA</th>
+                    <th>FIN VIGENCIA</th>
+                    <th>ESTADO</th>
+                    <th>ACCCION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let uvt of listUvts | paginate:{itemsPerPage:5, currentPage:pageActualValoresUvt}">
+                    <td scope="row">{{uvt.vlr_UVT_ACT}}</td>
+                    <td>{{uvt.anio_VIGENCIA}}</td>
+                    <td>{{uvt.fec_INI_VIGENCIA | date:'dd/MM/yyyy'}}</td>
+                    <td>{{uvt.fec_FIN_VIGENCIA | date:'dd/MM/yyyy'}}</td>
+                    <td>{{uvt.estado}}</td>
+                    <td>
+                        <button class="btn btn-danger mb-1" (click)="borrarValorUvt(uvt)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="pageActualValoresUvt= $event"></pagination-controls>
+        
+    </ng-wizard-step>
+
+    <ng-wizard-step [title]="'Móvil Subtipo Oferta'" [description]="!parametrizacionActualizacionPSO ? 'Sin parametrizar' : 'Parametrizado'">
+        <div class="col-md-12 mb-3">
+            <label for="actualizarPSO">Ultima Actualizacion:  <strong>{{UltimaActualizacionProductoSubtipoOferta | date:'dd/MM/yyyy hh:mm a' }}</strong> </label>
+        </div>
+        <div class="col-md-12">
+            <h5 *ngIf="!parametrizacionActualizacionPSO">
+                <label for="actualizarPSO" class="me-3 text-success">¿desea actualizar MOVIL SUBTIPO OFERTA?</label>
+            </h5>
+            <select *ngIf="!parametrizacionActualizacionPSO" class="form-select" name="actualizarPSO" id="actualizarPSO" [(ngModel)]="opcionPSO">
+                <option value="0">Seleccione</option>
+                <option value="1">SI</option>
+                <option value="2">NO</option>
+            </select>
+        </div>
+
+    </ng-wizard-step>
+
+</ng-wizard>
 
 <div class="col-md-12">
     <ng-template #contenido let-modal>
@@ -273,6 +287,5 @@
             <button type="button" class="btn btn-primary" (click)="guardarValorUVT()">Guardar</button>
             <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
         </div>
-
     </ng-template>
 </div>

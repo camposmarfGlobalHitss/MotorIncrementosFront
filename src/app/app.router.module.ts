@@ -19,13 +19,13 @@ import { SeguridadComponent } from './components/seguridad/seguridad.component';
 import { AuditoriaComponent } from './components/auditoria/auditoria.component';
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
 import { ReglasExtraccionComponent } from './components/reglas-extraccion/reglas-extraccion.component';
-import { GeneracionReglasComponent } from './components/generacion-reglas/generacion-reglas.component';
 import { CalculoIncrementoComponent } from './components/calculo-incremento/calculo-incremento.component';
 import { ParametrizacionCalculoComponent } from './components/parametrizacion-calculo/parametrizacion-calculo.component';
 import { FrontCalculoComponent } from './components/front-calculo/front-calculo.component';
 import { InterfacesComponent } from './components/interfaces/interfaces.component';
 import { ReinyeccionComponent } from './components/reinyeccion/reinyeccion.component';
 import { EjecucionIncrementoComponent } from './components/ejecucion-incremento/ejecucion-incremento.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
 
 
 const ROUTES: Routes = [
@@ -47,10 +47,10 @@ const ROUTES: Routes = [
         {path:'perfil', component: PerfilComponent },
         {path:'extraccion', component: ExtraccionInformacionComponent },
         {path:'reglas', component: ReglasExtraccionComponent },
-        {path:'creareglas', component: GeneracionReglasComponent },
         {path:'calculoIncremento', component: FrontCalculoComponent, children:[
             {path:'calculo/:parametrizacion', component:CalculoIncrementoComponent},
             {path:'parametrizacion', component:ParametrizacionCalculoComponent},
+            {path:'reportes', component: ReportesComponent },
             {path:'ejecucion/:parametro', component: EjecucionIncrementoComponent},
             {path:'interfaces', component:InterfacesComponent},
             {path:'**', redirectTo:'calculo' },

@@ -42,7 +42,6 @@ import { ExtraccionInformacionService } from './services/extraccion-informacion.
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReglasExtraccionComponent } from './components/reglas-extraccion/reglas-extraccion.component';
-import { GeneracionReglasComponent } from './components/generacion-reglas/generacion-reglas.component';
 import { AdminusuariosService } from './services/adminusuarios.service';
 import { ReglasService } from './services/reglas.service';
 import { CalculoIncrementoComponent } from './components/calculo-incremento/calculo-incremento.component';
@@ -54,8 +53,14 @@ import { FrontCalculoComponent } from './components/front-calculo/front-calculo.
 import { CalculoincrementoService } from './services/calculoincremento.service';
 import { InterfacesComponent } from './components/interfaces/interfaces.component';
 import { ReinyeccionComponent } from './components/reinyeccion/reinyeccion.component';
+import { ReportesComponent } from './components/reportes/reportes.component';
 import { PapaParseModule } from 'ngx-papaparse';
 import {EjecucionIncrementoComponent} from './components/ejecucion-incremento/ejecucion-incremento.component';
+import { NgWizardConfig, NgWizardModule, THEME } from 'ng-wizard';
+
+const ngWizardConfig: NgWizardConfig = {
+  theme: THEME.arrows
+};
 
 @NgModule({
   declarations: [
@@ -80,7 +85,6 @@ import {EjecucionIncrementoComponent} from './components/ejecucion-incremento/ej
     FiltroTablasPipe,
     AdminUsuariosComponent,
     ReglasExtraccionComponent,
-    GeneracionReglasComponent,
     CalculoIncrementoComponent,
     ParametrizacionCalculoComponent,
     FrontCalculoComponent,
@@ -89,7 +93,8 @@ import {EjecucionIncrementoComponent} from './components/ejecucion-incremento/ej
     FilteridclientePipe,
     FilteridenclientePipe,
     FilterrefPipe,
-    EjecucionIncrementoComponent
+    EjecucionIncrementoComponent,
+    ReportesComponent
   ],
   imports: [
     BrowserModule,
@@ -101,6 +106,7 @@ import {EjecucionIncrementoComponent} from './components/ejecucion-incremento/ej
     NgxPaginationModule,
     NgbModule,
     PapaParseModule,
+    NgWizardModule.forRoot(ngWizardConfig)
   ],exports:[
   
   ],

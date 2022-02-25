@@ -1,109 +1,194 @@
-<h2>Reglas de Extraccion</h2>
-<hr>
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-success table-striped table-hover mt-3" id="tabla-condiciones">
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Descripcion Regla</th>
-                    <th>Fecha Creacion</th>
-                    <th>Condicion</th>
-                    <th>Accion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let i = index let regla of listReglas | paginate:{id:'prueba', itemsPerPage:10, currentPage:pageActual}; ">
-                    <td scope="row">{{i+1}}</td>
-                    <td>{{regla.regla}}</td>
-                    <td>{{regla.fechaCreacion |date}}</td>
-                    <td>{{regla.condicion}}</td>
-                    <td>
-                        <button class="btn btn-success me-2 mb-1" (click)="openLG(contenido,regla)">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger mb-1" (click)="borrarCondicion(regla)">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
+<div class="d-flex justify-content-between">
+    <h3>Reglas de Extracción</h3>
+    <button class="btn btn-primary margin" (click)="irCrearRegla(creacion)">Nueva Regla</button>
+</div>
 
-            </tbody>
-        </table>
-        <pagination-controls id="prueba" class="text-center" previousLabel="Prev" responsive="true" (pageChange)="cambiarPaginaReglasAct($event)"></pagination-controls>
+<hr class="margin">
 
-        <button class="btn btn-primary mb-5" (click)="irCrearRegla()">Nueva Regla</button>
-        <button class="btn btn-warning ms-2 mb-5" (click)="validarCondiciones(carga)">Validar Reglas</button>
-        <button class="btn btn-success ms-2 mb-5 me-2 float-end" (click)="extraccionCuentas()">Continuar</button>
+<ng-wizard [config]="configs" (stepChanged)="stepChanged($event)">
 
-
-
-
-    </div>
-    <div class="col-md-12">
-        <ng-template #contenido let-modal>
-            <div class="modal-header">
-                <h4 class="modal-tittle text-success">Editar Regla</h4>
-                <button class="close" aria-label="close" (click)="modal.dismiss()">
-                    <span aria-label="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form autocomplete="off" [formGroup]="forma" (ngSubmit)="actualizarCondicion()">
-                    <div class="mb-3">
-                        <label for="descripcion" class="form-label">DESCRIPCION DE LA REGLA</label>
-                        <textarea class="form-control" id="descripcion" rows="5" name="descripcion" formControlName="descripcion"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="condicion" class="form-label w-100">GENERACION FILTRO</label>
-                        <textarea class="form-control" id="condicion" rows="5" name="condicion" formControlName="condicion"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" type="submit" (click)="actualizarCondicion()">Editar</button>
-                <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
-            </div>
-        </ng-template>
-
-    </div>
-
-    <div class="col-md-12">
-        <ng-template #carga let-modal>
-            <div class="modal-header">
-                <h4 class="modal-tittle text-success">VALIDAR CONDICIONES ACTUALES</h4>
-                <button class="close" aria-label="close" (click)="modal.dismiss()">
-                    <span aria-label="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table">
+    <ng-wizard-step [title]="'1'" [canEnter]="isValidTypeBoolean" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-success table-striped table-hover mt-3" id="tabla-condiciones">
                     <thead>
                         <tr>
-                            <th>NO REFERENCIA</th>
-                            <th>COD_ID</th>
-                            <th>ID CLIENTE</th>
-                            <th>IDENTIFICACION CLIENTE</th>
-                            <th>ID PRODUCTO</th>
+                            <th>Item</th>
+                            <th>Descripción Regla</th>
+                            <th>Fecha Creación</th>
+                            <th>Condición</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let calculo of list_calculo | paginate:{itemsPerPage:30, currentPage:paginaActualModal}; let i = index">
-                            <td scope="row">{{calculo.no_REFERENCIA}}</td>
-                            <td>{{calculo.cod_ID}}</td>
-                            <td>{{calculo.id_CLIENTE}}</td>
-                            <td>{{calculo.iden_CLIE}}</td>
-                            <th>{{calculo.id_PRODUCTO}}</th>
+                        <tr
+                            *ngFor="let i = index let regla of listReglas | paginate:{id:'prueba', itemsPerPage:10, currentPage:pageActual}; ">
+                            <td scope="row">{{i+1}}</td>
+                            <td>{{regla.regla}}</td>
+                            <td>{{regla.fechaCreacion |date}}</td>
+                            <td>{{regla.condicion}}</td>
+                            <td>
+                                <button class="btn btn-success me-2 mb-1" (click)="openLG(contenido,regla)">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger mb-1" (click)="borrarCondicion(regla)">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
                         </tr>
+
                     </tbody>
                 </table>
-                <pagination-controls class="text-center" previousLabel="Prev" responsive="true" (pageChange)="cambiarPaginaValidaRegla($event)"></pagination-controls>
+                <pagination-controls id="prueba" class="text-center" previousLabel="Prev" responsive="true"
+                    (pageChange)="cambiarPaginaReglasAct($event)"></pagination-controls>
             </div>
-            <div class="modal-footer">
-                <label class="text-success position-absolute bottom-0 start-0 mb-4 ms-2" style="font-weight: bold;">Cantidad Registros: {{cantidad_registros}}</label>
-                <button type="button" class="btn btn-danger bg-success" (click)="modal.close()">Cerrar</button>
-            </div>
-        </ng-template>
-    </div>
+        </div>
+        <div class="col-md-12">
+            <ng-template #contenido let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-tittle text-success">Editar Regla</h4>
+                    <button class="close" aria-label="close" (click)="modal.dismiss()">
+                        <span aria-label="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off" [formGroup]="forma" (ngSubmit)="actualizarCondicion()">
+                        <div class="mb-3">
+                            <label style="font-weight: bold" for="descripcion" class="form-label">DESCRIPCIÓN DE LA REGLA</label>
+                            <textarea class="form-control" id="descripcion" rows="5" name="descripcion"
+                                formControlName="descripcion"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label style="font-weight: bold" for="condicion" class="form-label w-100">GENERACIÓN FILTRO</label>
+                            <textarea class="form-control" id="condicion" rows="5" name="condicion"
+                                formControlName="condicion"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit" (click)="actualizarCondicion()">Editar</button>
+                    <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+                </div>
+            </ng-template>
+        </div>
+        <div class="col-md-12">
+            <ng-template #creacion let-modal>
+                <div class="modal-header">
+                    <h3 class="modal-tittle text-success">Creación de Regla</h3>
+                    <button class="close" aria-label="close" (click)="modal.dismiss()">
+                        <span aria-label="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off" (ngSubmit)="validar( forma2 )" #forma2="ngForm">
+                        <div class="row mt-5">
+                            <div class="col-md-9">
+                                <div class="mb-3">
+                                    <label style="font-weight: bold" for="descripcion" class="form-label">DESCRIPCIÓN DE LA REGLA</label>
+                                    <textarea class="form-control" id="descripcion" rows="5" ngModel
+                                        [class.is-invalid]="descripcionRegla.invalid && descripcionRegla.touched"
+                                        #descripcionRegla="ngModel" name="descripcionRegla" required></textarea>
+                                    <small *ngIf="descripcionRegla.invalid && descripcionRegla.touched"
+                                        class="form-text text-danger">*La descripcion de la regla es requerida por favor
+                                        digitela!!</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label style="font-weight: bold;" for="servicio">SERVICIO QUE AFECTA</label>
+                                <select name="servicio" class="form-select" style="width: 90%" required ngModel
+                                    #servicio="ngModel" [class.is-invalid]="servicio.invalid && servicio.touched">
+                                    <option selected value="Fija">Fija</option>
+                                    <option value="Movil">Movil</option>
+                                </select>
+                                <small *ngIf="servicio.invalid && servicio.touched"
+                                    class="form-text text-danger">*Indique el servicio afectado!!</small>
+                            </div>
 
-</div>
+                        </div>
+
+                        <div class="row mt-3 ">
+                            <div class="col-md-9 ">
+                                <label style="font-weight: bold" for="descripcion" class="form-label">SQL REGLAS ACTUALES</label>
+                                <div class="mb-3 ">
+                                    <button *ngIf="!mostrarReglasSql" class="btn btn-success mb-3"
+                                        (click)="MostrarOcultarSql()">Mostrar</button>
+                                    <button *ngIf="mostrarReglasSql" class="btn btn-danger mb-3"
+                                        (click)="MostrarOcultarSql()">Ocultar</button>
+                                    <textarea *ngIf="mostrarReglasSql" class="form-control" id="filtroregla" rows="12"
+                                        [value]="condicionesActuales" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3 ">
+                            <div class="col-md-9 ">
+                                <div class="mb-3 ">
+                                    <label style="font-weight: bold" for="descripcion" class="form-label">GENERACIÓN FILTRO</label>
+                                    <small class="form-text text-success mt-2 lh-1 mb-3"
+                                        style="font-weight: bold;">*NOTA: para cada una de las condiciones es importante
+                                        colocar los alias para cada una de las tablas: tabla IMT_TBL_CONTRATOS alias =
+                                        "cont.Nombre_Columna",
+                                        tabla IMT_TBL_CLIENTES alias = "cli.Nombre_Columna", tabla
+                                        IMT_TBL_PRODUCTO_OFERTA alias "pro.Nombre_Columna". </small>
+                                    <textarea class="form-control " id="filtroregla " rows="5" ngModel
+                                        [class.is-invalid]="condicion.invalid && condicion.touched" #condicion="ngModel"
+                                        name="condicion" required></textarea>
+                                    <small *ngIf="condicion.invalid && condicion.touched"
+                                        class="form-text text-danger">*La condicion es requerida por favor
+                                        digitela!!!</small>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-warning" type="submit">
+                            Validar Regla
+                        </button>
+                        <br>
+                        <button type="button" (click)="crearRegla()" class="btn-primary mt-5 mb-5"
+                            [disabled]="BanderaCreaRegla" [ngClass]="{'btn-disabled':BanderaCreaRegla}">
+                            Crear Regla
+                        </button>
+                        <button class="btn-danger ms-3 mt-5 mb-5" (click)="volverReglas() ">
+                            Cancelar
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger bg-success" (click)="modal.close()">Cerrar</button>
+                </div>
+            </ng-template>
+        </div>
+    </ng-wizard-step>
+
+    <ng-wizard-step [title]="'2'">
+        <h3 class="modal-tittle">Validar Condiciones Actuales</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>NO REFERENCIA</th>
+                    <th>COD_ID</th>
+                    <th>ID CLIENTE</th>
+                    <th>IDENTIFICACION CLIENTE</th>
+                    <th>ID PRODUCTO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let calculo of list_calculo | paginate:{itemsPerPage:30, currentPage:paginaActualModal}; let i = index">
+                    <td scope="row">{{calculo.no_REFERENCIA}}</td>
+                    <td>{{calculo.cod_ID}}</td>
+                    <td>{{calculo.id_CLIENTE}}</td>
+                    <td>{{calculo.iden_CLIE}}</td>
+                    <th>{{calculo.id_PRODUCTO}}</th>
+                </tr>
+            </tbody>
+            <tfoot>
+                <span class="text-success bottom-0 start-0 mb-4 ms-2" style="font-weight: bold;">Cantidad Registros:
+                    {{cantidad_registros}}</span>
+            </tfoot>
+        </table>
+        <pagination-controls class="text-center" previousLabel="Prev" responsive="true"
+            (pageChange)="cambiarPaginaValidaRegla($event)"></pagination-controls>
+
+    </ng-wizard-step>
+
+</ng-wizard>

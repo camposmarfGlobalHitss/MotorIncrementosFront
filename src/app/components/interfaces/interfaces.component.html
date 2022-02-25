@@ -1,9 +1,8 @@
 <div class="row">
-    <h1>Generación de Interfaces, Reportes y Archivos</h1>
-    <hr>
+    <h1>Generación de Interfaces</h1>
 </div>
+<hr class="margin">
 <div class="row">
-    <h3 class="text-warning">Generación de Interfaces</h3>
     <div class="col-md-12">
         <button class="btn btn-warning mt-3 mb-3" (click)="generarArchivoPLM()">Generar Archivo Plano</button>
     </div>
@@ -15,41 +14,12 @@
         <button class="btn btn-danger mt-3" *ngIf="MostrarContenido" (click)="MostrarContenido=!MostrarContenido">Ocultar</button>
         <h3 *ngIf="MostrarContenido">Contenido del archivo: {{selectedCSVFileName}}</h3>
         <pre *ngIf="MostrarContenido" id="contenido-archivo" style="width: 1100px; height: 700px;">{{resultadoLectura}}</pre>
-        <hr>
+        <hr class="margin">
     </div>
 </div>
-<div class="row">
-    <h3 class="text-primary">Generación de Reportes</h3>
-    <div class="col-md-12 text-center mt-2">
-        <select class="orderby" aria-label="Default select example" #selectOpt>
-            <option value="0" selected>Lista de Reportes -seleccione una-</option>
-            <option value="1">Reporte cuentas a Incrementar</option>
-            <option value="2">Reporte de cuentas no incrementadas</option>
-            <option value="3">Reporte cuentas sujetas a incrementos</option>
-            <option value="4">Reporte cuentas no sujetas a incrementos</option>
-            <option value="5">Reporte de control fija y movil</option>
-          </select>
-        <br>
-        <button class="btn btn-primary mt-3" style="font-size: 20px;" (click)="selectOpcion(selectOpt.value)">Generar</button>
-    </div>
-</div>
+
 <div class="row mt-3">
-    <hr>
-    <h3 class="text-success">Generación de Archivos</h3>
-    <div class="col-md-12 text-center">
-        <select class="orderby2 mt-3" #selectArchivos>
-            <option value="0" selected>Lista de Archivos -seleccione uno-</option>
-            <option value="1">Lista Exclusiones Cargada</option>
-            <option value="2">Informe Pre incremento</option>
-        </select>
-        <br>
-        <button class="btn btn-success mt-3" style="font-size: 20px;" (click)="generarArchivos(selectArchivos.value)">Generar</button>
-    </div>
-</div>
-<div class="row mt-3">
-    <hr>
     <div class="col-md-12">
         <button class="btn btn-info mb-3 mt-3" (click)="finalizarProceso()">Terminar</button>
     </div>
-
 </div>
