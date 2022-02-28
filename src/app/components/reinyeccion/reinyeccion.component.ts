@@ -68,8 +68,8 @@ export class ReinyeccionComponent implements OnInit {
               });          
               Swal.showLoading();
               /*Llamado al job que actualiza los registro con los estados del archivo PLM*/
-              /*this.fileStorage.executeJob().subscribe(resp => {
-                this.actualizoestados = resp
+              this.fileStorage.executeJob().subscribe(resp => {
+                this.actualizoestados = Boolean (resp)
                 if(resp){
                   Swal.fire({
                     icon: 'success',
@@ -85,7 +85,7 @@ export class ReinyeccionComponent implements OnInit {
                     allowOutsideClick: false
                   }); 
                 }
-              })*/
+              })
             }
           });
         }       

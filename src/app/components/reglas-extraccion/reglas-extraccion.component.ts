@@ -209,8 +209,7 @@ export class ReglasExtraccionComponent implements OnInit {
           allowOutsideClick: false
         });
         Swal.showLoading();
-        this.router.navigateByUrl('/dashboard/calculoIncremento/calculo/0');
-        /*this.reglasSrv.extraccionCuentas().subscribe(resp=>{
+        this.reglasSrv.extraccionCuentas().subscribe(resp=>{
           Swal.fire({
             icon: 'success',
             title: 'OK',
@@ -225,7 +224,7 @@ export class ReglasExtraccionComponent implements OnInit {
             text: err.error,
             allowOutsideClick: false  
           });
-        })*/
+        })
       }
     })
   }
@@ -248,7 +247,6 @@ export class ReglasExtraccionComponent implements OnInit {
         text: 'Datos cargados correctamente!',
         allowOutsideClick: false
       });
-      //this.modal.open(carga, {size:'lg', scrollable:true, centered:true});
     },err=>{
       console.log(err);      
       Swal.fire({
