@@ -17,7 +17,7 @@ export class ReinyeccionComponent implements OnInit {
 
   MostrarContenido: boolean = false;
   validateName: boolean = false;
-  actualizoestados: boolean = false;
+  actualizoestados: Boolean = false;
 
   selectedCSVFileName: string = '';
   resultadoLectura: string = '';
@@ -69,8 +69,8 @@ export class ReinyeccionComponent implements OnInit {
               Swal.showLoading();
               /*Llamado al job que actualiza los registro con los estados del archivo PLM*/
               this.fileStorage.executeJob().subscribe(resp => {
-                this.actualizoestados = Boolean (resp)
-                if(resp){
+                this.actualizoestados = (resp === 'true')
+                if(this.actualizoestados){
                   Swal.fire({
                     icon: 'success',
                     title: 'OK',
@@ -109,7 +109,7 @@ export class ReinyeccionComponent implements OnInit {
         }
       })
     }else{
-      Swal.fire({
+      Swal.fire({        
         /*Cuando no cumple con el formato definido validado desde el cliente*/
         icon: 'error',
         title: 'Upsss..',
