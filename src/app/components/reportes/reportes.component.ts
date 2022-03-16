@@ -40,52 +40,84 @@ export class ReportesComponent implements OnInit {
 
   generarArchivos(seleccion: any) {
     if (seleccion === '0') {
-      alert('por favor seleccione una opcion valida');
-    } else if (seleccion === '2') {
+      alert('por favor seleccione una opcion válida');
+    } else if (seleccion === '2') {      
       this.generarInformePreIncremento();
     }
   }
 
   generarRepCtasIncremento() {
-
+    /*
+      @Luz.Obredor 09.03.2022
+      Funcionalidad que permite generar reporte en el cliente
+    */
     Swal.fire({
       icon: 'info',
-      title: 'Por favor espere!!',
+      title: 'Por favor espere!',
       text: 'Generando Reporte Cuentas Incremento',
       allowOutsideClick: false
     });
     Swal.showLoading();
     this.interfacSrv.generarRepCtasIncremento().subscribe(resp => {
+      const url = window.URL.createObjectURL(resp)
+      let a = document.createElement('a')
+      document.body.appendChild(a)
+      a.href = url
+      a.download = 'reporte_cuentas_con_incremento.csv'
+      a.click()
+      window.URL.revokeObjectURL(url)
+      a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!!',
-        text: resp
+        title: 'EXITO!'
+      });     
+    }, error=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR!',
+        text: error.error
       });
     })
   }
 
   generarRepCtasNoCumplenPoliticas() {
+    /*
+      @Luz.Obredor 09.03.2022
+      Funcionalidad que permite generar reporte en el cliente
+    */
     Swal.fire({
       icon: 'info',
-      title: 'Por favor espere!!',
+      title: 'Por favor espere!',
       text: 'Generando Reporte de cuentas no incrementadas...',
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.interfacSrv.generarRepCtasNoCumplenPoliticas().subscribe(resp => {
+    this.interfacSrv.generarRepCtasNoCumplenPoliticas().subscribe(resp => {      
+      const url = window.URL.createObjectURL(resp)
+      let a = document.createElement('a')
+      document.body.appendChild(a)
+      a.href = url
+      a.download = 'reporte_cuentas_no_cumplen_politicas.csv'
+      a.click()
+      window.URL.revokeObjectURL(url)
+      a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!!',
-        text: resp
+        title: 'EXITO!'
       });
+    }, error=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR!',
+        text: error.error
+      })
     })
-
   }
 
   generarRepCtasSujIncremento() {
     Swal.fire({
       icon: 'info',
-      title: 'Por favor espere!!',
+      title: 'Por favor espere!',
       text: 'Generando Reporte de Cuentas sujetas a incremento',
       allowOutsideClick: false
     });
@@ -93,33 +125,56 @@ export class ReportesComponent implements OnInit {
     this.interfacSrv.generarRepCtasSujIncremento().subscribe(resp => {
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!!',
+        title: 'EXITO!',
         text: resp
       });
+    }, error=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR!',
+        text: error.error
+      })
     })
   }
 
   generarRepCtasNoSujIncremento() {
+    /*
+      @Luz.Obredor 09.03.2022
+      Funcionalidad que permite generar reporte en el cliente
+    */
     Swal.fire({
       icon: 'info',
-      title: 'Por favor espere!!',
+      title: 'Por favor espere!',
       text: 'Generando Reporte de cuentas no sujetas a incremento',
       allowOutsideClick: false
     });
     Swal.showLoading();
     this.interfacSrv.generarRepCtasNoSujIncremento().subscribe(resp => {
+      const url = window.URL.createObjectURL(resp)
+      let a = document.createElement('a')
+      document.body.appendChild(a)
+      a.href = url
+      a.download = 'reporte_cuentas_no_sujetas_incremento.csv'
+      a.click()
+      window.URL.revokeObjectURL(url)
+      a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!!',
-        text: resp
+        title: 'EXITO!'
       });
+    }, error=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR!',
+        text: error.error
+      })
     })
   }
 
   generarRepCtrlFyM() {
     Swal.fire({
       icon: 'info',
-      title: 'Por favor espere!!',
+      title: 'Por favor espere!',
       text: 'Generando Reportes de control de fija y movil',
       allowOutsideClick: false
     });
@@ -127,36 +182,49 @@ export class ReportesComponent implements OnInit {
     this.interfacSrv.generarRepCtrlFyM().subscribe(resp => {
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!!',
+        title: 'EXITO!',
         text: resp
       });
+    }, error=>{
+      Swal.fire({
+        icon: 'error',
+        title: 'ERROR!',
+        text: error.error
+      })
     })
   }
 
   generarInformePreIncremento() {
+    /*
+      @Luz.Obredor 09.03.2022
+      Funcionalidad que permite generar reporte en el cliente
+    */
     Swal.fire({
       icon: 'info',
-      title: 'Por favor espere!!',
+      title: 'Por favor espere!',
       text: 'Generando Informe Pre Incremento',
       allowOutsideClick: false
     });
     Swal.showLoading();
     this.interfacSrv.generarInformePreIncremento().subscribe(resp => {
+      const url = window.URL.createObjectURL(resp)
+      let a = document.createElement('a')
+      document.body.appendChild(a)
+      a.href = url
+      a.download = 'reporte_pre_incremento.csv'
+      a.click()
+      window.URL.revokeObjectURL(url)
+      a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!!',
-        text: resp
+        title: 'EXITO!'
       });
     }, error => {
-      console.log(error);
-
       Swal.fire({
         icon: 'error',
-        title: 'Error',
+        title: 'ERROR!',
         text: error.error
       })
     });
   }
-
-
 }

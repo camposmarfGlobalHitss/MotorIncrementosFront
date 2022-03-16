@@ -125,7 +125,7 @@ export class ReinyeccionComponent implements OnInit {
     con el formato definido OUT_MTARIFF_BATCH_DDMMYYYYHH24MISS.csv, resibe como único parámetro el nombre del archivo
   */
   validateNameFile(file: string) {
-    let exp = /^OUT_MTARIFF_BATCH_([0-2][0-9]|3[0-1])(0[1-9]|1[0-2])(\d{4})([01]?[0-9]|2[0-3])[0-5][0-9]([0-5][0-9])?.csv$/
+    let exp = /^OUT_IN_MTARIFF_BATCH_([0-2][0-9]|3[0-1])(0[1-9]|1[0-2])(\d{4})([01]?[0-9]|2[0-3])[0-5][0-9]([0-5][0-9])?.csv$/
     return exp.test(file)
   }
 
