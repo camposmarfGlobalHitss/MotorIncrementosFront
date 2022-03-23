@@ -46,52 +46,93 @@ export class CalculoIncrementoComponent implements OnInit {
       showNextButton: false,
       showPreviousButton: false
     },
-    anchorSettings:{ 
-      anchorClickable: true, 
+    anchorSettings: {
+      anchorClickable: true,
     }
   };
 
   isValidTypeBoolean: boolean = true;
 
-  constructor(private reglasSrv: ReglasService, 
-    private route: Router, 
-    private activateRoute: ActivatedRoute,
-    private ngWizardService: NgWizardService) {
+  constructor(private reglasSrv: ReglasService,
+              private route: Router,
+              private activateRoute: ActivatedRoute,
+              private ngWizardService: NgWizardService) {
     this.activateRoute.params.subscribe(param => {
       this.parametroUrl = +param.parametrizacion;
     });
-    console.log(this.parametroUrl);
-
-    if (this.parametroUrl === 1) {
-      this.parametrizacionRelizada = true;
-      this.cargaMensaje = 'Cargando datos';
-    } else {
-      this.parametrizacionRelizada = false;
-      this.cargaMensaje = 'Cargando resultado de aplicación de reglas!';
-    }
     this.data_cargada = false;
     this.mostrarExclusiones = false;
     this.user_actual = localStorage.getItem('usuario');
-    this.mostrarMensajeCargando(this.cargaMensaje);
-    this.reglasSrv.traerCuentasPostExtraccion().subscribe(resp => {
-      this.list_cal_inc = resp;
-
-      Swal.fire({
-        icon: 'success',
-        title: 'OK',
-        text: 'DATOS CARGADOS CORRECTAMENTE!!',
-        allowOutsideClick: false
-      });
-      this.data_cargada = true;
-    }, err => {
-      console.log(err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Upsss..',
-        text: 'Error procesando la solicitud, intente mas tarde',
-        allowOutsideClick: false
-      });
-    });
+    switch (this.parametroUrl) {
+      case 0:
+        this.parametrizacionRelizada = false;
+        this.cargaMensaje = 'Cargando resultado de aplicación de reglas!';
+        this.mostrarMensajeCargando(this.cargaMensaje);
+        this.reglasSrv.traerCuentasPostExtraccion().subscribe(resp => {
+          this.list_cal_inc = resp;
+          Swal.fire({
+            icon: 'success',
+            title: 'OK',
+            text: 'Datos cargados correctamente!',
+            allowOutsideClick: false
+          });
+          this.data_cargada = true;
+        }, err => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: 'Error procesando la solicitud, intente más tarde',
+            allowOutsideClick: false
+          });
+        });
+        break;
+      case 1:
+        this.parametrizacionRelizada = true;
+        this.cargaMensaje = 'Cargando datos!';
+        this.mostrarMensajeCargando(this.cargaMensaje);
+        this.reglasSrv.traerCuentasPostExtraccion().subscribe(resp => {
+          this.list_cal_inc = resp;
+          Swal.fire({
+            icon: 'success',
+            title: 'OK',
+            text: 'Datos cargados correctamente!',
+            allowOutsideClick: false
+          });
+          this.data_cargada = true;
+        }, err => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: 'Error procesando la solicitud, intente más tarde',
+            allowOutsideClick: false
+          });
+        });
+        break;
+      case 2:
+        this.parametrizacionRelizada = true;
+        this.cargaMensaje = 'Cargando datos corregidos!';
+        this.reglasSrv.traerCuentasCorregidas().subscribe(resp => {
+          this.list_cal_inc = resp;
+          Swal.fire({
+            icon: 'success',
+            title: 'OK',
+            text: 'Datos cargados correctamente!',
+            allowOutsideClick: false
+          });
+          this.data_cargada = true;
+        }, err => {
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Upsss..',
+            text: 'Error procesando la solicitud, intente más tarde',
+            allowOutsideClick: false
+          });
+        });
+        break;
+    }
   }
 
 
@@ -102,7 +143,7 @@ export class CalculoIncrementoComponent implements OnInit {
   mostrarMensajeCargando(mensaje: string) {
     Swal.fire({
       icon: 'info',
-      title: 'Por Favor Espere...',
+      title: 'Por favor espere...',
       text: mensaje,
       allowOutsideClick: false
     });
@@ -147,17 +188,13 @@ export class CalculoIncrementoComponent implements OnInit {
     Swal.showLoading();
     this.progress.percentage = 0;
     this.currentFileUpload = this.selectedFiles.item(0);
-    console.log(this.currentFileUpload.name);
-
     this.reglasSrv.cargarExclusiones(this.currentFileUpload, this.user_actual).subscribe(resp => {
       this.list_exclusiones = resp;
-      console.log(this.list_exclusiones);
-
       this.exclusiones_cargadas = true;
       Swal.fire({
         icon: 'success',
         title: 'OK',
-        text: 'Cargado Correctamente!!',
+        text: 'Cargado Correctamente!',
         allowOutsideClick: false
       });
     }, err => {
@@ -183,41 +220,41 @@ export class CalculoIncrementoComponent implements OnInit {
   }
 
   continuarCalculoIncremento() {
-    this.route.navigateByUrl('/dashboard/calculoIncremento/interfaces');
+    this.route.navigateByUrl(`/dashboard/calculoIncremento/interfaces/${this.parametroUrl}`);
   }
 
   stepChanged(args: StepChangedArgs) {
     this.configs.toolbarSettings.toolbarExtraButtons = []
-    if(args.step.index == 0){
+    if (args.step.index == 0) {
       this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.showNextStep() } })
-    }else{
-      if(this.data_cargada){        
-        if(!this.parametrizacionRelizada){
+    } else {
+      if (this.data_cargada) {
+        if (!this.parametrizacionRelizada) {
           this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarCalculo() } })
-          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Parametrización del cálculo', class: 'btn btn-primary', event: () => { this.irParametrizacion()} })
-        }else{
+          this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Parametrización del cálculo', class: 'btn btn-primary', event: () => { this.irParametrizacion() } })
+        } else {
           this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.continuarCalculoIncremento() } })
-        }      
+        }
       }
-    }    
+    }
   }
 
   isValidFunctionReturnsBoolean(args: StepValidationArgs) {
     return true;
   }
-  
+
   showPreviousStep(event?: Event) {
     this.ngWizardService.previous();
   }
- 
+
   showNextStep(event?: Event) {
     this.ngWizardService.next();
   }
- 
+
   resetWizard(event?: Event) {
     this.ngWizardService.reset();
   }
- 
+
   setTheme(theme: THEME) {
     this.ngWizardService.theme(theme);
   }

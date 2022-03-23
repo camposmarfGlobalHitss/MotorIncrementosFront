@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Papa } from 'ngx-papaparse';
 import { CalculoincrementoService } from 'src/app/services/calculoincremento.service';
 import Swal from 'sweetalert2';
@@ -17,9 +17,15 @@ export class InterfacesComponent implements OnInit {
   resultadoLectura: string = '';
   isCSV_Valid: boolean;
   MostrarContenido: boolean = false;
+  parametroUrl:number
+
   constructor(private papa: Papa, 
     private calculoSrv: CalculoincrementoService, 
-    private route: Router) {
+    private route: Router,
+    private activateRoute: ActivatedRoute) {
+    this.activateRoute.params.subscribe(param => {
+      this.parametroUrl = +param.parametro;
+    });
     const csvData = '';
     this.MostrarContenido = false;
     this.papa.parse(csvData, {
@@ -93,25 +99,42 @@ export class InterfacesComponent implements OnInit {
       allowOutsideClick: false
     });
     Swal.showLoading();
-    this.calculoSrv.generarArchivoPlanoPLM().subscribe(resp => {
-      Swal.fire({
-        icon: 'success',
-        title: 'OK',
-        text: resp,
-        allowOutsideClick: false
+    if(this.parametroUrl == 2){
+      this.calculoSrv.generarArchivoPlanoPLMCorregido().subscribe(resp => {
+        Swal.fire({
+          icon: 'success',
+          title: 'OK',
+          text: resp,
+          allowOutsideClick: false
+        });
+      }, err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'upss..!!',
+          text: 'error al generar el archivo, por favor intente mas tarde',
+          allowOutsideClick: false
+        });
       });
-    }, err => {
-      Swal.fire({
-        icon: 'error',
-        title: 'upss..!!',
-        text: 'error al generar el archivo, por favor intente mas tarde',
-        allowOutsideClick: false
+    }else{
+      this.calculoSrv.generarArchivoPlanoPLM().subscribe(resp => {
+        Swal.fire({
+          icon: 'success',
+          title: 'OK',
+          text: resp,
+          allowOutsideClick: false
+        });
+      }, err => {
+        Swal.fire({
+          icon: 'error',
+          title: 'upss..!!',
+          text: 'error al generar el archivo, por favor intente mas tarde',
+          allowOutsideClick: false
+        });
       });
-    });
+    }
   }
 
   finalizarProceso() {
-
     Swal.fire({
       text: '¿Realmente desea finalizar el proceso de incremento?',
       confirmButtonColor: '#5062F7',

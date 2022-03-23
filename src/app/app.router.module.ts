@@ -52,7 +52,7 @@ const ROUTES: Routes = [
             {path:'parametrizacion', component:ParametrizacionCalculoComponent},
             {path:'reportes', component: ReportesComponent },
             {path:'ejecucion/:parametro', component: EjecucionIncrementoComponent},
-            {path:'interfaces', component:InterfacesComponent},
+            {path:'interfaces/:parametro', component:InterfacesComponent},
             {path:'**', redirectTo:'calculo' },
             {path:'reinyeccion', component: ReinyeccionComponent}
             ] },

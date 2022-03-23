@@ -45,6 +45,10 @@ export class ReglasService {
     return this.http.get<CalculoIncremento[]>('mit/reglas/calculoIncrementoPostExtraccion');
   }
 
+  traerCuentasCorregidas():Observable<CalculoIncremento[]>{
+    return this.http.get<CalculoIncremento[]>('mit/reglas/calculoIncrementoCorregido');
+  }
+
   validarCondicionesActuales():Observable<CalculoIncremento[]>{
     return this.http.get<CalculoIncremento[]>('mit/reglas/validarCondiciones')
   }

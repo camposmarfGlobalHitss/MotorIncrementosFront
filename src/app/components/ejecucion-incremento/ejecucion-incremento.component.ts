@@ -229,7 +229,11 @@ export class EjecucionIncrementoComponent implements OnInit {
   }
 
   continuarProcesoParametrizacion(){
-    this.router.navigateByUrl(`/dashboard/calculoIncremento/calculo/${1}`);
+    if(this.parametroUrl === 0 ){
+      this.router.navigateByUrl(`/dashboard/calculoIncremento/calculo/${1}`);
+    }else{
+      this.router.navigateByUrl(`/dashboard/calculoIncremento/calculo/${2}`);
+    }    
   }
   
   cancelarParametrizacion(){

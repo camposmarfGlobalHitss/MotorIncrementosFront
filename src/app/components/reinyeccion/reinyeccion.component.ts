@@ -78,6 +78,7 @@ export class ReinyeccionComponent implements OnInit {
                     allowOutsideClick: false
                   }); 
                 }else{
+                  console.log(1)
                   Swal.fire({
                     icon: 'error',
                     title: 'Upsss..',

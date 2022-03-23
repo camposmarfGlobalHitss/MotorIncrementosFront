@@ -63,13 +63,14 @@ export class ReportesComponent implements OnInit {
       let a = document.createElement('a')
       document.body.appendChild(a)
       a.href = url
-      a.download = 'reporte_cuentas_con_incremento.csv'
+      a.download = 'REP_CTAS_INC.csv'
       a.click()
       window.URL.revokeObjectURL(url)
       a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!'
+        title: 'EXITO!',
+        text: 'Reporte de cuentas incrementadas generado correctamente en carpeta de Descargas'
       });     
     }, error=>{
       Swal.fire({
@@ -97,13 +98,14 @@ export class ReportesComponent implements OnInit {
       let a = document.createElement('a')
       document.body.appendChild(a)
       a.href = url
-      a.download = 'reporte_cuentas_no_cumplen_politicas.csv'
+      a.download = 'REP_CTAS_NO_INCREMENTADAS.csv'
       a.click()
       window.URL.revokeObjectURL(url)
       a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!'
+        title: 'EXITO!',
+        text: 'Reporte de cuentas no incrementadas generado correctamente en carpeta de Descargas'
       });
     }, error=>{
       Swal.fire({
@@ -154,13 +156,14 @@ export class ReportesComponent implements OnInit {
       let a = document.createElement('a')
       document.body.appendChild(a)
       a.href = url
-      a.download = 'reporte_cuentas_no_sujetas_incremento.csv'
+      a.download = 'REP_CTAS_NO_SUJ_INC.csv'
       a.click()
       window.URL.revokeObjectURL(url)
       a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!'
+        title: 'EXITO!',
+        text: 'Reporte de cuentas no sujetas a incremento generado correctamente en carpeta de Descargas'
       });
     }, error=>{
       Swal.fire({
@@ -211,13 +214,14 @@ export class ReportesComponent implements OnInit {
       let a = document.createElement('a')
       document.body.appendChild(a)
       a.href = url
-      a.download = 'reporte_pre_incremento.csv'
+      a.download = 'INF_PRE_INC.csv'
       a.click()
       window.URL.revokeObjectURL(url)
       a.remove()
       Swal.fire({
         icon: 'success',
-        title: 'EXITO!'
+        title: 'EXITO!',
+        text: 'Informe Pre Incremento generado correctamente en carpeta de Descargas'
       });
     }, error => {
       Swal.fire({
@@ -227,4 +231,5 @@ export class ReportesComponent implements OnInit {
       })
     });
   }
+  
 }

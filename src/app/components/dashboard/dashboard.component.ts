@@ -42,6 +42,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl(`/dashboard/calculoIncremento/ejecucion/${0}`);
   }
 
+  interfacesIncremento(){
+    this.router.navigateByUrl(`/dashboard/calculoIncremento/interfaces/${0}`);
+  }
+  
   desloguear(){
     localStorage.clear();
     this.router.navigate(['login'])

@@ -6,7 +6,7 @@
         <input class="btn btn-warning" type="file" accept=".csv" #fileImportInput name="CSV File Upload" (change)="fileChangeListener($event)" accept=".csv">
         <hr>
         <button class="btn btn-danger mt-3" *ngIf="MostrarContenido && validateName" (click)="MostrarContenido=!MostrarContenido">Ocultar</button>
-        <button class="btn btn-success mt-3" *ngIf="actualizoestados" (click)="ejecucionIncremento()">Ejecución Cálculo</button>
+        <button class="btn btn-success mt-3" *ngIf="actualizoestados" (click)="ejecucionIncremento()">Ejecución Cálculo (Reinyección)</button>
         <br><br>
         <h4 *ngIf="MostrarContenido && validateName">Contenido del archivo: {{selectedCSVFileName}}</h4>
         <br>

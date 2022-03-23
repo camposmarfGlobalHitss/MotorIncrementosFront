@@ -29,7 +29,6 @@ export class CalculoincrementoService {
 
   }
 
-
   obtenerParametrosIncrementoFija():Observable<ParametrosIncrementoFija[]>{
     return this.http.get<ParametrosIncrementoFija[]>('mit/calculo/obtenerParametrosIncrementoFija');
   }
@@ -42,7 +41,6 @@ export class CalculoincrementoService {
   borrarParametrosIncrementoFija(pif:ParametrosIncrementoFija):Observable<string>{
     return this.http.post('mit/calculo/borrarParametrosIncrementoFija',pif,{responseType:'text'});
   }
-
 
   obtenerValoresUvts():Observable<Uvts[]>{
     return this.http.get<Uvts[]>('mit/calculo/obtenerValoresUvts');
@@ -77,6 +75,12 @@ export class CalculoincrementoService {
     return this.http.get('mit/calculo/generarArchivoPLM',{responseType:'text'})
   }
 
-
+  /* 
+    @Luz.Obredor 22.03.2022
+    Consumo del servicio que genera el archivo de entrada a ericsson PLM por reinyección
+  */
+  generarArchivoPlanoPLMCorregido():Observable<string>{
+    return this.http.get('mit/calculo/generarArchivoPLMCorregido',{responseType:'text'})
+  }
 
 }
