@@ -422,7 +422,8 @@ export class ParametrizacionCalculoComponent implements OnInit {
     }).then(resp=>{
       if(resp.isConfirmed){
         this.parametrizacionValoresUvt = true;
-        this.showNextStep();
+        this.cargarListas();
+        this.router.navigateByUrl(`/dashboard/calculoIncremento/ejecucion/0`);
       }
     });
   }
@@ -516,14 +517,14 @@ export class ParametrizacionCalculoComponent implements OnInit {
         if(this.parametrizacionValoresUvt){
           this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarValoresUvt()}})
         }
-        this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Continuar', class: 'btn btn-success', event: () => { this.aceptarValoresUvt() }})
+        this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Finalizar', class: 'btn btn-success', event: () => { this.aceptarValoresUvt() }})
       break;
-      default:
+      /*default:
         if(this.parametrizacionActualizacionPSO){
           this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Cancelar', class: 'btn btn-danger', event: () => { this.cancelarActualizacionPSO()}})
         }
         this.configs.toolbarSettings.toolbarExtraButtons.push({ text: 'Finalizar', class: 'btn btn-success', event: () => { this.guardarPSO() }})    
-      break;
+      break;*/
     }
   }
 
