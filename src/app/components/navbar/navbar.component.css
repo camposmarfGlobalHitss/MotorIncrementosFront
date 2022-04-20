@@ -1,0 +1,8 @@
+.bg-light {
+    /*background-color: #efecec !important;*/
+    background-color: #dfdfdf !important;
+}
+
+a.text-light:hover{
+    color: #ffffff !important;
+}

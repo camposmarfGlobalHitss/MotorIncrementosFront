@@ -1,4 +1,141 @@
-<h1 class="mt-3">
+<div class="row">
+  <div class="col-sm-3 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Extracción Clientes</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h2 class="mb-0">{{listAuditoria[0]?.cantidadRegistros}}</h2>
+              <p [ngClass]="{'text-success': clientes > 0, 'text-danger': clientes < 0}"
+                class="ml-2 mb-0 font-weight-medium">{{clientes + '%'}}</p>
+            </div>
+            <h6 class="text-muted font-weight-normal">Actual: {{listAuditoria[0]?.fechaProceso | date: 'dd-MM-yy' }}
+            </h6>
+            <h6 class="text-muted font-weight-normal">Anterior: {{listAuditoriaAnterior[0]?.fechaProceso | date:
+              'dd-MM-yy' }}</h6>
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right d-flex align-items-end justify-content-center">
+            <i class="icon-lg fa fa-user text-primary"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Extracción Contratos</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h2 class="mb-0">{{listAuditoria[2]?.cantidadRegistros}}</h2>
+              <p [ngClass]="{'text-success': contratos > 0, 'text-danger': contratos < 0}"
+                class="ml-2 mb-0 font-weight-medium">{{contratos + '%'}}</p>
+            </div>
+            <h6 class="text-muted font-weight-normal">Actual: {{listAuditoria[2]?.fechaProceso | date: 'dd-MM-yy' }}
+            </h6>
+            <h6 class="text-muted font-weight-normal">Anterior: {{listAuditoriaAnterior[1]?.fechaProceso | date:
+              'dd-MM-yy' }}</h6>
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right d-flex align-items-end justify-content-center">
+            <i style="margin-right: 20px;" class="icon-lg fa fa-handshake-o text-danger"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Extracción Ofertas</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h2 class="mb-0">{{listAuditoria[2]?.cantidadRegistros}}</h2>
+              <p [ngClass]="{'text-success': ofertas > 0, 'text-danger': ofertas < 0}"
+                class="ml-2 mb-0 font-weight-medium">{{ofertas + '%'}}</p>
+            </div>
+            <h6 class="text-muted font-weight-normal">Actual: {{listAuditoria[2]?.fechaProceso | date: 'dd-MM-yy' }}
+            </h6>
+            <h6 class="text-muted font-weight-normal">Anterior: {{listAuditoriaAnterior[2]?.fechaProceso | date:
+              'dd-MM-yy' }}</h6>
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right d-flex align-items-end justify-content-center">
+            <i class="icon-lg fa fa-clone text-warning"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Extracción Tarifas</h5>
+        <div class="row">
+          <div class="col-8 col-sm-12 col-xl-8 my-auto">
+            <div class="d-flex d-sm-block d-md-flex align-items-center">
+              <h2 class="mb-0">{{listAuditoria[3]?.cantidadRegistros}}</h2>
+              <p [ngClass]="{'text-success': tarifas > 0, 'text-danger': tarifas < 0}"
+                class="ml-2 mb-0 font-weight-medium">{{tarifas + '%'}}</p>
+            </div>
+            <h6 class="text-muted font-weight-normal">Actual: {{listAuditoria[3]?.fechaProceso | date: 'dd-MM-yy' }}
+            </h6>
+            <h6 class="text-muted font-weight-normal">Anterior: {{listAuditoriaAnterior[3]?.fechaProceso | date:
+              'dd-MM-yy' }}</h6>
+          </div>
+          <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right d-flex align-items-end justify-content-center">
+            <i class="icon-lg fa fa-usd text-success"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 grid-margin">
+    <div class="card" style="height: 100%;">
+      <div class="card-body">
+        <h5>Estados del Cálculo de Incremento</h5>
+        <div>
+          <apx-chart id="chart" [series]="chartOptions?.series" [chart]="chartOptions?.chart"
+            [labels]="chartOptions?.labels" [responsive]="chartOptions?.responsive"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>Cuentas Incrementadas y No Incrementadas</h5>
+        <div>
+          <apx-chart id="chart3"
+            [series]="chartOptions3?.series"
+            [chart]="chartOptions3?.chart"
+            [labels]="chartOptions3?.labels"
+            [responsive]="chartOptions3?.responsive"
+          ></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 grid-margin">
+    <div class="card">
+      <div class="card-body">
+        <h5>CFM por Estratos</h5>
+        <div>
+          <apx-chart id="chart2" [series]="chartOptions2?.series" [chart]="chartOptions2?.chart"
+            [dataLabels]="chartOptions2?.dataLabels" [plotOptions]="chartOptions2?.plotOptions"
+            [yaxis]="chartOptions2?.yaxis" [xaxis]="chartOptions2?.xaxis" [legend]="chartOptions2?.legend"
+            [colors]="chartOptions2?.colors" [grid]="chartOptions2?.grid"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<h1 class="mt-3">
     Tablero Principal...</h1>
 <hr>
 <div class="row">
@@ -31,8 +168,8 @@
                 <a href="/dashboard/monitoreo" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
-    </div>
-    <!-- <div class="col-3">
+    </div>-->
+<!-- <div class="col-3">
         <div class="card" style="width: 18rem;">
             <img src="../../../assets/img/programador.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
@@ -42,7 +179,7 @@
             </div>
         </div>
     </div> -->
-</div>
+<!--</div>
 <div class="row">
     <div class="col-4">
         <div class="card" style="width: 23rem;">
@@ -73,8 +210,8 @@
                 <a href="/dashboard/configuracion" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
-    </div>
-    <!-- <div class="col-3">
+    </div>-->
+<!-- <div class="col-3">
         <div class="card" style="width: 18rem;">
             <img src="../../../assets/img/programador.png" class="card-img-top p-3" alt="...">
             <div class="card-body">
@@ -83,5 +220,116 @@
                 <a href="#" class="btn btn-primary w-100">Gestionar</a>
             </div>
         </div>
-    </div> -->
+    </div>
+</div>-->
+<div class="col-md-12">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h5 class="modal-tittle">CÁLCULO DE INCREMENTO {{estado}}</h5>
+    </div>
+    <div class="modal-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N° Referencia</th>
+            <th>Id Cliente</th>
+            <th>Identificación</th>
+            <th>Id Producto</th>
+            <th>Fecha Incremento</th>
+            <th>Valor Incremento</th>
+            <th>% Incremento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let inc of listCalculo | paginate:{itemsPerPage:10, currentPage:pageActual}">
+            <td scope="row">{{inc.no_REFERENCIA}}</td>
+            <td>{{inc.id_CLIENTE}}</td>
+            <td>{{inc.iden_CLIE}}</td>
+            <td>{{inc.id_PRODUCTO}}</td>
+            <td>{{inc.fec_CREA_INCRTO | date: 'dd-MM-yyyy'}}</td>
+            <td>{{inc.vlr_INCREMENTO}}</td>
+            <td>{{inc.porcentaje_INCREMENTO}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls class="text-center" previousLabel="Prev" responsive="true"
+        (pageChange)="pageActual = $event"></pagination-controls>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+    </div>
+  </ng-template>
+</div>
+
+<div class="col-md-12">
+  <ng-template #content1 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-tittle">CFM ESTRATO: {{estrato}}</h5>
+    </div>
+    <div class="modal-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N° Referencia</th>
+            <th>Id Cliente</th>
+            <th>Identificación</th>
+            <th>Id Producto</th>
+            <th>CFM antes de IVA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let inc of listCalculo | paginate:{itemsPerPage:10, currentPage:pageActual}">
+            <td scope="row">{{inc.no_REFERENCIA}}</td>
+            <td>{{inc.id_CLIENTE}}</td>
+            <td>{{inc.iden_CLIE}}</td>
+            <td>{{inc.id_PRODUCTO}}</td>
+            <td>{{inc.cfm_SIN_IVA}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls class="text-center" previousLabel="Prev" responsive="true"
+        (pageChange)="pageActual = $event">
+      </pagination-controls>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+    </div>
+  </ng-template>
+</div>
+
+<div class="col-md-12">
+  <ng-template #content2 let-modal>
+    <div class="modal-header">
+      <h5 class="modal-tittle">{{tipo == 'INC' ? 'CUENTAS INCREMENTADAS' : 'CUENTAS NO INCREMENTADAS' }}</h5>
+    </div>
+    <div class="modal-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>N° Referencia</th>
+            <th>Id Cliente</th>
+            <th>Identificación</th>
+            <th>Id Producto</th>
+            <th>Fecha Incremento</th>
+            <th>Valor Incremento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let inc of listCalculo | paginate:{itemsPerPage:10, currentPage:pageActual}">
+            <td scope="row">{{inc.no_REFERENCIA}}</td>
+            <td>{{inc.id_CLIENTE}}</td>
+            <td>{{inc.iden_CLIE}}</td>
+            <td>{{inc.id_PRODUCTO}}</td>
+            <td>{{inc.fec_CREA_INCRTO | date: 'dd-MM-yyyy'}}</td>
+            <td>{{inc.vlr_INCREMENTO}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls class="text-center" previousLabel="Prev" responsive="true"
+        (pageChange)="pageActual = $event"></pagination-controls>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.close()">Cancelar</button>
+    </div>
+  </ng-template>
 </div>

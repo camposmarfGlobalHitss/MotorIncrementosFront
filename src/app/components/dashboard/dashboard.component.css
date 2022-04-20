@@ -23,10 +23,6 @@ a:hover {
   background-color: #ff5555 !important;
 }
 
-.bg-light {
-  background-color: #efecec !important;
-}
-
 .bg-grey {
   background-color: #efefef !important;
 }
@@ -42,18 +38,6 @@ a:hover {
 
 .btn-primary:hover {
   background-color: #111B54;
-}
-
-#sidebar-container {
-  min-height: 100vh;
-}
-
-#sidebar-container .logo {
-  padding: 0.875rem 1.25rem;
-}
-
-#sidebar-container {
-  width: 15rem;
 }
 
 #content {
@@ -88,6 +72,14 @@ a:hover {
 .submenu{
   font-size: 0.8rem !important;
   margin-left: 1rem;
+}
+
+.pl-1{
+  padding-left: 1rem !important;
+}
+
+#content-wrapper{
+  height: 100% !important;
 }
 
 @media (max-width: 768px) {

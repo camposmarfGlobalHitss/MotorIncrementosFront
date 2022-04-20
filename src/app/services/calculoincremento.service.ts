@@ -6,6 +6,7 @@ import { ParametrosIncrementoFija } from '../classes/parametros-incremento-fija'
 import { Uvts } from '../classes/uvts';
 import { ParametrosCalculoMovil } from '../classes/parametros-calculo-movil';
 import { ParametrosCalculoFija } from '../classes/parametros-calculo-fija';
+import { CalculoIncremento } from '../classes/calculo-incremento';
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +82,38 @@ export class CalculoincrementoService {
   */
   generarArchivoPlanoPLMCorregido():Observable<string>{
     return this.http.get('mit/calculo/generarArchivoPLMCorregido',{responseType:'text'})
+  }
+
+  calculoEstados():Promise<any[]>{
+    return this.http.get<any[]>('mit/calculo/calculoEstados').toPromise()
+  }
+
+  calculoEstadoInicial():Promise<CalculoIncremento[]>{
+    return this.http.get<CalculoIncremento[]>('mit/calculo/calculoPorEstados').toPromise()
+  }
+
+  calculoPorEstados(estado: string):Promise<CalculoIncremento[]>{
+    return this.http.get<CalculoIncremento[]>(`mit/calculo/calculoPorEstados/${estado}`).toPromise()
+  }
+
+  estratosCFM():Promise<number[]>{
+    return this.http.get<number[]>(`mit/calculo/cfmPorEstrato`).toPromise()
+  }
+
+  cfmPorEstrato(estrato: number):Promise<CalculoIncremento[]>{
+    return this.http.get<CalculoIncremento[]>(`mit/calculo/cfmPorEstrato/${estrato}`).toPromise()
+  }
+
+  cuentasIncNoInc():Promise<any[]>{
+    return this.http.get<any[]>('mit/calculo/cuentasIncNoInc').toPromise()
+  }
+
+  cuentasByTipo(tipo: string):Promise<any[]>{
+    return this.http.get<any[]>(`mit/calculo/cuentasIncNoInc/${tipo}`).toPromise()
+  }
+
+  contratosDANE():Promise<any[]>{
+    return this.http.get<any[]>(`mit/calculo/contratosDANE`).toPromise()
   }
 
 }

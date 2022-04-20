@@ -36,21 +36,22 @@ export class MonitoreoPlmComponent implements OnInit {
   muestratablaResultados:boolean=false;
   muestratablaDetallesErrores:boolean=false;
   
-  
+  sidebar: any
 
   constructor(private monitoreoService: MonitoreoService,
               private jsonpipe:JsonPipe) { 
 
-              this.muestraArchivoPlano=false;
-              this.muestraBatchId=false;
-              this.muestraSelect=true;
-              this.buttonMonitoreo=false; 
-              this.areajson=false; 
-              this.muestratablaResultados = false;
-              this.muestratablaDetallesErrores=false
+    this.muestraArchivoPlano=false;
+    this.muestraBatchId=false;
+    this.muestraSelect=true;
+    this.buttonMonitoreo=false; 
+    this.areajson=false; 
+    this.muestratablaResultados = false;
+    this.muestratablaDetallesErrores=false;
 
-              
-              }
+    this.sidebar = document.querySelector('#sidebar-container');         
+    this.sidebar.classList.add('height-nav')
+  }
 
      ngOnInit() {
    }
@@ -76,6 +77,7 @@ validarNombre(event:Event){
 }
 
 monitorear(){
+  this.sidebar.classList.remove('height-nav')
   this.attribs = '';
   this.executionFilter = [];
   this.muestratablaResultados = false;

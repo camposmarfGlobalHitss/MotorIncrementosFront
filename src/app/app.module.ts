@@ -54,9 +54,11 @@ import { CalculoincrementoService } from './services/calculoincremento.service';
 import { InterfacesComponent } from './components/interfaces/interfaces.component';
 import { ReinyeccionComponent } from './components/reinyeccion/reinyeccion.component';
 import { ReportesComponent } from './components/reportes/reportes.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PapaParseModule } from 'ngx-papaparse';
 import {EjecucionIncrementoComponent} from './components/ejecucion-incremento/ejecucion-incremento.component';
 import { NgWizardConfig, NgWizardModule, THEME } from 'ng-wizard';
+import { NgApexchartsModule } from "ng-apexcharts";
 
 const ngWizardConfig: NgWizardConfig = {
   theme: THEME.arrows
@@ -94,7 +96,8 @@ const ngWizardConfig: NgWizardConfig = {
     FilteridenclientePipe,
     FilterrefPipe,
     EjecucionIncrementoComponent,
-    ReportesComponent
+    ReportesComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +109,8 @@ const ngWizardConfig: NgWizardConfig = {
     NgxPaginationModule,
     NgbModule,
     PapaParseModule,
-    NgWizardModule.forRoot(ngWizardConfig)
+    NgWizardModule.forRoot(ngWizardConfig),
+    NgApexchartsModule
   ],exports:[
   
   ],

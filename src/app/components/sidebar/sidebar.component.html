@@ -1,0 +1,75 @@
+<div id="sidebar-container" class="sidebar-container bg-primary">
+    <div class="logo">
+        <div class="row" [ngClass]="{'logo-only': isMenuCollapsed}">
+            <div [ngClass]="{'col-md-5': !isMenuCollapsed , 'col-md-12': isMenuCollapsed}">
+                <img src="../../../assets/img/logo-Claro.png" class="img-fluid rounded-circle avatar mr-2"
+                    id="logodashboard" alt="Claro">
+            </div>
+            <div class="title col-md-7 mt-2" *ngIf="!isMenuCollapsed">
+                <h4 class="text-light font-weight-bold mb-0" style="font-size: 22px;">MIT</h4>
+            </div>
+        </div>
+    </div>
+    <div class="menu" routerLinkActive="active">
+        <a [routerLink]="['/dashboard']" class="items d-block text-light p-3 border-0" [ngClass]="{'icon-only': isMenuCollapsed}"><i
+                class="icon ion-md-apps lead" [ngClass]="{'me-2': !isMenuCollapsed}"></i>
+            <span *ngIf="!isMenuCollapsed">Tablero</span></a>
+        <a routerLink="/dashboard/extraccion" class="items d-block text-light p-3 border-0" [ngClass]="{'icon-only': isMenuCollapsed}"><i
+                class="icon ion-md-cube lead" [ngClass]="{'me-2': !isMenuCollapsed}"></i>
+                <span *ngIf="!isMenuCollapsed">Cargue Información</span></a>
+        <a style="padding: 13px 16px;" *ngIf="!isMenuCollapsed" class="items d-block text-light border-0" [ngClass]="{'icon-only': isMenuCollapsed, 'proc': !isMenuCollapsed}" (click)="toggleSidebar()"
+            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            <i class="fas fa-chart-line" [ngClass]="{'me-2': !isMenuCollapsed}"></i><span *ngIf="!isMenuCollapsed">Proc Incremento</span>
+            <i *ngIf="!isMenuCollapsed" id="chevron" class="fas collap" [ngClass]="{'fa-chevron-down' : (isCollapsed), 'fa-chevron-up' : (!isCollapsed)}"></i>
+        </a>
+        <div *ngIf="!isMenuCollapsed" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+            <a style="padding: 25px 13px 13px 16px;" [routerLink]="['/dashboard/reglas']" class="items d-block text-light border-0 submenu">
+                <span class="submenu" *ngIf="!isMenuCollapsed">Reglas de Extracción</span></a>
+            <a [routerLink]="['/dashboard/calculoIncremento/parametrizacion']" class="items d-block text-light p-3 border-0 submenu">
+                <span class="submenu" *ngIf="!isMenuCollapsed">Parametrización</span></a>
+            <a (click)="ejecucionIncremento()" class="items d-block text-light p-3 border-0 submenu">
+                <span class="submenu" *ngIf="!isMenuCollapsed">Ejecución del cálculo</span></a>
+            <a (click)="interfacesIncremento()" class="items d-block text-light p-3 border-0 submenu">
+                <span class="submenu" *ngIf="!isMenuCollapsed">Generación de Interfaces</span></a>
+            <a [routerLink]="['/dashboard/calculoIncremento/reportes']" class="items d-block text-light p-3 border-0 submenu">
+                <span class="submenu" *ngIf="!isMenuCollapsed">Generación de Reportes</span></a>
+            <a  style="padding: 16px 13px 0px 16px;"  [routerLink]="['/dashboard/calculoIncremento/reinyeccion']" class="items d-block text-light border-0 submenu">
+                <span class="submenu" *ngIf="!isMenuCollapsed">Proc de Reinyección</span></a>
+        </div>
+        <div ngbDropdown class="d-inline-block" style="width: 100%;">
+            <a *ngIf="isMenuCollapsed" class="items d-block text-light p-3 border-0" [ngClass]="{'icon-only': isMenuCollapsed}"
+                [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample" id="dropdownBasic1" ngbDropdownToggle>
+                <i class="fas fa-chart-line" [ngClass]="{'me-2': !isMenuCollapsed}"></i>
+            </a>
+            <div id="flotante" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <a ngbDropdownItem [routerLink]="['/dashboard/reglas']" class="items d-block text-light p-3 border-0 submenu">
+                    <span>Reglas de Extracción</span></a>
+                <a ngbDropdownItem [routerLink]="['/dashboard/calculoIncremento/parametrizacion']" class="items d-block text-light p-3 border-0 submenu">
+                    <span>Parametrización</span></a>
+                <a ngbDropdownItem (click)="ejecucionIncremento()" class="items d-block text-light p-3 border-0 submenu">
+                    <span>Ejecución del cálculo</span></a>
+                <a ngbDropdownItem (click)="interfacesIncremento()" class="items d-block text-light p-3 border-0 submenu">
+                    <span>Generación de Interfaces</span></a>
+                <a ngbDropdownItem [routerLink]="['/dashboard/calculoIncremento/reportes']" class="items d-block text-light p-3 border-0 submenu">
+                    <span>Generación de Reportes</span></a>
+                <a ngbDropdownItem [routerLink]="['/dashboard/calculoIncremento/reinyeccion']" class="items d-block text-light p-3 border-0 submenu">
+                    <span>Proc de Reinyección</span></a>
+            </div>
+        </div>
+        <a style="padding: 13px 16px;" routerLink="/dashboard/monitoreo" class="items d-block text-light border-0" [ngClass]="{'icon-only': isMenuCollapsed, 'monitoreo': !isMenuCollapsed}"><i
+                class="icon ion-md-barcode lead" [ngClass]="{'me-2': !isMenuCollapsed}"></i>
+                <span *ngIf="!isMenuCollapsed">Monitoreo</span></a>
+        <a routerLink="/dashboard/biz" class="items d-block text-light p-3 border-0" [ngClass]="{'icon-only': isMenuCollapsed}"><i
+                class="icon ion-md-stats lead" [ngClass]="{'me-2': !isMenuCollapsed}"></i>
+                <span *ngIf="!isMenuCollapsed">Biz Interaction</span></a>
+        <a routerLink="/dashboard/perfil" class="items d-block text-light p-3 border-0" [ngClass]="{'icon-only': isMenuCollapsed}"><i
+                class="icon ion-md-person lead" [ngClass]="{'me-2': !isMenuCollapsed}"></i>
+                <span *ngIf="!isMenuCollapsed">Perfil</span></a>
+        <a routerLink="/dashboard/about" class="items d-block text-light p-3 border-0" [ngClass]="{'icon-only': isMenuCollapsed}"><i
+                class="icon ion-md-help lead" [ngClass]="{'me-2': !isMenuCollapsed}"></i>
+                <span *ngIf="!isMenuCollapsed">Acerca de</span></a>
+        <a *ngIf="habConfiguracion" routerLink="/dashboard/configuracion" class="items d-block text-light p-3 border-0" [ngClass]="{'icon-only': isMenuCollapsed}">
+            <i class="icon ion-md-settings lead" [ngClass]="{'me-2': !isMenuCollapsed}"></i><span *ngIf="!isMenuCollapsed">Configuración</span>
+        </a>
+    </div>  
+</div>

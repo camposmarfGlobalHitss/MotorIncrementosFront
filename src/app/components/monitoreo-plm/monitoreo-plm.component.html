@@ -1,124 +1,129 @@
-<div class="row mt-2 g-4">
-    <h1>Monitoreo Incremento</h1>
-    <hr>
-    <div class="col-md-5" *ngIf="muestraSelect">
-        <div class="form-group row">
-            <div class="col-4">
-                <label class="col-form-label" style="font-size: 18px;">Monitoreo por</label>
-            </div>
-            <div class="col-8">
-                <select class="form-select" aria-label="Default select example" #selectTipo (change)="captura(selectTipo.value)">
-                    <option selected>Seleccione uno</option>
-                    <option value="1">Archivo Plano</option>
-                    <option value="2">Batch ID</option>
-                  </select>
-            </div>
+<h1>Monitoreo Incremento</h1>
+<hr>
+<div class="col-md-5" *ngIf="muestraSelect">
+    <div class="form-group row">
+        <div class="col-4">
+            <label class="col-form-label" style="font-size: 18px;">Monitoreo por</label>
+        </div>
+        <div class="col-8">
+            <select class="form-select" aria-label="Default select example" #selectTipo
+                (change)="captura(selectTipo.value)">
+                <option selected>Seleccione uno</option>
+                <option value="1">Archivo Plano</option>
+                <option value="2">Batch ID</option>
+            </select>
         </div>
     </div>
-    <div class="col-md-5" *ngIf="muestraArchivoPlano">
-        <button class="btn btn-danger" (click)="irAtrasArchivoPlano()">
-            <i class="fa fa-arrow-left"></i>
-        </button>
-        <div class="input-group mb-3">
-            <h3>
-                <label>Archivo Plano</label>
-            </h3>
+</div>
+<div class="col-md-5" *ngIf="muestraArchivoPlano">
+    <button class="btn btn-danger" (click)="irAtrasArchivoPlano()">
+        <i class="fa fa-arrow-left"></i>
+    </button>
+    <div class="input-group mb-3">
+        <h3>
+            <label>Archivo Plano</label>
+        </h3>
 
-            <div class="custom-input-file col-md-6 col-sm-6 col-xs-6 ms-2">
+        <div class="custom-input-file col-md-6 col-sm-6 col-xs-6 ms-2">
 
-                <input type="file" id="inputTarifas" class="input-file" (change)="validarNombre($event)" accept=".csv"> Subir fichero...
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">Nombre Archivo</label>
-            <label class="col-3 col-form-label">{{nombreArchivo}}</label>
-        </div>
-        <div class="form-group row">
-            <label class="col-3 col-form-label">Estado Archivo</label>
-            <label class="col-3 col-form-label">{{estadoArchivo}}</label>
-        </div>
-        <div class="d-grid gap-2 mt-5">
-            <button class="btn btn btn-success btn-block" type="button" (click)="monitorear()" [disabled]="buttonMonitoreo">Realizar Monitoreo</button>
-        </div>
-    </div>
-    <div class="col-md-5" *ngIf="muestraBatchId">
-        <button class="btn btn-danger" (click)="irAtrasBatchId()">
-            <i class="fa fa-arrow-left"></i>
-        </button>
-        <div class="form-group row mt-3">
-            <div class="col-3">
-                <label class="col-form-label" style="font-size: 18px;">Batch ID: </label>
-            </div>
-            <div class="col-9">
-                <input type="text" class="form-control" #inputBatchId placeholder="Ingrese Batch ID" (keyup.enter)="monitorearBatchId(inputBatchId.value); inputBatchId.value=''">
-            </div>
-        </div>
-        <div class="d-grid gap-2 mt-5">
-            <button class="btn btn btn-success btn-block" type="button" (click)="monitorearBatchId(inputBatchId.value); inputBatchId.value=''; areajson=false" [disabled]="buttonMonitoreo">Realizar Monitoreo</button>
+            <input type="file" id="inputTarifas" class="input-file" (change)="validarNombre($event)" accept=".csv">
+            Subir fichero...
         </div>
     </div>
 
-    <div class="col-md-6">
-        <h2 class="text-center">Estado Monitoreo</h2>
-        <hr style="margin-left: 10px;">
-        <app-loading *ngIf="carga"></app-loading>
-        <pre *ngIf="areajson" style="height: 400px; background:#DCD7D6; color: #140094;">
+    <div class="form-group row">
+        <label class="col-3 col-form-label">Nombre Archivo</label>
+        <label class="col-3 col-form-label">{{nombreArchivo}}</label>
+    </div>
+    <div class="form-group row">
+        <label class="col-3 col-form-label">Estado Archivo</label>
+        <label class="col-3 col-form-label">{{estadoArchivo}}</label>
+    </div>
+    <div class="d-grid gap-2 mt-5">
+        <button class="btn btn btn-success btn-block" type="button" (click)="monitorear()"
+            [disabled]="buttonMonitoreo">Realizar Monitoreo</button>
+    </div>
+</div>
+<div class="col-md-5" *ngIf="muestraBatchId">
+    <button class="btn btn-danger" (click)="irAtrasBatchId()">
+        <i class="fa fa-arrow-left"></i>
+    </button>
+    <div class="form-group row mt-3">
+        <div class="col-3">
+            <label class="col-form-label" style="font-size: 18px;">Batch ID: </label>
+        </div>
+        <div class="col-9">
+            <input type="text" class="form-control" #inputBatchId placeholder="Ingrese Batch ID"
+                (keyup.enter)="monitorearBatchId(inputBatchId.value); inputBatchId.value=''">
+        </div>
+    </div>
+    <div class="d-grid gap-2 mt-5">
+        <button class="btn btn btn-success btn-block" type="button"
+            (click)="monitorearBatchId(inputBatchId.value); inputBatchId.value=''; areajson=false"
+            [disabled]="buttonMonitoreo">Realizar Monitoreo</button>
+    </div>
+</div>
+
+<div class="col-md-6">
+    <h2 class="text-center">Estado Monitoreo</h2>
+    <hr style="margin-left: 10px;">
+    <app-loading *ngIf="carga"></app-loading>
+    <pre *ngIf="areajson" style="height: 400px; background:#DCD7D6; color: #140094;">
                 {{attribs}}
         </pre>
-        <table class="table" *ngIf="muestratablaResultados">
-            <thead class="table-dark">
-                <tr>
-                    <th>Operacion</th>
-                    <th>Resultado</th>
-                    <th>Opcion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Completos</td>
-                    <td>{{completados}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Fallidos</td>
-                    <td>{{fallidos}}</td>
-                    <td>
-                        <button *ngIf="fallos>0" type="button" class="btn btn-outline-info" (click)="muestratablaDetallesErrores = !muestratablaDetallesErrores; cambiarTextoBoton();">{{textoboton}}</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Pendientes</td>
-                    <td>{{pendientes}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Total</td>
-                    <td>{{total}}</td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
+    <table class="table" *ngIf="muestratablaResultados">
+        <thead class="table-dark">
+            <tr>
+                <th>Operacion</th>
+                <th>Resultado</th>
+                <th>Opcion</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Completos</td>
+                <td>{{completados}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Fallidos</td>
+                <td>{{fallidos}}</td>
+                <td>
+                    <button *ngIf="fallos>0" type="button" class="btn btn-outline-info"
+                        (click)="muestratablaDetallesErrores = !muestratablaDetallesErrores; cambiarTextoBoton();">{{textoboton}}</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Pendientes</td>
+                <td>{{pendientes}}</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Total</td>
+                <td>{{total}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 
-        <table class="table table-success table-striped" *ngIf="muestratablaDetallesErrores">
-            <thead>
-                <tr>
-                    <th>Customer ID</th>
-                    <th>Contract ID</th>
-                    <th>Error Message</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of executionFilter">
-                    <td>{{item.items[1].attribs.customerId}}</td>
-                    <td>{{item.items[1].attribs.changes[0].contractId}}</td>
-                    <td>{{item.attribs.failMessage}}</td>
-                    <td>
-                        <span class="badge bg-danger">{{item.attribs.status}}</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-success table-striped" *ngIf="muestratablaDetallesErrores">
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>Contract ID</th>
+                <th>Error Message</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of executionFilter">
+                <td>{{item.items[1].attribs.customerId}}</td>
+                <td>{{item.items[1].attribs.changes[0].contractId}}</td>
+                <td>{{item.attribs.failMessage}}</td>
+                <td>
+                    <span class="badge bg-danger">{{item.attribs.status}}</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

@@ -1,0 +1,68 @@
+.bg-primary {
+    background-color: #ff5555 !important;
+}
+
+#sidebar-container {
+    min-height: 100% !important;
+}
+
+#sidebar-container .logo {
+    padding: 1.2rem 1.5rem !important;
+}
+
+#sidebar-container {
+    width: 15rem;
+}
+
+.collap{
+    padding-left: 0.5rem !important;
+}
+
+.submenu{
+    padding-left: 1.5rem;
+    font-size: 0.8rem;
+}
+
+.icon-only{
+    text-align: center !important;
+}
+
+.logo-only{
+    justify-content: center !important;
+}
+
+.mt-2{
+    margin-top: 1rem !important;
+}
+
+.dropdown-menu{
+    background-color: #dfdfdf;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.menu-flotante{
+    top: -40px !important; 
+    left: 74px !important;
+}
+
+.proc{
+    padding-bottom: 0 !important;
+}
+
+.monitoreo{
+    padding-top: 0 !important;
+}
+
+.col-md-12{
+    padding-right: 4px !important;
+    padding-left: 4px !important;
+}
+
+@media(min-width:992px){
+    :host-context(.sidebar-icon-only) #sidebar-container{
+        width: 70px !important;
+    }
+}

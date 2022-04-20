@@ -11,7 +11,8 @@ import { AuditoriaService } from 'src/app/services/auditoria.service';
 })
 export class ExtraccionInformacionComponent implements OnInit {
 
-  ListExtraccionInfo: Auditoria[] = [];
+  listExtraccionInfo: Auditoria[] = [];
+  listExtraccionInfoAnt: Auditoria[] = [];
   seleccionado: any;
   resultExtract: string = '';
 
@@ -23,10 +24,8 @@ export class ExtraccionInformacionComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  cargarListExtraccionInfo() {
-    this.extractInfoService.traerInformacion().subscribe((resp: Auditoria[]) => {
-      this.ListExtraccionInfo = resp;
-    });
+  async cargarListExtraccionInfo() {
+    this.listExtraccionInfo = (await this.extractInfoService.traerInformacion())
   }
 
   /*

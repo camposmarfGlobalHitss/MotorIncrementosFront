@@ -10,9 +10,12 @@ export class ExtraccionInformacionService {
 
   constructor(private http:HttpClient) { }
 
+  traerInformacion():Promise<Auditoria[]>{
+    return this.http.get<Auditoria[]>('mit/extractInfo/statsExtraccion').toPromise()
+  }
 
-  traerInformacion():Observable<Auditoria[]>{
-    return this.http.get<Auditoria[]>('mit/extractInfo/statsExtraccion');
+  traerInformacionAnterior():Promise<Auditoria[]>{
+    return this.http.get<Auditoria[]>('mit/extractInfo/statsExtraccion/anterior').toPromise()
   }
 
   extraccionClientes():Observable<string>{

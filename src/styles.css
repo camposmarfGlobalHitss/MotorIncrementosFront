@@ -3,7 +3,7 @@
 @import '~ng-wizard/themes/ng_wizard.min.css';
 
 body {
-  width: 99%;
+  height: 100vh !important;
 }
 
 .ng-wizard-theme-circles>ul{
@@ -21,10 +21,6 @@ body {
   margin-left: 0 !important;
 }
 
-#ngwizard{
-  padding-right: 15px !important;
-}
-
 .ng-wizard-theme-circles>ul.step-anchor>li.active>a {
   border-color: #007bff !important;
   background: #007bff !important;
@@ -34,10 +30,19 @@ body {
   margin-bottom: 0 !important;
 }
 
-.margin{
-  margin-right: 15px;
+.p-3{
+  padding: 11px 16px !important;
 }
 
-.ng-wizard-main{
-  margin-right: 15px !important;
+.component{
+  padding: 1rem !important;
+}
+
+.height-nav{
+  height: 100vh !important;
+}
+
+.card{
+  background-color: #efefef40 !important;
+  border: 1px solid #efefef;
 }
