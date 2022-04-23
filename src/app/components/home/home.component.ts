@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Auditoria } from 'src/app/classes/auditoria';
 import { ExtraccionInformacionService } from 'src/app/services/extraccion-informacion.service';
-import { ApexNonAxisChartSeries, ApexChart, ApexResponsive, ChartComponent, ApexAxisChartSeries, ApexDataLabels, ApexPlotOptions, ApexYAxis, ApexGrid, ApexLegend } from 'ng-apexcharts';
+import { ApexNonAxisChartSeries, ApexChart, ApexResponsive, ChartComponent, ApexAxisChartSeries, ApexDataLabels, ApexPlotOptions, ApexYAxis, ApexGrid, ApexLegend, ApexStroke, ApexTitleSubtitle, ApexMarkers, ApexAnnotations, ApexFill, ApexTooltip } from 'ng-apexcharts';
 import { CalculoincrementoService } from 'src/app/services/calculoincremento.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalculoIncremento } from 'src/app/classes/calculo-incremento';
@@ -43,6 +43,31 @@ export type ChartOptions3 = {
   labels: any;
 };
 
+export type ChartOptions4 = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  dataLabels: ApexDataLabels;
+  markers: ApexMarkers;
+  title: ApexTitleSubtitle;
+  fill: ApexFill;
+  yaxis: ApexYAxis;
+  xaxis: ApexXAxis;
+  tooltip: ApexTooltip;
+  stroke: ApexStroke;
+  annotations: ApexAnnotations;
+  colors: any;
+  toolbar: any;
+};
+
+export type ChartOptions5 = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  markers: ApexMarkers;
+  stroke: ApexStroke;
+  dataLabels: ApexDataLabels;
+  title: ApexTitleSubtitle;
+};
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -60,8 +85,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   tarifas: any;
   estados: any;
   cuentas: any;
-
+  contratosDane: any[];
+  variaciones: any[];
   estratos: number[];
+  dane: any[];
 
   estado: string;
   estrato: number;
@@ -69,11 +96,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   listCalculo: CalculoIncremento[] = [];
 
-
   @ViewChild("chart") chart: ChartComponent;
   @ViewChild("chart2") chart2: ChartComponent;
   @ViewChild("chart3") chart3: ChartComponent;
-  
+  @ViewChild("chart4") chart4: ChartComponent;
+  @ViewChild("chart5") chart5: ChartComponent;
+
   @ViewChild('content', { static: false }) content;
   @ViewChild('content1', { static: false }) content1;
   @ViewChild('content2', { static: false }) content2;
@@ -81,17 +109,35 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public chartOptions: Partial<ChartOptions>;
   public chartOptions2: Partial<ChartOptions2>;
   public chartOptions3: Partial<ChartOptions3>;
+  public chartOptions4: Partial<ChartOptions>;
+  public chartOptions5: Partial<ChartOptions5>;
 
   constructor(private extractInfoService: ExtraccionInformacionService,
     private calculoIncrementoService: CalculoincrementoService,
-    private modal: NgbModal) {   
-    this.calculoEstados();
-  }
+    private modal: NgbModal) {}
 
   async ngAfterViewInit(){
+    this.calculoEstados();
     this.estratos = (await this.calculoIncrementoService.estratosCFM());
     this.cuentas = (await this.calculoIncrementoService.cuentasIncNoInc());
-    this.contratos = (await this.calculoIncrementoService.contratosDANE());
+    this.contratosDane = (await this.calculoIncrementoService.contratosDANE());
+    this.variaciones = (await this.calculoIncrementoService.variacionPreincremento());
+
+    this.variaciones = this.variaciones.map(m => {
+      m = m.split(',');
+      m = {x: new Date(m[0]), y: Number(m[1])}
+      return m;
+    });
+    
+    this.variaciones = this.variaciones.sort((a, b) => a.x - b.x)
+
+    this.variaciones = this.variaciones.map(v=> {    
+      let fecha = v.x;
+      v.x.setDate(fecha.getDate() + 1);
+      v = {x: v.x.toLocaleDateString("es-ES"), y: v.y}
+      return v;
+    });
+
     this.chartOptions2 = {
       series: [
         {
@@ -157,11 +203,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       }
     };
+
     this.chartOptions3 = {
       series: [0,0],
       chart: {
         type: "donut",
-        width: 500,
+        width: 330,
         events: { 
           dataPointSelection: (event, chartContext, config) => {
             this.tipo = config.dataPointIndex == 0 ? 'INC' : 'NO_INC'
@@ -169,7 +216,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           }
         }
       },
-      labels: ["Cuentas Incrementadas", "Cuentas No Incrementadas"],
+      labels: ["Incrementadas", "No Incrementadas"],
       responsive: [
         {
           breakpoint: 480,
@@ -184,6 +231,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       ]
     };
+
     this.cuentas.forEach(m => {
       switch (m.estado) {
         case 'INC':
@@ -194,7 +242,62 @@ export class HomeComponent implements OnInit, AfterViewInit {
           break;
       }
     });
-    console.log(this.contratos)
+    this.contratosDane = this.contratosDane.map(c => {
+      c = c.split(',');
+      return c;
+    });
+
+    this.chartOptions4 = {
+      series: [Number(this.contratosDane[0][0]), Number(this.contratosDane[1][0]), Number(this.contratosDane[2][0]), Number(this.contratosDane[3][0]), Number(this.contratosDane[4][0])],
+      labels: [this.contratosDane[0][1], this.contratosDane[1][1], this.contratosDane[2][1], this.contratosDane[3][1], this.contratosDane[4][1]],
+      chart: {
+        width: 330,
+        type: "pie",
+        events: {
+        }
+      },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 300
+            },
+            legend: {
+              position: "bottom"
+            }
+          }
+        }
+      ]
+    };
+
+    this.chartOptions5 = {
+      series: [
+        {
+          name: "Registros",
+          data: this.variaciones
+        }
+      ],
+      chart: {
+        type: "line",
+        height: 350
+      },
+      stroke: {
+        curve: "stepline"
+      },
+      dataLabels: {
+        enabled: false
+      },
+      title: {
+        text: "",
+        align: "left"
+      },
+      markers: {
+        hover: {
+          sizeOffset: 4
+        }
+      }
+    };
   }
 
   async ngOnInit(): Promise<void> {
@@ -218,9 +321,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.estados = (await this.calculoIncrementoService.calculoEstados());
     this.chartOptions = {
       series: [0, 0, 0, 0],
-      labels: ["Exito", "Rechazo", "Inicial", "Corregido"],
+      labels: ["EXITO", "RECHAZO", "INICIAL", "CORREGIDO"],
       chart: {
-        width: 400,
+        width: 300,
         type: "pie",
         events: {
           dataPointSelection: (event, chartContext, config) => {
@@ -233,7 +336,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              width: 300
             },
             legend: {
               position: "bottom"

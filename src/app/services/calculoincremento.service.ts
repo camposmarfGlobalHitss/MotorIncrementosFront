@@ -116,4 +116,8 @@ export class CalculoincrementoService {
     return this.http.get<any[]>(`mit/calculo/contratosDANE`).toPromise()
   }
 
+  variacionPreincremento():Promise<any[]>{
+    return this.http.get<any[]>(`mit/calculo/variacionPreincremento`).toPromise()
+  }
+
 }

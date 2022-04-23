@@ -46,3 +46,11 @@ body {
   background-color: #efefef40 !important;
   border: 1px solid #efefef;
 }
+
+.apexcharts-legend{
+  top: 0px !important;
+}
+
+.apexcharts-legend-series{
+  margin: 0px 5px !important;
+}

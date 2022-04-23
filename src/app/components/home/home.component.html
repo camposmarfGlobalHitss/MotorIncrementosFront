@@ -93,8 +93,8 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-6 grid-margin">
-    <div class="card" style="height: 100%;">
+  <div class="col-sm-4 grid-margin">
+    <div class="card" style="height:100%">
       <div class="card-body">
         <h5>Estados del Cálculo de Incremento</h5>
         <div>
@@ -104,17 +104,24 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-6 grid-margin">
-    <div class="card">
+  <div class="col-sm-4 grid-margin">
+    <div class="card" style="height:100%">
       <div class="card-body">
-        <h5>Cuentas Incrementadas y No Incrementadas</h5>
+        <h5>Cuentas Con o Sin Incremento</h5>
         <div>
-          <apx-chart id="chart3"
-            [series]="chartOptions3?.series"
-            [chart]="chartOptions3?.chart"
-            [labels]="chartOptions3?.labels"
-            [responsive]="chartOptions3?.responsive"
-          ></apx-chart>
+          <apx-chart id="chart3" [series]="chartOptions3?.series" [chart]="chartOptions3?.chart"
+            [labels]="chartOptions3?.labels" [responsive]="chartOptions3?.responsive"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 grid-margin">
+    <div class="card" style="height:100%">
+      <div class="card-body">
+        <h5>Ciudades con Mayor No. Contratos</h5>
+        <div>
+          <apx-chart id="chart4" [series]="chartOptions4?.series" [chart]="chartOptions4?.chart"
+            [labels]="chartOptions4?.labels" [responsive]="chartOptions4?.responsive"></apx-chart>
         </div>
       </div>
     </div>
@@ -122,7 +129,7 @@
 </div>
 <div class="row">
   <div class="col-sm-6 grid-margin">
-    <div class="card">
+    <div class="card" style="height:100%">
       <div class="card-body">
         <h5>CFM por Estratos</h5>
         <div>
@@ -130,6 +137,23 @@
             [dataLabels]="chartOptions2?.dataLabels" [plotOptions]="chartOptions2?.plotOptions"
             [yaxis]="chartOptions2?.yaxis" [xaxis]="chartOptions2?.xaxis" [legend]="chartOptions2?.legend"
             [colors]="chartOptions2?.colors" [grid]="chartOptions2?.grid"></apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 grid-margin">
+    <div class="card" style="height:100%">
+      <div class="card-body">
+        <h5>Variaciones del Proceso de Cálculo de Incremento</h5>
+        <div>
+          <apx-chart id="chart5"
+          [series]="chartOptions5?.series"
+          [chart]="chartOptions5?.chart"
+          [markers]="chartOptions5?.markers"
+          [stroke]="chartOptions5?.stroke"
+          [dataLabels]="chartOptions5?.dataLabels"
+          [title]="chartOptions5?.title"
+        ></apx-chart>
         </div>
       </div>
     </div>
@@ -222,6 +246,7 @@
         </div>
     </div>
 </div>-->
+
 <div class="col-md-12">
   <ng-template #content let-modal>
     <div class="modal-header">
