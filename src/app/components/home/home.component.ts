@@ -5,6 +5,7 @@ import { ApexNonAxisChartSeries, ApexChart, ApexResponsive, ChartComponent, Apex
 import { CalculoincrementoService } from 'src/app/services/calculoincremento.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalculoIncremento } from 'src/app/classes/calculo-incremento';
+import { LoadingService } from 'src/app/services/loading.service';
 
 type ApexXAxis = {
   type?: "category" | "datetime" | "numeric";
@@ -94,7 +95,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   estrato: number;
   tipo: string;
 
+  identificacion: string;
+
   listCalculo: CalculoIncremento[] = [];
+  listCalculoCopia: CalculoIncremento[] = [];
 
   @ViewChild("chart") chart: ChartComponent;
   @ViewChild("chart2") chart2: ChartComponent;
@@ -114,9 +118,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(private extractInfoService: ExtraccionInformacionService,
     private calculoIncrementoService: CalculoincrementoService,
-    private modal: NgbModal) {}
+    private modal: NgbModal,
+    private loadingService: LoadingService) {}
 
   async ngAfterViewInit(){
+
     this.calculoEstados();
     this.estratos = (await this.calculoIncrementoService.estratosCFM());
     this.cuentas = (await this.calculoIncrementoService.cuentasIncNoInc());
@@ -242,6 +248,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           break;
       }
     });
+
     this.contratosDane = this.contratosDane.map(c => {
       c = c.split(',');
       return c;
@@ -252,9 +259,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       labels: [this.contratosDane[0][1], this.contratosDane[1][1], this.contratosDane[2][1], this.contratosDane[3][1], this.contratosDane[4][1]],
       chart: {
         width: 330,
-        type: "pie",
-        events: {
-        }
+        type: "pie"
       },
       responsive: [
         {
@@ -298,9 +303,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       }
     };
+
+    this.loadingService.hideLoading();
   }
 
   async ngOnInit(): Promise<void> {
+    this.loadingService.startLoading();
     this.listAuditoria = (await this.extractInfoService.traerInformacion());
     this.listAuditoriaAnterior = (await this.extractInfoService.traerInformacionAnterior());
     this.calculoIncDec(this.listAuditoria, this.listAuditoriaAnterior);
@@ -318,6 +326,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   async calculoEstados() {
+    
     this.estados = (await this.calculoIncrementoService.calculoEstados());
     this.chartOptions = {
       series: [0, 0, 0, 0],
@@ -368,30 +377,43 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   async onEstado(index: number) {
-    this.listCalculo = [];
+    this.loadingService.startLoading();
+    this.listCalculo = this.listCalculoCopia = [];
     switch (index) {
       case 2:
         this.estado = 'INICIAL';
-        this.listCalculo = (await this.calculoIncrementoService.calculoEstadoInicial());
+        this.listCalculo = this.listCalculoCopia = (await this.calculoIncrementoService.calculoEstadoInicial());
         break;
       default:
         this.estado = (index == 0) ? 'EXITO' : (index == 1) ? 'RECHAZO' : 'CORREGIDO';
-        this.listCalculo = (await this.calculoIncrementoService.calculoPorEstados(this.estado));
+        this.listCalculo = this.listCalculoCopia = (await this.calculoIncrementoService.calculoPorEstados(this.estado));
         break;
     }
+    this.loadingService.hideLoading();
     this.abrirModal(this.content)
   }
 
   async onEstrato(estrato: number){
-    this.listCalculo = [];
-    this.listCalculo = (await this.calculoIncrementoService.cfmPorEstrato(estrato))
+    this.loadingService.startLoading();
+    this.listCalculo = this.listCalculoCopia = [];
+    this.listCalculo = this.listCalculoCopia = (await this.calculoIncrementoService.cfmPorEstrato(estrato))
+    this.loadingService.hideLoading();
     this.abrirModal(this.content1)
   }
 
   async onTipoCuenta(tipo: string){
-    this.listCalculo = [];
-    this.listCalculo = (await this.calculoIncrementoService.cuentasByTipo(tipo))
+    this.loadingService.startLoading();
+    this.listCalculo = this.listCalculoCopia = [];
+    this.listCalculo = this.listCalculoCopia = (await this.calculoIncrementoService.cuentasByTipo(tipo))
+    this.loadingService.hideLoading();
     this.abrirModal(this.content2)
+  }
+
+  search(event: any){
+    if(event.length > 0){
+      this.listCalculo =  this.listCalculoCopia.filter(m=> m.iden_CLIE.toUpperCase().indexOf(event.toUpperCase()) !== -1 && m.iden_CLIE.toUpperCase().indexOf(this.identificacion.toUpperCase()) !== -1);
+      this.identificacion = null;
+    }
   }
 
 }

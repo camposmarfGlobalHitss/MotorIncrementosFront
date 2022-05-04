@@ -253,6 +253,14 @@
       <h5 class="modal-tittle">CÁLCULO DE INCREMENTO {{estado}}</h5>
     </div>
     <div class="modal-body">
+      <form class="form-inline">
+        <div class="col-3 form-group">
+          <label class="col-form-label" style="font-size: 18px;">Identificación Cliente</label>
+        </div>
+        <div class="col-9 form-group">
+          <input type="text" name="identificacion" [(ngModel)]="identificacion" (ngModelChange)="search($event)">
+        </div>
+      </form>
       <table class="table">
         <thead>
           <tr>
@@ -292,6 +300,14 @@
       <h5 class="modal-tittle">CFM ESTRATO: {{estrato}}</h5>
     </div>
     <div class="modal-body">
+      <form class="form-inline">
+        <div class="col-3 form-group">
+          <label class="col-form-label" style="font-size: 18px;">Identificación Cliente</label>
+        </div>
+        <div class="col-9 form-group">
+          <input type="text" name="identificacion" [(ngModel)]="identificacion" (ngModelChange)="search($event)">
+        </div>
+      </form>
       <table class="table">
         <thead>
           <tr>
@@ -328,6 +344,14 @@
       <h5 class="modal-tittle">{{tipo == 'INC' ? 'CUENTAS INCREMENTADAS' : 'CUENTAS NO INCREMENTADAS' }}</h5>
     </div>
     <div class="modal-body">
+      <form class="form-inline">
+        <div class="col-3 form-group">
+          <label class="col-form-label" style="font-size: 18px;">Identificación Cliente</label>
+        </div>
+        <div class="col-9 form-group">
+          <input type="text" name="identificacion" [(ngModel)]="identificacion" (ngModelChange)="search($event)">
+        </div>
+      </form>
       <table class="table">
         <thead>
           <tr>

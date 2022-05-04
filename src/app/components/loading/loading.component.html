@@ -1,14 +1,15 @@
-<div class="row text-center">
-    <div class="col">
-        <div class="lds-roller">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+<div class="loading-wrapper">
+    <div class="loading" *ngIf="loading">
+        <div class="d-flex justify-content-center spinner">
+            <div class="spinner-grow text-danger" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-light" style="width: 2rem; height: 2rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-primary" style="width: 1rem; height: 1rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
     </div>
 </div>
